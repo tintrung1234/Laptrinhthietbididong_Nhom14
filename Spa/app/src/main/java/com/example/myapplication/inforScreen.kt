@@ -49,6 +49,92 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+@Preview (showBackground = true)
+@Composable
+fun inforScreen() {
+    Column (
+        modifier = Modifier.fillMaxSize()
+            .padding(vertical = 30.dp, horizontal = 20.dp)
+    ){
+        topLayout("Thông tin", { onclick() })
+//        inforLayout("ABC")
+        inforLayout()
+    }
+}
+
+private fun onclick(){}
+
+@Composable
+fun inforLayout(){
+    Column {
+        Spacer(modifier = Modifier.weight(0.5f))
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_logo), // Ảnh từ drawable
+                contentDescription = "Logo",
+                modifier = Modifier.size(150.dp) // Đặt kích thước ảnh
+                    .clip(CircleShape)
+                    .border(2.dp, Color.Black, CircleShape)
+            )
+            IconButton(
+                onClick = {},
+                modifier = Modifier
+                    .offset(x = 55.dp, y = 45.dp) // Di chuyển toàn bộ IconButton
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_camera), // Ảnh từ drawable
+                    contentDescription = "icon",
+                    modifier = Modifier
+                        .size(27.dp)
+                        .clip(CircleShape)
+                        .border(1.dp, Color.Black, CircleShape)
+                        .background(Color.White)
+                )
+            }
+
+        }
+        Spacer(modifier = Modifier.weight(0.5f))
+        Text(
+            text = "Xin chào ABC!",
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
+        )
+        var editInfor by remember { mutableStateOf(false) }
+        //=====================1 Hàm riêng========================
+        inforItem("name",editInfor)
+        inforItem("phone",editInfor)
+        inforItem("email",editInfor)
+        inforItem("pass",editInfor)
+        //========================================================
+        Spacer(modifier = Modifier.weight(1f))
+        Button(
+            onClick = {editInfor = !editInfor},
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally),
+            shape = RoundedCornerShape(12.dp), // Bo góc
+            colors = ButtonDefaults.buttonColors(
+                containerColor  = Color(android.graphics.Color.parseColor("#D6D183"))
+            ) // Đổi màu nền
+        ) {
+            Row {
+                Text(
+                    text = if(editInfor) "Lưu" else "Chỉnh sửa thông tin",
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(end = 5.dp)
+                )
+                Icon(
+                    imageVector = if(editInfor) Icons.Default.Done else Icons.Default.Create,
+                    contentDescription = "icon",
+                )
+            }
+        }
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun inforItem(title: String, editInfor: Boolean){
@@ -115,108 +201,3 @@ fun inforItem(title: String, editInfor: Boolean){
 }
 
 
-@Composable
-fun inforLayout(){
-    Column {
-        Spacer(modifier = Modifier.weight(0.5f))
-        Box(
-            modifier = Modifier.fillMaxWidth(),
-            contentAlignment = Alignment.Center
-            ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_logo), // Ảnh từ drawable
-                contentDescription = "Logo",
-                modifier = Modifier.size(150.dp) // Đặt kích thước ảnh
-                    .clip(CircleShape)
-                    .border(2.dp, Color.Black, CircleShape)
-            )
-            IconButton(
-                onClick = {},
-                modifier = Modifier
-                    .offset(x = 55.dp, y = 45.dp) // Di chuyển toàn bộ IconButton
-                ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_camera), // Ảnh từ drawable
-                    contentDescription = "icon",
-                    modifier = Modifier
-                        .size(27.dp)
-                        .clip(CircleShape)
-                        .border(1.dp, Color.Black, CircleShape)
-                        .background(Color.White)
-                )
-            }
-
-        }
-        Spacer(modifier = Modifier.weight(0.5f))
-        Text(
-            text = "Xin chào ABC!",
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
-        )
-        var editInfor by remember { mutableStateOf(false) }
-        //=====================1 Hàm riêng========================
-        inforItem("name",editInfor)
-        inforItem("phone",editInfor)
-        inforItem("email",editInfor)
-        inforItem("pass",editInfor)
-        //========================================================
-        Spacer(modifier = Modifier.weight(1f))
-        Button(
-            onClick = {editInfor = !editInfor},
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally),
-            shape = RoundedCornerShape(12.dp), // Bo góc
-            colors = ButtonDefaults.buttonColors(
-                containerColor  = Color(android.graphics.Color.parseColor("#D6D183"))
-            ) // Đổi màu nền
-        ) {
-            Row {
-                Text(
-                    text = if(editInfor) "Lưu" else "Chỉnh sửa thông tin",
-                    fontSize = 20.sp,
-                    modifier = Modifier.padding(end = 5.dp)
-                )
-                Icon(
-                    imageVector = if(editInfor) Icons.Default.Done else Icons.Default.Create,
-                    contentDescription = "icon",
-                )
-            }
-        }
-    }
-}
-
-@Preview (showBackground = true)
-@Composable
-fun inforScreen() {
-    Column (
-        modifier = Modifier.fillMaxSize()
-            .padding(vertical = 30.dp, horizontal = 20.dp)
-    ){
-        Row(
-            modifier = Modifier.padding(bottom = 25.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            IconButton(onClick = {}) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Back", // Mô tả để hỗ trợ truy cập
-                    tint = Color.Black // Màu của icon
-                )
-            }
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = "Thông báo",
-                fontSize = 25.sp
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Image(
-                painter = painterResource(id = R.drawable.ic_logo),
-                contentDescription = "Logo",
-                modifier = Modifier.size(70.dp) // Tuỳ chỉnh kích thước
-            )
-        }
-//        inforLayout("ABC")
-            inforLayout()
-    }
-}

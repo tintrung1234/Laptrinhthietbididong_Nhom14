@@ -31,6 +31,26 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 
+@Preview (showBackground = true)
+@Composable
+fun notifyScreen(){
+    Column (
+        modifier = Modifier.fillMaxSize()
+            .padding(vertical = 30.dp, horizontal = 20.dp)
+    ){
+        topLayout("Thông báo", { onclick() })
+        LazyColumn(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            items(20){
+                i -> notiItem()
+            }
+        }
+    }
+}
+
+private fun onclick(){}
+
 @Composable
 fun notiItem(){
     Column(
@@ -73,44 +93,4 @@ fun notiItem(){
         }
     }
     Spacer(modifier = Modifier.padding(bottom = 10.dp))
-}
-
-@Preview (showBackground = true)
-@Composable
-fun notifyScreen(){
-    Column (
-        modifier = Modifier.fillMaxSize()
-            .padding(vertical = 30.dp, horizontal = 20.dp)
-    ){
-        Row(
-            modifier = Modifier.padding(bottom = 25.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            IconButton(onClick = {}) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Back", // Mô tả để hỗ trợ truy cập
-                    tint = Color.Black // Màu của icon
-                )
-            }
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = "Thông báo",
-                fontSize = 25.sp
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Image(
-                painter = painterResource(id = R.drawable.ic_logo),
-                contentDescription = "Logo",
-                modifier = Modifier.size(70.dp) // Tuỳ chỉnh kích thước
-            )
-        }
-        LazyColumn(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            items(20){
-                i -> notiItem()
-            }
-        }
-    }
 }
