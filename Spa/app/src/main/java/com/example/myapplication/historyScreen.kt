@@ -151,13 +151,3 @@ fun itemServiceHistory(img: Int, name: String, costSale: Float, cost: Float){
         }
     }
 }
-
-@Preview (showBackground = true)
-@Composable
-fun test(){
-    Column (
-        modifier = Modifier.fillMaxSize()
-    ){
-
-    }
-}
