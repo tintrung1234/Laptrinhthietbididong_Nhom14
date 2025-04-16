@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="440eb64b-72d2-410f-9f05-d3e04356b5b6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../OwerApp/app/src/main/java/com/example/spa_ower_app/CheckStateOrder.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../OwerApp/app/src/main/java/com/example/spa_ower_app/ChiTietLichHen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../OwerApp/app/src/main/java/com/example/spa_ower_app/DetailServiceScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../OwerApp/app/src/main/java/com/example/spa_ower_app/DoanhThu.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../OwerApp/app/src/main/java/com/example/spa_ower_app/HistoryScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../OwerApp/app/src/main/java/com/example/spa_ower_app/InforScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../OwerApp/app/src/main/java/com/example/spa_ower_app/MenuBar.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../OwerApp/app/src/main/java/com/example/spa_ower_app/NotifyScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../OwerApp/app/src/main/java/com/example/spa_ower_app/ServiceScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../OwerApp/app/src/main/java/com/example/spa_ower_app/TopLayout.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../OwerApp/app/src/main/java/com/example/spa_ower_app/TrangChu.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../OwerApp/app/src/main/java/com/example/spa_ower_app/TrangDanhGia.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../OwerApp/app/src/main/java/com/example/spa_ower_app/TrangLienHe.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../OwerApp/app/src/main/java/com/example/spa_ower_app/TrangMaGiamGia.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../OwerApp/app/src/main/res/drawable/chart_doanhthu.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../OwerApp/app/src/main/res/drawable/dichvu_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../OwerApp/app/src/main/res/drawable/ic_launcher_background.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../OwerApp/app/src/main/res/drawable/ic_launcher_foreground.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/spa_app/CheckStateOrder.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/spa_app/ChiTietLichHen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/spa_app/DetailServiceScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/spa_app/HistoryScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/spa_app/InforScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/spa_app/MainActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/spa_app/MenuBar.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/spa_app/NotifyModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/spa_app/NotifyScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/spa_app/PaymentScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/spa_app/ServiceScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/spa_app/TopLayout.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/spa_app/TrangChu.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/spa_app/TrangDanhGia.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/spa_app/TrangDatLich.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/spa_app/TrangLienHe.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/spa_app/TrangMaGiamGia.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/.idea/deploymentTargetSelector.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/.idea/kotlinc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/.idea/migrations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/build.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/google-services.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/androidTest/java/com/example/spa_app/ExampleInstrumentedTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/java/com/example/spa_app/MainActivity.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/java/com/example/spa_app/SuaDichVu.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/java/com/example/spa_app/ThemDichVu.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/java/com/example/spa_app/TrangDanhGia.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/java/com/example/spa_app/TrangDatLich.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/java/com/example/spa_app/TrangLienHe.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/java/com/example/spa_app/TrangMaGiamGia.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/java/com/example/spa_app/ui/theme/Color.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/java/com/example/spa_app/ui/theme/Theme.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/java/com/example/spa_app/ui/theme/Type.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/attach_file.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/banner_trangchu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/doi_ngu_bs1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/emojione_money_bag.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/emojione_nail_polish.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/fluent_color_image_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/foundation_burst_sale.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/fxemoji_hourglass.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/fxemoji_note.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/group2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/ic_baseline_save_all.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/ic_launcher_background.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/ic_launcher_foreground.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/icon_dat_lich.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/icon_lich_su.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/icon_park_view_list.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/icon_tai_khoan.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/icon_trang_chu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/image13.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/image14.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/image20.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/image21.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/important.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/khuyen_mai1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/khuyen_mai2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/khuyen_mai4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/ktv1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/ktv2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/ktv3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/line_md_bell_loop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/line_md_chat_filled.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/location.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/logo7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/map_spa.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/mdi_voucher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/noto_label.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/ph_magnifying_glass_thin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/solar_calendar_bold.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/solar_cosmetic_bold.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/star.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/star_filled.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/tdesign_user_filled.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/twemoji_girl_light_skin_tone.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/twemoji_man_getting_massage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/vector4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/vector5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/drawable/vector_pen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/mipmap-anydpi/ic_launcher.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/mipmap-anydpi/ic_launcher_round.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/mipmap-hdpi/ic_launcher.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/mipmap-mdpi/ic_launcher.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/mipmap-xhdpi/ic_launcher.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/values/colors.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/values/strings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/values/themes.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/xml/backup_rules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/main/res/xml/data_extraction_rules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/app/src/test/java/com/example/spa_app/ExampleUnitTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/build.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/gradle/libs.versions.toml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Code/settings.gradle.kts" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=PhysicalDevice, isTemplate=false, identifier=serial=R5CWA1J677D)]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Class" />
+        <option value="Kotlin File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;tintrung1234&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/tintrung1234/Laptrinhthietbididong_Nhom15.git&quot;,
+    &quot;accountId&quot;: &quot;04f04d6a-1156-4b1c-8eaf-3c43a857cc33&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2uQYdhUCL3T1wNloScvv6A3z1qF" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Android App.app.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "git-widget-placeholder": "tin",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Study/HK6/Mobile/Project/OwerApp",
+    "settings.editor.selected.configurable": "editor.preferences.completion"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Study\HK6\Mobile\Project\UserApp\app\src\main\java\com\example\spa_app" />
+      <recent name="D:\Study\HK6\Mobile\Project\Code\app\src\main\java\com\example\spa_app" />
+      <recent name="D:\Study\HK6\Mobile\Project\Code\Code\app\src\main\res\drawable" />
+      <recent name="D:\Study\HK6\Mobile\Project\Laptrinhthietbididong_Nhom15\app\src\main\res\drawable" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Study\HK6\Mobile\Project\Code\app\src\main\res\drawable" />
+      <recent name="D:\Study\HK6\Mobile\Project\Code\app\src\main\java\com\example\spa_app" />
+      <recent name="D:\Study\HK6\Mobile\Project\Code\Code\app" />
+      <recent name="D:\Study\HK6\Mobile\Project\Code\Code\app\src\main\res\drawable" />
+      <recent name="D:\Study\HK6\Mobile\Project\Laptrinhthietbididong_Nhom15\app\src\main\res\drawable" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="Spa_app.app" />
+      <option name="ANDROID_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="ALLOW_ASSUME_VERIFIED" value="false" />
+      <option name="CLEAR_APP_STORAGE" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="RESTORE_ENABLED" value="false" />
+      <option name="RESTORE_FILE" value="" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Hybrid>
+      <Java>
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Java>
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="440eb64b-72d2-410f-9f05-d3e04356b5b6" name="Changes" comment="" />
+      <created>1742182353552</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1742182353552</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="play_dynamic_filters_status">
+    <option name="appIdToCheckInfo">
+      <map>
+        <entry key="com.example.spa_app">
+          <value>
+            <CheckInfo lastCheckTimestamp="1742285255806" />
+          </value>
+        </entry>
+        <entry key="com.example.spa_app.test">
+          <value>
+            <CheckInfo lastCheckTimestamp="1742285255806" />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
