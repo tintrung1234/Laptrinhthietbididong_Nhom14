@@ -1,2 +1,2 @@
-# Laptrinhthietbididong_Nhom15
-Nơi lưu lại tiến độ bài tập nhóm của nhóm 15
+# Laptrinhthietbididong_Nhom14
+Nơi lưu lại tiến độ bài tập nhóm của nhóm 14
