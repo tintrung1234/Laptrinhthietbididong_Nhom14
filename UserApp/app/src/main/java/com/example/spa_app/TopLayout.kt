@@ -36,7 +36,7 @@ fun TopLayout(title: String, onclick: () -> Unit) {
                 .fillMaxWidth()
         ) {
             Text(
-                "Mã giảm giá",
+                title,
                 modifier = Modifier.align(Alignment.Center),
                 fontSize = 28.sp
             )

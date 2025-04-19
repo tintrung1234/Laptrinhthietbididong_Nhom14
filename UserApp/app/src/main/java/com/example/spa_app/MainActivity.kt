@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Controller() {
     val navConTroller = rememberNavController()
-    NavHost(navController = navConTroller, startDestination = "TrangChu") {
+    NavHost(navController = navConTroller, startDestination = "DangNhapDangKy") {
         composable("TrangChu") { TrangChu(navConTroller) }
         composable("DatLich") { Trangdatlich(navConTroller) }
         composable("DanhGia") { ReviewPage(navConTroller) }
@@ -34,6 +34,7 @@ fun Controller() {
         composable("ChiTietDichVu") { DetailServiceScreen(navConTroller) }
         composable("LichSu") { HistoryScreen(navConTroller) }
         composable("MaGiamGia") { TrangMaGiamGia(navConTroller) }
+        composable("DangNhapDangKy") { LoginRegisterScreen(navConTroller) }
         composable("LienHe") { TrangLienHe(navConTroller) }
         composable("ChiTietLichHen") { AppointmentDetailScreen(navConTroller) }
         composable("CacGoiDichVu") { ServiceScreen(navConTroller) }

@@ -67,8 +67,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.spa_ower_app.SuaDichVu
-import com.example.spa_ower_app.ThemDichVu
+import com.example.spa_ower_app.ThemSuaDichVu
 import java.time.format.TextStyle
 
 
@@ -96,16 +95,15 @@ fun Controller() {
         composable("LienHe") { TrangLienHe(navConTroller) }
         composable("CacGoiDichVu") { ServiceScreen(navConTroller) }
         composable("TaiKhoan") { InforScreen(navConTroller) }
-        composable("ThemDichVu") { ThemDichVu(navConTroller) }
+        composable("ThemDichVu") { ThemSuaDichVu(navConTroller) }
         composable("DanhGia") { ReviewPage(navConTroller) }
+        composable("DangNhapDangKy") { LoginRegisterScreen(navConTroller) }
         composable("MaGiamGia") { TrangMaGiamGia(navConTroller) }
-        composable("SuaDichVu") { SuaDichVu(navConTroller) }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    val navController = rememberNavController()
-    RevenueScreen(navController)
+    Controller()
 }

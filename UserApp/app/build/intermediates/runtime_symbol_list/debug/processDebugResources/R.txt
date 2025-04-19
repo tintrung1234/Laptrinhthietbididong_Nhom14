@@ -143,6 +143,7 @@ int drawable icon_lich_su 0x7f040030
 int drawable icon_park_view_list 0x7f040031
 int drawable icon_tai_khoan 0x7f040032
 int drawable icon_trang_chu 0x7f040033
+int drawable iconpasseye 0x7f040062
 int drawable image10 0x7f040034
 int drawable image13 0x7f040035
 int drawable image14 0x7f040036
