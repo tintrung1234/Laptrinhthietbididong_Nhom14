@@ -55,6 +55,7 @@ drawable nimbus_cash
 drawable noto_label
 drawable payments
 drawable ph_magnifying_glass_thin
+drawable signout_ic
 drawable solar_calendar_bold
 drawable solar_cosmetic_bold
 drawable star
@@ -68,6 +69,7 @@ drawable vector_pen
 mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name
+string default_web_client_id
 string gcm_defaultSenderId
 string google_api_key
 string google_app_id

@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -46,24 +48,27 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 
 @Composable
 fun InforScreen(navController: NavController) {
-    Column (
-        modifier = Modifier.fillMaxSize()
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
             .padding(vertical = 30.dp, horizontal = 20.dp)
-    ){
+    ) {
         TopLayout("Thông tin cá nhân", { navController.navigate("TrangChu") })
 //        inforLayout("ABC")
-        inforLayout()
+        val viewModel: AuthViewModel = viewModel()
+        inforLayout(navController, viewModel)
     }
 }
 
-private fun onclick(){}
+private fun onclick() {}
 
 @Composable
-fun inforLayout(){
+fun inforLayout(navController: NavController, viewModel: AuthViewModel = viewModel()) {
     Column {
         Spacer(modifier = Modifier.weight(0.5f))
         Box(
@@ -73,7 +78,8 @@ fun inforLayout(){
             Image(
                 painter = painterResource(id = R.drawable.ic_logo), // Ảnh từ drawable
                 contentDescription = "Logo",
-                modifier = Modifier.size(150.dp) // Đặt kích thước ảnh
+                modifier = Modifier
+                    .size(150.dp) // Đặt kích thước ảnh
                     .clip(CircleShape)
                     .border(2.dp, Color.Black, CircleShape)
             )
@@ -103,60 +109,91 @@ fun inforLayout(){
         )
         var editInfor by remember { mutableStateOf(false) }
         //=====================1 Hàm riêng========================
-        inforItem("name",editInfor)
-        inforItem("phone",editInfor)
-        inforItem("email",editInfor)
-        inforItem("pass",editInfor)
+        inforItem("name", editInfor)
+        inforItem("phone", editInfor)
+        inforItem("email", editInfor)
+        inforItem("pass", editInfor)
         //========================================================
         Spacer(modifier = Modifier.weight(1f))
-        Button(
-            onClick = {editInfor = !editInfor},
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally),
-            shape = RoundedCornerShape(12.dp), // Bo góc
-            colors = ButtonDefaults.buttonColors(
-                containerColor  = Color(android.graphics.Color.parseColor("#D6D183"))
-            ) // Đổi màu nền
-        ) {
-            Row {
-                Text(
-                    text = if(editInfor) "Lưu" else "Chỉnh sửa thông tin",
-                    fontSize = 20.sp,
-                    modifier = Modifier.padding(end = 5.dp)
-                )
-                Icon(
-                    imageVector = if(editInfor) Icons.Default.Done else Icons.Default.Create,
-                    contentDescription = "icon",
-                )
+        Row {
+
+            Button(
+                onClick = { editInfor = !editInfor },
+                modifier = Modifier
+//                .align(Alignment.CenterHorizontally)
+                ,
+                shape = RoundedCornerShape(12.dp), // Bo góc
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(android.graphics.Color.parseColor("#D6D183"))
+                ) // Đổi màu nền
+            ) {
+                Row {
+                    Text(
+                        text = if (editInfor) "Lưu" else "Chỉnh sửa thông tin",
+                        fontSize = 20.sp,
+                        modifier = Modifier.padding(end = 5.dp)
+                    )
+                    Icon(
+                        imageVector = if (editInfor) Icons.Default.Done else Icons.Default.Create,
+                        contentDescription = "icon",
+                    )
+                }
+            }
+
+            Spacer(Modifier.width(10.dp))
+
+            Button(
+                onClick = {
+                    viewModel.signOut()
+                    navController.navigate("TrangChu")
+                },
+                modifier = Modifier
+//                .align(Alignment.CenterHorizontally)
+                ,
+                shape = RoundedCornerShape(12.dp), // Bo góc
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(android.graphics.Color.parseColor("#D6D183"))
+                ),
+                contentPadding = PaddingValues(0.dp)
+            ) {
+                Row {
+                    Icon(
+                        painter = painterResource(R.drawable.signout_ic),
+                        modifier = Modifier.size(20.dp),
+                        contentDescription = "icon",
+                        tint = Color.White
+                    )
+                }
             }
         }
+
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun inforItem(title: String, editInfor: Boolean){
+fun inforItem(title: String, editInfor: Boolean) {
     Row(
         modifier = Modifier.padding(top = 20.dp, bottom = 2.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
 
-            imageVector = when(title){
-                "name"-> Icons.Default.AccountCircle
-                "phone"-> Icons.Default.Phone
-                "email"-> Icons.Default.Email
-                "pass"-> Icons.Default.Lock
+            imageVector = when (title) {
+                "name" -> Icons.Default.AccountCircle
+                "phone" -> Icons.Default.Phone
+                "email" -> Icons.Default.Email
+                "pass" -> Icons.Default.Lock
                 else -> Icons.Default.AccountCircle
             },
             contentDescription = "icon",
         )
         Text(
-            text = when(title){
-                "name"-> "Họ và tên"
-                "phone"-> "Số điện thoại"
-                "email"-> "Email"
-                "pass"-> "Mật khẩu"
+            text = when (title) {
+                "name" -> "Họ và tên"
+                "phone" -> "Số điện thoại"
+                "email" -> "Email"
+                "pass" -> "Mật khẩu"
                 else -> ""
             },
             fontWeight = FontWeight.Bold,
@@ -165,16 +202,20 @@ fun inforItem(title: String, editInfor: Boolean){
         )
     }
     var passwordVisible by remember { mutableStateOf(false) }
-    var inforName by remember { mutableStateOf(when(title){
-        "name"-> "Nguyễn Văn A"
-        "phone"-> "099123456"
-        "email"-> "abc@gmail.com"
-        "pass"-> "password"
-        else -> ""
-    }) }
+    var inforName by remember {
+        mutableStateOf(
+            when (title) {
+                "name" -> "Nguyễn Văn A"
+                "phone" -> "099123456"
+                "email" -> "abc@gmail.com"
+                "pass" -> "password"
+                else -> ""
+            }
+        )
+    }
     TextField(
         value = inforName,
-        onValueChange = {inforName = it},
+        onValueChange = { inforName = it },
         enabled = editInfor,
         colors = TextFieldDefaults.textFieldColors(
             containerColor = Color(android.graphics.Color.parseColor("#E0E0E0")), // Màu nền khi bị disabled
@@ -186,15 +227,15 @@ fun inforItem(title: String, editInfor: Boolean){
         modifier = Modifier
             .fillMaxWidth()
             .height(50.dp),
-        visualTransformation = if (title=="pass" && !passwordVisible)  PasswordVisualTransformation() else VisualTransformation.None,
-        trailingIcon = if (title == "pass"){
+        visualTransformation = if (title == "pass" && !passwordVisible) PasswordVisualTransformation() else VisualTransformation.None,
+        trailingIcon = if (title == "pass") {
             {
                 val icon = Icons.Default.Lock
                 IconButton(onClick = { passwordVisible = !passwordVisible }) {
                     Icon(imageVector = icon, contentDescription = "Toggle Password Visibility")
                 }
             }
-        }else null
+        } else null
     )
 }
 

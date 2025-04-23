@@ -38,24 +38,25 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-fun DetailServiceScreen(navController: NavController){
+fun DetailServiceScreen(navController: NavController) {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .padding(vertical = 30.dp, horizontal = 20.dp)
     ) {
-        TopLayout("Dịch vụ", {navController.navigate("TrangChu")})
+        TopLayout("Dịch vụ", { navController.navigate("TrangChu") })
         Box(
             modifier = Modifier.fillMaxSize()
-        ){
-            LazyColumn (
+        ) {
+            LazyColumn(
                 modifier = Modifier.fillMaxSize()
-            ){
+            ) {
                 item { imageSection() }
                 item { inforService() }
                 item { descService() }
             }
             Button(
-                onClick = {navController.navigate("TrangDatLich")},
+                onClick = { navController.navigate("TrangDatLich") },
                 shape = RoundedCornerShape(7.dp),
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
@@ -78,14 +79,14 @@ fun DetailServiceScreen(navController: NavController){
 }
 
 @Composable
-fun imageSection(){
-    Column (
+fun imageSection() {
+    Column(
         modifier = Modifier.fillMaxWidth()
-    ){
+    ) {
         Image(
             painter = painterResource(id = R.drawable.khuyen_mai1),
             contentDescription = "",
-            contentScale = ContentScale.Crop, // hoặc Fit nếu muốn ảnh không bị cắt
+            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
@@ -93,34 +94,24 @@ fun imageSection(){
         )
         Spacer(modifier = Modifier.height(7.dp))
         LazyRow {
-            item { Image(
-                painter = painterResource(id = R.drawable.khuyen_mai2),
-                contentDescription = "",
-                modifier = Modifier.padding(end = 5.dp)
-            ) }
-            item { Image(
-                painter = painterResource(id = R.drawable.khuyen_mai2),
-                contentDescription = "",
-                modifier = Modifier.padding(end = 5.dp)
-            ) }
-            item { Image(
-                painter = painterResource(id = R.drawable.khuyen_mai2),
-                contentDescription = "",
-                modifier = Modifier.padding(end = 5.dp)
-            ) }
-            item { Image(
-                painter = painterResource(id = R.drawable.khuyen_mai2),
-                contentDescription = "",
-                modifier = Modifier.padding(end = 5.dp)
-            ) }
+            repeat(5) {
+                item {
+                    Image(
+                        painter = painterResource(id = R.drawable.khuyen_mai2),
+                        contentDescription = "",
+                        modifier = Modifier.padding(end = 5.dp)
+                    )
+                }
+            }
         }
     }
 }
 
 @Composable
-fun inforService(){
+fun inforService() {
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(vertical = 13.dp),
         verticalArrangement = Arrangement.spacedBy(5.dp),
     ) {
@@ -133,7 +124,8 @@ fun inforService(){
             modifier = Modifier.fillMaxWidth()
         ) {
             Row(
-                verticalAlignment = Alignment.CenterVertically){
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(
                     text = "Đánh giá: 4.8",
                     color = Color(0xFF818181)
@@ -147,7 +139,8 @@ fun inforService(){
             }
             Spacer(modifier = Modifier.width(20.dp))
             Row(
-                verticalAlignment = Alignment.CenterVertically){
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Icon(
                     painter = painterResource(R.drawable.image10),
                     contentDescription = "",
@@ -188,7 +181,7 @@ fun inforService(){
 }
 
 @Composable
-fun descService(){
+fun descService() {
     Card(
         modifier = Modifier.fillMaxSize(),
         colors = CardDefaults.cardColors(

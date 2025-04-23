@@ -1,6 +1,7 @@
 package com.example.spa_app
 
 import android.os.Bundle
+import android.util.Patterns
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -29,6 +30,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 
 @Composable
@@ -43,7 +45,7 @@ fun LoginRegisterScreen(navController: NavController) {
     ) {
         Spacer(Modifier.height(15.dp))
         Button(
-            onClick = {navController.navigate("TrangChu")},
+            onClick = { navController.navigate("TrangChu") },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFFD9D9D9).copy(
                     alpha = 0.79f
@@ -96,36 +98,61 @@ fun LoginRegisterScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        val viewModel: AuthViewModel = viewModel()
         if (isLogin) {
-            LoginForm()
+            LoginForm(navController, viewModel)
         } else {
-            RegisterForm()
+            RegisterForm(navController, viewModel)
         }
     }
 }
 
+fun isValidEmail(email: String): Boolean {
+    return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+}
 
+fun isValidPassword(password: String): Boolean {
+    // Ví dụ: ít nhất 6 ký tự
+    return password.length >= 6
+}
+
+fun isValidPhoneNumber(phone: String): Boolean {
+    val regex = Regex("^0\\d{9}$") // Bắt đầu bằng 0, theo sau là đúng 9 số
+    return regex.matches(phone) && phone.isNotEmpty()
+}
+
+fun isValidName(name: String): Boolean {
+    return name.trim().isNotEmpty()
+}
 
 @Composable
-fun LoginForm() {
-    var username by remember { mutableStateOf("") }
+fun LoginForm(navController: NavController, viewModel: AuthViewModel = viewModel()) {
+    var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
+    var error by remember { mutableStateOf<String?>(null) }
 
     Column {
         OutlinedTextField(
-            value = username,
-            onValueChange = { username = it },
-            label = { Text("Tên đăng nhập") },
+            value = email,
+            onValueChange = {
+                email = it
+                error = null
+            },
+            label = { Text("Nhập Email") },
             leadingIcon = { Icon(Icons.Default.Person, contentDescription = null) },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            isError = error?.contains("Email") == true
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
         OutlinedTextField(
             value = password,
-            onValueChange = { password = it },
+            onValueChange = {
+                password = it
+                error = null
+            },
             label = { Text("Mật khẩu") },
             leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
             trailingIcon = {
@@ -137,13 +164,29 @@ fun LoginForm() {
                 }
             },
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            isError = error?.contains("Mật khẩu") == true
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(14.dp))
+
+        if (error != null) {
+            Text(text = error!!, color = Color.Red, modifier = Modifier.padding(top = 4.dp))
+        }
+
+        Spacer(modifier = Modifier.height(4.dp))
 
         Button(
-            onClick = { /* Đăng nhập logic */ },
+            onClick = {
+                if (!isValidEmail(email)) {
+                    error = "Email không hợp lệ"
+                } else if (!isValidPassword(password)) {
+                    error = "Mật khẩu phải từ 6 ký tự trở lên"
+                } else {
+                    viewModel.signIn(email, password)
+                    navController.navigate("TrangChu")
+                }
+            },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(Color(0xFFEFDCA9))
         ) {
@@ -163,49 +206,66 @@ fun LoginForm() {
 }
 
 @Composable
-fun RegisterForm() {
+fun RegisterForm(navController: NavController, viewModel: AuthViewModel = viewModel()) {
     var username by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
+    var error by remember { mutableStateOf<String?>(null) }
+    var message by remember { mutableStateOf<String?>(null) }
 
     Column {
         OutlinedTextField(
             value = username,
-            onValueChange = { username = it },
+            onValueChange = {
+                username = it
+                error = null
+            },
             label = { Text("Tên đăng nhập *") },
             leadingIcon = { Icon(Icons.Default.Person, contentDescription = null) },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            isError = error?.contains("Tên") == true
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
         OutlinedTextField(
             value = phone,
-            onValueChange = { phone = it },
+            onValueChange = {
+                phone = it
+                error = null
+            },
             label = { Text("Số điện thoại *") },
             leadingIcon = { Icon(Icons.Default.Phone, contentDescription = null) },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Phone),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            isError = error?.contains("Số điện thoại") == true
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
         OutlinedTextField(
             value = email,
-            onValueChange = { email = it },
+            onValueChange = {
+                email = it
+                error = null
+            },
             label = { Text("Email") },
             leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            isError = error?.contains("Email") == true
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
         OutlinedTextField(
             value = password,
-            onValueChange = { password = it },
+            onValueChange = {
+                password = it
+                error = null
+            },
             label = { Text("Mật khẩu *") },
             leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
             trailingIcon = {
@@ -218,13 +278,37 @@ fun RegisterForm() {
                 }
             },
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            isError = error?.contains("Mật khẩu") == true
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(14.dp))
+
+        if (error != null) {
+            Text(text = error!!, color = Color.Red, modifier = Modifier.padding(top = 4.dp))
+        }
+
+        if (message != null) {
+            Text(text = message!!, color = Color.Green, modifier = Modifier.padding(top = 4.dp))
+        }
+
+        Spacer(modifier = Modifier.height(4.dp))
 
         Button(
-            onClick = { /* Đăng ký logic */ },
+            onClick = {
+                if (!isValidName(username)) {
+                    error = "Tên không được để trống"
+                } else if (!isValidPhoneNumber(phone)) {
+                    error = "Số điện thoại không hợp lệ"
+                } else if (!isValidEmail(email)) {
+                    error = "Email không hợp lệ"
+                } else if (!isValidPassword(password)) {
+                    error = "Mật khẩu phải từ 6 ký tự trở lên"
+                } else {
+                    viewModel.signUpWithDetails(email, password, username, phone)
+                    message = "Đăng ký tài khoản thành công"
+                }
+            },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(Color(0xFFEFDCA9))
         ) {

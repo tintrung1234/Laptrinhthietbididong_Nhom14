@@ -42,6 +42,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 
 @Composable
@@ -78,6 +79,7 @@ fun TrangChu(navController: NavController) {
                             .offset(y = 30.dp),
                         horizontalArrangement = Arrangement.Center
                     ) {
+
                         //Search bar
                         Row(
                             modifier = Modifier
@@ -368,6 +370,7 @@ fun TrangChu(navController: NavController) {
         }
 
         //Menu
-        MenuBar(navController)
+        val viewModel: AuthViewModel = viewModel()
+        MenuBar(navController, viewModel)
     }
 }
