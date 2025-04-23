@@ -40,7 +40,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -105,10 +107,10 @@ fun inforLayout(){
         )
         var editInfor by remember { mutableStateOf(false) }
         //=====================1 Hàm riêng========================
-        inforItem("name",editInfor)
-        inforItem("phone",editInfor)
-        inforItem("email",editInfor)
-        inforItem("pass",editInfor)
+        inforItem(Icons.Default.AccountCircle,"Họ và tên",false,editInfor, "Nguyễn Văn A")
+        inforItem(Icons.Default.Phone,"Số điện thoại",false,editInfor, "092134xxxx")
+        inforItem(Icons.Default.Email,"Email",false,editInfor, "NguyenVanA@gmail.com")
+        inforItem(Icons.Default.Lock,"Mật khẩu",true,editInfor, "password")
         //========================================================
         Spacer(modifier = Modifier.weight(1f))
         Button(
@@ -137,59 +139,41 @@ fun inforLayout(){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun inforItem(title: String, editInfor: Boolean){
+fun inforItem(icon: ImageVector, title: String,  isPass: Boolean, editInfor: Boolean, placeholder: String = ""){
     Row(
         modifier = Modifier.padding(top = 20.dp, bottom = 2.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
 
-            imageVector = when(title){
-                "name"-> Icons.Default.AccountCircle
-                "phone"-> Icons.Default.Phone
-                "email"-> Icons.Default.Email
-                "pass"-> Icons.Default.Lock
-                else -> Icons.Default.AccountCircle
-            },
+            imageVector = icon,
             contentDescription = "icon",
         )
         Text(
-            text = when(title){
-                "name"-> "Họ và tên"
-                "phone"-> "Số điện thoại"
-                "email"-> "Email"
-                "pass"-> "Mật khẩu"
-                else -> ""
-            },
+            text = title,
             fontWeight = FontWeight.Bold,
             fontSize = 17.sp,
             modifier = Modifier.padding(start = 5.dp)
         )
     }
     var passwordVisible by remember { mutableStateOf(false) }
-    var inforName by remember { mutableStateOf(when(title){
-        "name"-> "Nguyễn Văn A"
-        "phone"-> "099123456"
-        "email"-> "abc@gmail.com"
-        "pass"-> "password"
-        else -> ""
-    }) }
+    var inforName by remember { mutableStateOf(placeholder)}
     TextField(
         value = inforName,
         onValueChange = {inforName = it},
         enabled = editInfor,
         colors = TextFieldDefaults.textFieldColors(
             containerColor = Color(android.graphics.Color.parseColor("#E0E0E0")), // Màu nền khi bị disabled
-            disabledIndicatorColor = Color.Transparent // Ẩn viền khi bị disabled
-
+            disabledIndicatorColor = Color.Transparent, // Ẩn viền khi bị disabled
+            unfocusedIndicatorColor = Color.Transparent, // khi chưa focus
         ),
         textStyle = TextStyle(fontSize = 16.sp),
         shape = RoundedCornerShape(12.dp), // Bo góc
         modifier = Modifier
             .fillMaxWidth()
             .height(50.dp),
-        visualTransformation = if (title=="pass" && !passwordVisible)  PasswordVisualTransformation() else VisualTransformation.None,
-        trailingIcon = if (title == "pass"){
+        visualTransformation = if (isPass && !passwordVisible)  PasswordVisualTransformation() else VisualTransformation.None,
+        trailingIcon = if (isPass){
             {
                 val icon = Icons.Default.Lock
                 IconButton(onClick = { passwordVisible = !passwordVisible }) {
