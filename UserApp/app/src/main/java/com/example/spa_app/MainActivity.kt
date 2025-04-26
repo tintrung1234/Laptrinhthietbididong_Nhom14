@@ -36,14 +36,14 @@ fun Controller() {
     val servicesViewModel: ServiceViewModel = viewModel()
     val staffsViewModel: StaffViewModel = viewModel()
     val categoryViewModel: CategoryViewModel = viewModel()
-
+    val appointmentViewModel: AppointmentViewModel = viewModel()
     NavHost(navController = navConTroller, startDestination = "TrangChu") {
         composable("TrangChu") { TrangChu(navConTroller, servicesViewModel, staffsViewModel) }
         composable("DatLich") { Trangdatlich(navConTroller) }
         composable("DanhGia") { ReviewPage(navConTroller) }
         composable("ThongBao") { NotifyScreen(navConTroller) }
         composable("ChiTietDichVu") { DetailServiceScreen(navConTroller) }
-        composable("LichSu") { HistoryScreen(navConTroller) }
+        composable("LichSu") { HistoryScreen(navConTroller,appointmentViewModel) }
         composable("MaGiamGia") { TrangMaGiamGia(navConTroller) }
         composable("DangNhapDangKy") { LoginRegisterScreen(navConTroller) }
         composable("LienHe") { TrangLienHe(navConTroller) }

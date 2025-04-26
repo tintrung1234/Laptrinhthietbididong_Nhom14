@@ -201,7 +201,6 @@ fun inforItem(title: String, editInfor: Boolean) {
             modifier = Modifier.padding(start = 5.dp)
         )
     }
-    var passwordVisible by remember { mutableStateOf(false) }
     var inforName by remember {
         mutableStateOf(
             when (title) {

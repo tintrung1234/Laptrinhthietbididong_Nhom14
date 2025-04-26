@@ -79,7 +79,7 @@ fun ServiceScreen(
             modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp))
-        { TopLayout("Dịch vụ",{navController.navigate("TrangChu")})}
+        { TopLayout("Dịch vụ",{navController.popBackStack()})}
         Card(
             modifier = Modifier.fillMaxSize()
                 .shadow(

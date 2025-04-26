@@ -8,14 +8,14 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 
 data class Appointment(
-    val UserId: String,
-    val StaffId: Int,
-    val ServicesId: Int,
-    val OrderDate: String,
-    val PickedDate: String,
-    val State: Boolean,
-    val TotalValues: Int,
-    val PaymentMethod: String,
+    val UserId: String = "",
+    val StaffId: Int = 0,
+    val ServicesId: Int = 0,
+    val OrderDate: String = "",
+    val PickedDate: String = "",
+    val State: Int = 0,
+    val TotalValues: Int = 0,
+    val PaymentMethod: Boolean = false,
 )
 class AppointmentViewModel: ViewModel() {
     private val db = FirebaseFirestore.getInstance()
