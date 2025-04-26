@@ -51,9 +51,9 @@ fun Controller() {
 //@Preview(showBackground = true)
 //@Composable
 //fun Preview() {
-////    Spa_appTheme {
+//    Spa_appTheme {
 ////        Controller()
-////    }
 //    val navConTroller = rememberNavController()
-//    InforScreen(navConTroller)
+//    LoginRegisterScreen(navConTroller)
+//    }
 //}

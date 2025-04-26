@@ -50,6 +50,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun InforScreen(navController: NavController) {
@@ -59,7 +61,6 @@ fun InforScreen(navController: NavController) {
             .padding(vertical = 30.dp, horizontal = 20.dp)
     ) {
         TopLayout("Thông tin cá nhân", { navController.navigate("TrangChu") })
-//        inforLayout("ABC")
         val viewModel: AuthViewModel = viewModel()
         inforLayout(navController, viewModel)
     }
@@ -69,27 +70,29 @@ private fun onclick() {}
 
 @Composable
 fun inforLayout(navController: NavController, viewModel: AuthViewModel = viewModel()) {
+    val currentUser = FirebaseAuth.getInstance().currentUser
+    val photoUrl = currentUser?.photoUrl
     Column {
-        Spacer(modifier = Modifier.weight(0.5f))
+        Spacer(modifier = Modifier.weight(0.2f))
         Box(
             modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.Center
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_logo), // Ảnh từ drawable
-                contentDescription = "Logo",
+            AsyncImage(
+                model = photoUrl?: R.drawable.ic_logo,
+                contentDescription = "User Avatar",
                 modifier = Modifier
-                    .size(150.dp) // Đặt kích thước ảnh
+                    .size(150.dp)
                     .clip(CircleShape)
                     .border(2.dp, Color.Black, CircleShape)
             )
             IconButton(
                 onClick = {},
                 modifier = Modifier
-                    .offset(x = 55.dp, y = 45.dp) // Di chuyển toàn bộ IconButton
+                    .offset(x = 55.dp, y = 45.dp)
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_camera), // Ảnh từ drawable
+                    painter = painterResource(id = R.drawable.ic_camera),
                     contentDescription = "icon",
                     modifier = Modifier
                         .size(27.dp)
@@ -102,7 +105,7 @@ fun inforLayout(navController: NavController, viewModel: AuthViewModel = viewMod
         }
         Spacer(modifier = Modifier.weight(0.5f))
         Text(
-            text = "Xin chào ABC!",
+            text = currentUser?.displayName ?: "Xin chào",
             modifier = Modifier.align(Alignment.CenterHorizontally),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
@@ -112,11 +115,9 @@ fun inforLayout(navController: NavController, viewModel: AuthViewModel = viewMod
         inforItem("name", editInfor)
         inforItem("phone", editInfor)
         inforItem("email", editInfor)
-        inforItem("pass", editInfor)
         //========================================================
         Spacer(modifier = Modifier.weight(1f))
         Row {
-
             Button(
                 onClick = { editInfor = !editInfor },
                 modifier = Modifier
@@ -173,6 +174,7 @@ fun inforLayout(navController: NavController, viewModel: AuthViewModel = viewMod
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun inforItem(title: String, editInfor: Boolean) {
+    val currentUser = FirebaseAuth.getInstance().currentUser
     Row(
         modifier = Modifier.padding(top = 20.dp, bottom = 2.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -183,7 +185,6 @@ fun inforItem(title: String, editInfor: Boolean) {
                 "name" -> Icons.Default.AccountCircle
                 "phone" -> Icons.Default.Phone
                 "email" -> Icons.Default.Email
-                "pass" -> Icons.Default.Lock
                 else -> Icons.Default.AccountCircle
             },
             contentDescription = "icon",
@@ -193,7 +194,6 @@ fun inforItem(title: String, editInfor: Boolean) {
                 "name" -> "Họ và tên"
                 "phone" -> "Số điện thoại"
                 "email" -> "Email"
-                "pass" -> "Mật khẩu"
                 else -> ""
             },
             fontWeight = FontWeight.Bold,
@@ -205,10 +205,9 @@ fun inforItem(title: String, editInfor: Boolean) {
     var inforName by remember {
         mutableStateOf(
             when (title) {
-                "name" -> "Nguyễn Văn A"
-                "phone" -> "099123456"
-                "email" -> "abc@gmail.com"
-                "pass" -> "password"
+                "name" -> currentUser?.displayName ?: ""
+                "phone" -> currentUser?.phoneNumber ?: ""
+                "email" -> currentUser?.email ?: ""
                 else -> ""
             }
         )
@@ -222,20 +221,11 @@ fun inforItem(title: String, editInfor: Boolean) {
             disabledIndicatorColor = Color.Transparent // Ẩn viền khi bị disabled
 
         ),
-        textStyle = TextStyle(fontSize = 16.sp),
+        textStyle = TextStyle(fontSize = 14.sp),
         shape = RoundedCornerShape(12.dp), // Bo góc
         modifier = Modifier
             .fillMaxWidth()
             .height(50.dp),
-        visualTransformation = if (title == "pass" && !passwordVisible) PasswordVisualTransformation() else VisualTransformation.None,
-        trailingIcon = if (title == "pass") {
-            {
-                val icon = Icons.Default.Lock
-                IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                    Icon(imageVector = icon, contentDescription = "Toggle Password Visibility")
-                }
-            }
-        } else null
     )
 }
 

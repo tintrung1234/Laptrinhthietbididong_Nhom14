@@ -142,6 +142,7 @@ drawable ic_call_answer_video_low
 drawable ic_call_decline
 drawable ic_call_decline_low
 drawable ic_camera
+drawable ic_google
 drawable ic_hot
 drawable ic_launcher_background
 drawable ic_launcher_foreground
@@ -364,6 +365,7 @@ string dropdown_menu
 string fallback_menu_item_copy_link
 string fallback_menu_item_open_in_browser
 string fallback_menu_item_share_link
+string firebase_database_url
 string gcm_defaultSenderId
 string google_api_key
 string google_app_id

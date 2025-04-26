@@ -1,13 +1,18 @@
 package com.example.spa_app
 
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -22,16 +27,26 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.auth
 
 @Composable
 fun LoginRegisterScreen(navController: NavController) {
@@ -40,69 +55,75 @@ fun LoginRegisterScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp)
             .background(color = Color.White)
     ) {
-        Spacer(Modifier.height(15.dp))
-        Button(
-            onClick = { navController.navigate("TrangChu") },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFD9D9D9).copy(
-                    alpha = 0.79f
-                )
-            ),
-            contentPadding = PaddingValues(0.dp),
-            modifier = Modifier.size(55.dp)
-        ) {
-            Icon(
-                painterResource(R.drawable.vector4),
-                contentDescription = null,
-                modifier = Modifier.size(23.dp, 19.dp),
-                tint = Color.Black
-            )
-        }
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        Image(
-            painter = painterResource(id = R.drawable.logo7),
-            contentDescription = "Logo",
+        Column(
             modifier = Modifier
-                .size(100.dp)
-                .align(Alignment.CenterHorizontally)
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        Row(
-            Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+                .fillMaxSize()
+                .padding(24.dp)
+                .background(color = Color.White)
         ) {
-            Text(
-                text = "Đăng Nhập",
-                fontSize = 18.sp,
-                fontWeight = if (isLogin) FontWeight.Bold else FontWeight.Normal,
-                textDecoration = if (isLogin) TextDecoration.Underline else null,
+            Spacer(Modifier.height(15.dp))
+            Button(
+                onClick = { navController.navigate("TrangChu") },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFD9D9D9).copy(
+                        alpha = 0.79f
+                    )
+                ),
+                contentPadding = PaddingValues(0.dp),
+                modifier = Modifier.size(55.dp)
+            ) {
+                Icon(
+                    painterResource(R.drawable.vector4),
+                    contentDescription = null,
+                    modifier = Modifier.size(23.dp, 19.dp),
+                    tint = Color.Black
+                )
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Image(
+                painter = painterResource(id = R.drawable.logo7),
+                contentDescription = "Logo",
                 modifier = Modifier
-                    .clickable { isLogin = true }
-                    .padding(end = 16.dp)
+                    .size(100.dp)
+                    .align(Alignment.CenterHorizontally)
             )
-            Text(
-                text = "Đăng Ký",
-                fontSize = 18.sp,
-                fontWeight = if (!isLogin) FontWeight.Bold else FontWeight.Normal,
-                textDecoration = if (!isLogin) TextDecoration.Underline else null,
-                modifier = Modifier.clickable { isLogin = false }
-            )
-        }
 
-        Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
-        val viewModel: AuthViewModel = viewModel()
-        if (isLogin) {
-            LoginForm(navController, viewModel)
-        } else {
-            RegisterForm(navController, viewModel)
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = "Đăng Nhập",
+                    fontSize = 18.sp,
+                    fontWeight = if (isLogin) FontWeight.Bold else FontWeight.Normal,
+                    textDecoration = if (isLogin) TextDecoration.Underline else null,
+                    modifier = Modifier
+                        .clickable { isLogin = true }
+                        .padding(end = 16.dp)
+                )
+                Text(
+                    text = "Đăng Ký",
+                    fontSize = 18.sp,
+                    fontWeight = if (!isLogin) FontWeight.Bold else FontWeight.Normal,
+                    textDecoration = if (!isLogin) TextDecoration.Underline else null,
+                    modifier = Modifier.clickable { isLogin = false }
+                )
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            val viewModel: AuthViewModel = viewModel()
+            if (isLogin) {
+                LoginForm(navController, viewModel)
+            } else {
+                RegisterForm(navController, viewModel)
+            }
         }
     }
 }
@@ -166,6 +187,15 @@ fun LoginForm(navController: NavController, viewModel: AuthViewModel = viewModel
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth(),
             isError = error?.contains("Mật khẩu") == true
+        )
+        Spacer(modifier = Modifier.height(14.dp))
+        GoogleLoginButton(
+            onSuccess = { user ->
+                navController.navigate("TrangChu")
+            },
+            onError = { error ->
+                Log.e("Login", "Error: ${error.message}")
+            }
         )
 
         Spacer(modifier = Modifier.height(14.dp))
@@ -314,5 +344,60 @@ fun RegisterForm(navController: NavController, viewModel: AuthViewModel = viewMo
         ) {
             Text("Đăng ký", color = Color.Black)
         }
+    }
+}
+
+@Composable
+fun GoogleLoginButton(
+    onSuccess: (FirebaseUser) -> Unit,
+    onError: (Exception) -> Unit
+) {
+    val context = LocalContext.current
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+        try {
+            val account = task.getResult(ApiException::class.java)
+            val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+            Firebase.auth.signInWithCredential(credential)
+                .addOnSuccessListener { authResult ->
+                    onSuccess(authResult.user!!)
+                }
+                .addOnFailureListener {
+                    onError(it)
+                }
+        } catch (e: ApiException) {
+            onError(e)
+        }
+    }
+
+    Button(
+        onClick = {
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(context.getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
+
+            val client = GoogleSignIn.getClient(context, gso)
+            launcher.launch(client.signInIntent)
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(50.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.White,
+            contentColor = Color.Black
+        ),
+        border = BorderStroke(1.dp, Color.LightGray),
+        shape = RoundedCornerShape(8.dp)
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.ic_google),
+            contentDescription = "Google",
+            modifier = Modifier.size(20.dp)
+        )
+        Spacer(Modifier.width(12.dp))
+        Text("Đăng nhập với Google")
     }
 }
