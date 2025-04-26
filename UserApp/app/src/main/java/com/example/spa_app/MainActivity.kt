@@ -8,9 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.spa_app.ui.theme.Spa_appTheme
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
@@ -42,12 +44,23 @@ fun Controller() {
         composable("DatLich") { Trangdatlich(navConTroller) }
         composable("DanhGia") { ReviewPage(navConTroller) }
         composable("ThongBao") { NotifyScreen(navConTroller) }
-        composable("ChiTietDichVu") { DetailServiceScreen(navConTroller) }
+        composable(
+            "ChiTietDichVu/{serviceId}",
+            arguments = listOf(navArgument("serviceId") { type = NavType.IntType })
+        ) {backStackEntry ->
+            val serviceId = backStackEntry.arguments?.getInt("serviceId")
+            DetailServiceScreen(navConTroller, serviceId)
+        }
         composable("LichSu") { HistoryScreen(navConTroller,appointmentViewModel) }
         composable("MaGiamGia") { TrangMaGiamGia(navConTroller) }
         composable("DangNhapDangKy") { LoginRegisterScreen(navConTroller) }
         composable("LienHe") { TrangLienHe(navConTroller) }
-        composable("ChiTietLichHen") { AppointmentDetailScreen(navConTroller) }
+        composable(
+            "ChiTietLichHen/{appointmentId}",
+            arguments = listOf(navArgument("appointmentId") { type = NavType.IntType })
+        ) {backStackEntry ->
+            val appointmentId = backStackEntry.arguments?.getInt("appointmentId")
+            AppointmentDetailScreen(navConTroller, appointmentId) }
         composable("CacGoiDichVu") { ServiceScreen(navConTroller, servicesViewModel, categoryViewModel) }
         composable("TaiKhoan") { InforScreen(navConTroller) }
         composable("TrangThanhToan") { PaymentScreen(navConTroller) }

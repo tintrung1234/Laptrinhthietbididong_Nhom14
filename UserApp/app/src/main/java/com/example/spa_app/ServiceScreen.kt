@@ -166,6 +166,9 @@ fun IconWithText(icon: Int, title: String, id: Int, isSelection: Boolean, onClic
 
 @Composable
 fun itemCardService(services: List<Service>, title: String, img: Int, navController: NavController){
+    val serviceViewModel: ServiceViewModel = viewModel()
+    val services = serviceViewModel.services
+    val servicesID = serviceViewModel.servicesID
     val filteredServices = services.filter {
         when (title) {
             "Bán chạy nhất" -> it.Visitors >= 900
@@ -213,7 +216,7 @@ fun itemCardService(services: List<Service>, title: String, img: Int, navControl
                         .heightIn(max = 300.dp),
                 ) {
                     items(filteredServices){service ->
-                        itemDisplayService(service, navController)
+                        itemDisplayService(service,servicesID[services.indexOf(service)],navController)
                     }
                 }
             }
@@ -223,11 +226,11 @@ fun itemCardService(services: List<Service>, title: String, img: Int, navControl
 }
 
 @Composable
-fun itemDisplayService(service: Service, navController: NavController){
+fun itemDisplayService(service: Service, serviceID: Int, navController: NavController){
     Row (
         modifier = Modifier.fillMaxWidth()
             .padding(top = 15.dp)
-            .clickable(onClick = {navController.navigate("ChiTietDichVu")})
+            .clickable(onClick = {navController.navigate("ChiTietDichVu/$serviceID")})
     ) {
         AsyncImage(
             model = service.Image,

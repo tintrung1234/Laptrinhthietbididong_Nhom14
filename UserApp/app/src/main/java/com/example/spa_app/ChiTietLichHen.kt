@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-fun AppointmentDetailScreen(navController: NavController) {
+fun AppointmentDetailScreen(navController: NavController, appointmentID: Int?) {
     Scaffold { paddingValues ->
         Column(
             modifier = Modifier
@@ -50,7 +50,7 @@ fun AppointmentDetailScreen(navController: NavController) {
                 .padding(paddingValues) // Thêm padding từ Scaffold
         ) {
             // Header
-            TopLayout("Thông tin lịch hẹn", {navController.navigate("LichSu") })
+            TopLayout("Thông tin lịch hẹn", {navController.popBackStack() })
 
             Spacer(modifier = Modifier.height(8.dp))
 

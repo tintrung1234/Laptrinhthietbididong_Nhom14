@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-fun DetailServiceScreen(navController: NavController) {
+fun DetailServiceScreen(navController: NavController, serviceID: Int?) {
     Column(
         modifier = Modifier
             .fillMaxSize()

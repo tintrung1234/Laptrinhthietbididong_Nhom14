@@ -21,6 +21,8 @@ class AppointmentViewModel: ViewModel() {
     private val db = FirebaseFirestore.getInstance()
     var appointments by mutableStateOf<List<Appointment>>(emptyList())
         private set
+    var appointmentsID by mutableStateOf<List<Int>>(emptyList())
+        private set
     init {
         fetchAppointments()
     }
@@ -28,6 +30,7 @@ class AppointmentViewModel: ViewModel() {
         db.collection("Appointments")
             .get()
             .addOnSuccessListener { result ->
+                appointmentsID = result.mapNotNull { it.id.toIntOrNull() }
                 appointments = result.mapNotNull { it.toObject(Appointment::class.java) }
             }
             .addOnFailureListener {

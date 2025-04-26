@@ -69,6 +69,9 @@ fun HistoryScreen(
 @Composable
 fun itemCardHistory(appointment: Appointment, navController: NavController){
     val serviceViewModel: ServiceViewModel = viewModel()
+    val appointmentViewModel: AppointmentViewModel = viewModel()
+    var appointments = appointmentViewModel.appointments
+    var appointmentsID = appointmentViewModel.appointmentsID
     var servicesID = serviceViewModel.servicesID
     var index = servicesID.indexOf(appointment.ServicesId)
     val service = serviceViewModel.services[index]
@@ -98,7 +101,7 @@ fun itemCardHistory(appointment: Appointment, navController: NavController){
             Column(
                 modifier = Modifier.fillMaxWidth()
                 ) {
-                itemServiceHistory(service, appointment.State, navController)
+                itemServiceHistory(service, appointmentsID[appointments.indexOf(appointment)],navController)
             }
             Text(
                 text = "Tổng tiền: ${appointment.TotalValues}}",
@@ -114,13 +117,13 @@ fun itemCardHistory(appointment: Appointment, navController: NavController){
 }
 
 @Composable
-fun itemServiceHistory(service: Service, state: Int, navController: NavController){
+fun itemServiceHistory(service: Service, appointmentID: Int, navController: NavController){
     Row (
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 30.dp)
             .clickable(onClick = {
-                navController.navigate(if (state == 3) "DanhGia" else "ChiTietLichHen")
+                navController.navigate("ChiTietLichHen/$appointmentID")
             }),
     ) {
         AsyncImage(
