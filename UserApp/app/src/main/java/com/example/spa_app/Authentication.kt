@@ -10,6 +10,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.firestore
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 class AuthViewModel : ViewModel() {
     data class User(
@@ -50,11 +52,18 @@ class AuthViewModel : ViewModel() {
             }
     }
 
+    private val _loginState = MutableStateFlow<Result<FirebaseUser>?>(null)
+    val loginState: StateFlow<Result<FirebaseUser>?> = _loginState
+
     fun signIn(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
-                authState = if (task.isSuccessful) auth.currentUser else null
-                if (!task.isSuccessful) errorMessage = task.exception?.message
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    _loginState.value = Result.success(user!!)
+                } else {
+                    _loginState.value = Result.failure(task.exception ?: Exception("Unknown error"))
+                }
             }
     }
 

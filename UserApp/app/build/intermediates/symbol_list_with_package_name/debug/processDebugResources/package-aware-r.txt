@@ -200,6 +200,7 @@ drawable star_filled
 drawable tdesign_user_filled
 drawable twemoji_girl_light_skin_tone
 drawable twemoji_man_getting_massage
+drawable user_image
 drawable vector4
 drawable vector5
 drawable vector_pen

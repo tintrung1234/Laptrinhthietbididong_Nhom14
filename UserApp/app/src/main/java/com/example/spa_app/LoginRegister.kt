@@ -23,6 +23,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,6 +45,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
@@ -153,6 +156,21 @@ fun LoginForm(navController: NavController, viewModel: AuthViewModel = viewModel
     var passwordVisible by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf<String?>(null) }
 
+    val loginState by viewModel.loginState.collectAsState()
+
+    // Nếu đăng nhập thành công -> Navigate
+    LaunchedEffect(loginState) {
+        loginState?.let { result ->
+            if (result.isSuccess) {
+                navController.navigate("TrangChu") {
+                    popUpTo("LoginScreen") { inclusive = true }
+                }
+            } else if (result.isFailure) {
+                error = "Tài khoản hoặc mật khẩu chưa chính xác"
+            }
+        }
+    }
+
     Column {
         OutlinedTextField(
             value = email,
@@ -188,20 +206,11 @@ fun LoginForm(navController: NavController, viewModel: AuthViewModel = viewModel
             modifier = Modifier.fillMaxWidth(),
             isError = error?.contains("Mật khẩu") == true
         )
-        Spacer(modifier = Modifier.height(14.dp))
-        GoogleLoginButton(
-            onSuccess = { user ->
-                navController.navigate("TrangChu")
-            },
-            onError = { error ->
-                Log.e("Login", "Error: ${error.message}")
-            }
-        )
 
         Spacer(modifier = Modifier.height(14.dp))
 
         if (error != null) {
-            Text(text = error!!, color = Color.Red, modifier = Modifier.padding(top = 4.dp))
+            Text(text = error!!, color = Color.Red, modifier = Modifier.padding(top = 4.dp) .align(alignment = Alignment.CenterHorizontally))
         }
 
         Spacer(modifier = Modifier.height(4.dp))
@@ -214,7 +223,6 @@ fun LoginForm(navController: NavController, viewModel: AuthViewModel = viewModel
                     error = "Mật khẩu phải từ 6 ký tự trở lên"
                 } else {
                     viewModel.signIn(email, password)
-                    navController.navigate("TrangChu")
                 }
             },
             modifier = Modifier.fillMaxWidth(),
@@ -223,11 +231,22 @@ fun LoginForm(navController: NavController, viewModel: AuthViewModel = viewModel
             Text("Đăng nhập", color = Color.Black)
         }
 
+        Spacer(modifier = Modifier.height(14.dp))
+        GoogleLoginButton(
+            onSuccess = { user ->
+                navController.navigate("TrangChu")
+            },
+            onError = { error ->
+                Log.e("Login", "Error: ${error.message}")
+            }
+        )
+
         Text(
             text = "Quên mật khẩu",
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(top = 8.dp),
+                .padding(top = 8.dp)
+                .clickable(onClick = { navController.navigate("QuanMatKhau") }),
             fontSize = 12.sp,
             color = Color.Black,
             textDecoration = TextDecoration.Underline
@@ -315,11 +334,23 @@ fun RegisterForm(navController: NavController, viewModel: AuthViewModel = viewMo
         Spacer(modifier = Modifier.height(14.dp))
 
         if (error != null) {
-            Text(text = error!!, color = Color.Red, modifier = Modifier.padding(top = 4.dp))
+            Text(
+                text = error!!,
+                color = Color.Red,
+                modifier = Modifier
+                    .padding(top = 4.dp)
+                    .align(alignment = Alignment.CenterHorizontally)
+            )
         }
 
         if (message != null) {
-            Text(text = message!!, color = Color.Green, modifier = Modifier.padding(top = 4.dp))
+            Text(
+                text = message!!,
+                color = Color.Green,
+                modifier = Modifier
+                    .padding(top = 4.dp)
+                    .align(alignment = Alignment.CenterHorizontally)
+            )
         }
 
         Spacer(modifier = Modifier.height(4.dp))
@@ -380,7 +411,10 @@ fun GoogleLoginButton(
                 .build()
 
             val client = GoogleSignIn.getClient(context, gso)
-            launcher.launch(client.signInIntent)
+
+            client.signOut().addOnCompleteListener {
+                launcher.launch(client.signInIntent)
+            }
         },
         modifier = Modifier
             .fillMaxWidth()
@@ -401,3 +435,63 @@ fun GoogleLoginButton(
         Text("Đăng nhập với Google")
     }
 }
+
+@Composable
+fun ForgotPasswordScreen(navController: NavController) {
+    var email by remember { mutableStateOf("") }
+    var message by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(vertical = 30.dp, horizontal = 20.dp)
+    ) {
+        TopLayout("Quên mật khẩu", { navController.navigate("DangNhapDangKy") })
+        Text("Quên mật khẩu", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(20.dp))
+
+        OutlinedTextField(
+            value = email,
+            onValueChange = {
+                email = it
+            },
+            label = { Text("Email") },
+            leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(14.dp))
+
+        Spacer(modifier = Modifier.height(4.dp))
+        Button(
+            onClick = {
+                if (email.isBlank()) {
+                    message = "Vui lòng nhập email."
+                } else {
+                    FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                message = "Đã gửi email reset mật khẩu! Kiểm tra hộp thư."
+                            } else {
+                                val exception = task.exception
+                                if (exception is FirebaseAuthInvalidUserException) {
+                                    message = "Email này chưa đăng ký."
+                                } else {
+                                    message = "Có lỗi xảy ra: ${exception?.message}"
+                                }
+                            }
+                        }
+                }
+            },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(Color(0xFFEFDCA9)),
+        ) {
+            Text("Gửi link reset mật khẩu")
+        }
+        Spacer(modifier = Modifier.height(20.dp))
+        if (message.isNotEmpty()) {
+            Text(text = message, color = Color.Red)
+        }
+    }
+}
+

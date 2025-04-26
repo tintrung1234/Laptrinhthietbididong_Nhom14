@@ -199,6 +199,7 @@ int drawable star_filled 0x7f040062
 int drawable tdesign_user_filled 0x7f040063
 int drawable twemoji_girl_light_skin_tone 0x7f040064
 int drawable twemoji_man_getting_massage 0x7f040065
+int drawable user_image 0x7f040069
 int drawable vector4 0x7f040066
 int drawable vector5 0x7f040067
 int drawable vector_pen 0x7f040068
