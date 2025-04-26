@@ -4,7 +4,7 @@
             "outputFile": "com.example.spa_app-mergeDebugResources-67:/values-v21/values-v21.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\huynh\\.gradle\\caches\\8.10.2\\transforms\\f9eb5d87a1736e1a96919f784c71f978\\transformed\\core-1.15.0\\res\\values-v21\\values-v21.xml",
+                    "source": "C:\\Users\\Thanh Dat\\.gradle\\caches\\8.10.2\\transforms\\f9eb5d87a1736e1a96919f784c71f978\\transformed\\core-1.15.0\\res\\values-v21\\values-v21.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,13",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\huynh\\.gradle\\caches\\8.10.2\\transforms\\1aacae51bb6bc1f52844c890ea1b145b\\transformed\\credentials-play-services-auth-1.2.0-rc01\\res\\values-v21\\values-v21.xml",
+                    "source": "C:\\Users\\Thanh Dat\\.gradle\\caches\\8.10.2\\transforms\\1aacae51bb6bc1f52844c890ea1b145b\\transformed\\credentials-play-services-auth-1.2.0-rc01\\res\\values-v21\\values-v21.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
