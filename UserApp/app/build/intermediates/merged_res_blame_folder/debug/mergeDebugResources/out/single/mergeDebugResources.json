@@ -1,294 +1,306 @@
 [
     {
-        "merged": "com.example.spa_app-debug-67:/mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "com.example.spa_app-main-69:/mipmap-mdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_line_md_chat_filled.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\line_md_chat_filled.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_fluent_color_image_16.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/fluent_color_image_16.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\mipmap-xhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_ktv2.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/ktv2.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_ic_logo.jpg.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\ic_logo.jpg"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "com.example.spa_app-main-69:/mipmap-xxxhdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_khuyen_mai4.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\khuyen_mai4.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_donghocat.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/donghocat.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_nimbus_cash.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\nimbus_cash.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_mdi_voucher.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/mdi_voucher.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\mipmap-anydpi_ic_launcher.xml.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\mipmap-anydpi\\ic_launcher.xml"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_emojione_nail_polish.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/emojione_nail_polish.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_icon_tai_khoan.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\icon_tai_khoan.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_fxemoji_hourglass.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/fxemoji_hourglass.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_emojione_nail_polish.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\emojione_nail_polish.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.spa_app-main-69:/mipmap-xxxhdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_solar_calendar_bold.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\solar_calendar_bold.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_ic_logo.jpg.flat",
-        "source": "com.example.spa_app-main-69:/drawable/ic_logo.jpg"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_fluent_color_image_16.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\fluent_color_image_16.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_noto_label.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/noto_label.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_group2.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\group2.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_icon_lich_su.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/icon_lich_su.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_logo7.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\logo7.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_attach_file.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/attach_file.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_icon_park_view_list.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/icon_park_view_list.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_image20.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\image20.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_star.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/star.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\xml_backup_rules.xml.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\xml\\backup_rules.xml"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_khuyen_mai2.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/khuyen_mai2.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_ph_magnifying_glass_thin.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\ph_magnifying_glass_thin.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_icon_tai_khoan.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/icon_tai_khoan.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_vector5.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\vector5.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_ic_camera.xml.flat",
-        "source": "com.example.spa_app-main-69:/drawable/ic_camera.xml"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_khuyen_mai1.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\khuyen_mai1.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_ic_hot.jpg.flat",
-        "source": "com.example.spa_app-main-69:/drawable/ic_hot.jpg"
+        "merged": "com.example.spa_app-debug-69:/font_ltim_regular.ttf.flat",
+        "source": "com.example.spa_app-main-71:/font/ltim_regular.ttf"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_star_filled.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/star_filled.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_star.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\star.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_icon_trang_chu.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/icon_trang_chu.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_map_spa.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\map_spa.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_ic_launcher_foreground.xml.flat",
-        "source": "com.example.spa_app-main-69:/drawable/ic_launcher_foreground.xml"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_banner_trangchu.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\banner_trangchu.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_solar_cosmetic_bold.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/solar_cosmetic_bold.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_icon_trang_chu.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\icon_trang_chu.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_khuyen_mai1.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/khuyen_mai1.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_ktv1.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\ktv1.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_map_spa.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/map_spa.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_image21.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\image21.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_group2.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/group2.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_ic_camera.xml.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\ic_camera.xml"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_foundation_burst_sale.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/foundation_burst_sale.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\ic_launcher_foreground.xml"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_logo_momo.jpg.flat",
-        "source": "com.example.spa_app-main-69:/drawable/logo_momo.jpg"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_icon_lich_su.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\icon_lich_su.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_image14.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/image14.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_ic_sale.jpg.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\ic_sale.jpg"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/mipmap-anydpi_ic_launcher.xml.flat",
-        "source": "com.example.spa_app-main-69:/mipmap-anydpi/ic_launcher.xml"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\xml_data_extraction_rules.xml.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\xml\\data_extraction_rules.xml"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_doi_ngu_bs1.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/doi_ngu_bs1.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_logo_momo.jpg.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\logo_momo.jpg"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_fxemoji_note.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/fxemoji_note.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_location.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\location.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_important.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/important.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\mipmap-hdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_image20.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/image20.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\mipmap-anydpi_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\mipmap-anydpi\\ic_launcher_round.xml"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_ktv1.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/ktv1.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_important.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\important.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_banner_trangchu.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/banner_trangchu.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_donghocat.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\donghocat.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_image10.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/image10.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_vector4.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\vector4.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_vector4.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/vector4.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_image10.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\image10.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_ph_magnifying_glass_thin.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/ph_magnifying_glass_thin.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_payments.xml.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\payments.xml"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/mipmap-anydpi_ic_launcher_round.xml.flat",
-        "source": "com.example.spa_app-main-69:/mipmap-anydpi/ic_launcher_round.xml"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\mipmap-xxhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.spa_app-main-69:/mipmap-hdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_clock.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\clock.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_solar_calendar_bold.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/solar_calendar_bold.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_goi_dau.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\goi_dau.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "com.example.spa_app-main-69:/mipmap-xxhdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_twemoji_man_getting_massage.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\twemoji_man_getting_massage.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_line_md_bell_loop.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/line_md_bell_loop.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_ic_hot.jpg.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\ic_hot.jpg"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_line_md_chat_filled.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/line_md_chat_filled.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_mdi_voucher.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\mdi_voucher.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_khuyen_mai4.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/khuyen_mai4.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_fxemoji_note.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\fxemoji_note.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_twemoji_man_getting_massage.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/twemoji_man_getting_massage.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_ktv2.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\ktv2.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_nimbus_cash.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/nimbus_cash.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_line_md_bell_loop.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\line_md_bell_loop.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_twemoji_girl_light_skin_tone.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/twemoji_girl_light_skin_tone.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_image14.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\image14.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_image21.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/image21.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_vector_pen.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\vector_pen.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_vector_pen.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/vector_pen.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_doi_ngu_bs1.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\doi_ngu_bs1.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_ic_launcher_background.xml.flat",
-        "source": "com.example.spa_app-main-69:/drawable/ic_launcher_background.xml"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_icon_dat_lich.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\icon_dat_lich.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_ic_sale.jpg.flat",
-        "source": "com.example.spa_app-main-69:/drawable/ic_sale.jpg"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_twemoji_girl_light_skin_tone.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\twemoji_girl_light_skin_tone.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.spa_app-main-69:/mipmap-xxhdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_iconpasseye.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\iconpasseye.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_image13.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/image13.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_icon_park_view_list.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\icon_park_view_list.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.spa_app-main-69:/mipmap-xhdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_tdesign_user_filled.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\tdesign_user_filled.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_ic_baseline_save_all.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/ic_baseline_save_all.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\ic_launcher_background.xml"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_tdesign_user_filled.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/tdesign_user_filled.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_foundation_burst_sale.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\foundation_burst_sale.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "com.example.spa_app-main-69:/mipmap-xhdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_image13.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\image13.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_emojione_money_bag.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/emojione_money_bag.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\mipmap-hdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_ktv3.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/ktv3.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\mipmap-mdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_iconpasseye.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/iconpasseye.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_solar_cosmetic_bold.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\solar_cosmetic_bold.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_payments.xml.flat",
-        "source": "com.example.spa_app-main-69:/drawable/payments.xml"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_noto_label.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\noto_label.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_icon_dat_lich.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/icon_dat_lich.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.spa_app-main-69:/mipmap-mdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_attach_file.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\attach_file.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/xml_data_extraction_rules.xml.flat",
-        "source": "com.example.spa_app-main-69:/xml/data_extraction_rules.xml"
+        "merged": "com.example.spa_app-debug-69:/font_ltim.xml.flat",
+        "source": "com.example.spa_app-main-71:/font/ltim.xml"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_signout_ic.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/signout_ic.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\mipmap-xxxhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_clock.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/clock.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_emojione_money_bag.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\emojione_money_bag.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "com.example.spa_app-main-69:/mipmap-hdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_ktv3.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\ktv3.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_logo7.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/logo7.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\mipmap-xxhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/xml_backup_rules.xml.flat",
-        "source": "com.example.spa_app-main-69:/xml/backup_rules.xml"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\mipmap-xhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_vector5.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/vector5.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_star_filled.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\star_filled.png"
     },
     {
-        "merged": "com.example.spa_app-debug-67:/drawable_location.png.flat",
-        "source": "com.example.spa_app-main-69:/drawable/location.png"
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_signout_ic.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\signout_ic.png"
+    },
+    {
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_ic_baseline_save_all.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\ic_baseline_save_all.png"
+    },
+    {
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_fxemoji_hourglass.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\fxemoji_hourglass.png"
+    },
+    {
+        "merged": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-debug-69:\\drawable_khuyen_mai2.png.flat",
+        "source": "C:\\Users\\huynh\\.gradle\\daemon\\8.10.2\\com.example.spa_app-main-71:\\drawable\\khuyen_mai2.png"
     }
 ]

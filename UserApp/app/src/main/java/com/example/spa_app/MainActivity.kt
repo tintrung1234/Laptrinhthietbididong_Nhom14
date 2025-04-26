@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -27,8 +28,10 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Controller() {
     val navConTroller = rememberNavController()
+    val servicesViewModel: ServiceViewModel = viewModel()
+    val staffsViewModel: StaffViewModel = viewModel()
     NavHost(navController = navConTroller, startDestination = "TrangChu") {
-        composable("TrangChu") { TrangChu(navConTroller) }
+        composable("TrangChu") { TrangChu(navConTroller, servicesViewModel, staffsViewModel) }
         composable("DatLich") { Trangdatlich(navConTroller) }
         composable("DanhGia") { ReviewPage(navConTroller) }
         composable("ThongBao") { NotifyScreen(navConTroller) }
@@ -45,12 +48,12 @@ fun Controller() {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun Preview() {
-//    Spa_appTheme {
-//        Controller()
-//    }
-    val navConTroller = rememberNavController()
-    InforScreen(navConTroller)
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun Preview() {
+////    Spa_appTheme {
+////        Controller()
+////    }
+//    val navConTroller = rememberNavController()
+//    InforScreen(navConTroller)
+//}

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.spa_app-mergeDebugResources-65:/values-uz/values-uz.xml",
+            "outputFile": "com.example.spa_app-mergeDebugResources-67:/values-uz/values-uz.xml",
             "map": [
                 {
                     "source": "C:\\Users\\huynh\\.gradle\\caches\\8.10.2\\transforms\\baff95dfbc443deb6e21cef741e728bb\\transformed\\play-services-basement-18.5.0\\res\\values-uz\\values.xml",

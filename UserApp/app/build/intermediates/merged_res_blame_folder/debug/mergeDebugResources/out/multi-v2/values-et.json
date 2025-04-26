@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.spa_app-mergeDebugResources-65:/values-et/values-et.xml",
+            "outputFile": "com.example.spa_app-mergeDebugResources-67:/values-et/values-et.xml",
             "map": [
                 {
                     "source": "C:\\Users\\huynh\\.gradle\\caches\\8.10.2\\transforms\\c5070a1ef8c3b11f03145517da369740\\transformed\\browser-1.4.0\\res\\values-et\\values-et.xml",

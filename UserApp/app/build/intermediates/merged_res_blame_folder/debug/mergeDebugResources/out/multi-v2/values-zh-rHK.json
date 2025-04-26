@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.spa_app-mergeDebugResources-65:/values-zh-rHK/values-zh-rHK.xml",
+            "outputFile": "com.example.spa_app-mergeDebugResources-67:/values-zh-rHK/values-zh-rHK.xml",
             "map": [
                 {
                     "source": "C:\\Users\\huynh\\.gradle\\caches\\8.10.2\\transforms\\b9c370803d85dfe530e45a86df4fa013\\transformed\\material3-release\\res\\values-zh-rHK\\values-zh-rHK.xml",

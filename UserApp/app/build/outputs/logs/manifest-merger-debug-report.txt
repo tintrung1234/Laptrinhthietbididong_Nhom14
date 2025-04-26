@@ -9,12 +9,15 @@ MERGED from [androidx.navigation:navigation-runtime:2.8.9] C:\Users\huynh\.gradl
 MERGED from [androidx.navigation:navigation-common-ktx:2.8.9] C:\Users\huynh\.gradle\caches\8.10.2\transforms\f8fc0032d1b1058f5043b88898300574\transformed\navigation-common-ktx-2.8.9\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.navigation:navigation-runtime-ktx:2.8.9] C:\Users\huynh\.gradle\caches\8.10.2\transforms\11fde7240f3398d4540ae5c983741b3a\transformed\navigation-runtime-ktx-2.8.9\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.navigation:navigation-compose:2.8.9] C:\Users\huynh\.gradle\caches\8.10.2\transforms\22999be8c3a6cdbba7e6888b42096aa6\transformed\navigation-compose-2.8.9\AndroidManifest.xml:2:1-7:12
+MERGED from [io.coil-kt:coil-compose:2.4.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\1e5699a358157b96b0556f1d7e97af64\transformed\coil-compose-2.4.0\AndroidManifest.xml:2:1-7:12
+MERGED from [io.coil-kt:coil-compose-base:2.4.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\f9f21ea35ce1b6047f378139dc764ca1\transformed\coil-compose-base-2.4.0\AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.accompanist:accompanist-drawablepainter:0.30.1] C:\Users\huynh\.gradle\caches\8.10.2\transforms\f907562f5d37f5d40c7d7981d9559417\transformed\accompanist-drawablepainter-0.30.1\AndroidManifest.xml:17:1-25:12
 MERGED from [androidx.compose.material3:material3-android:1.2.1] C:\Users\huynh\.gradle\caches\8.10.2\transforms\b9c370803d85dfe530e45a86df4fa013\transformed\material3-release\AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.compose.material:material-android:1.6.6] C:\Users\huynh\.gradle\caches\8.10.2\transforms\882e00c547fc53e7f003e65166781b49\transformed\material-release\AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.compose.material:material-icons-core-android:1.6.6] C:\Users\huynh\.gradle\caches\8.10.2\transforms\69431e774a165c90a38ca93d375fef14\transformed\material-icons-core-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.material:material-ripple-android:1.6.6] C:\Users\huynh\.gradle\caches\8.10.2\transforms\8f4f4c44b2a4aad1c2e93efae008bcea\transformed\material-ripple-release\AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.compose.foundation:foundation-android:1.7.2] C:\Users\huynh\.gradle\caches\8.10.2\transforms\9d149ad10b05b5d56503994fa5235632\transformed\foundation-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-icons-core-android:1.6.6] C:\Users\huynh\.gradle\caches\8.10.2\transforms\69431e774a165c90a38ca93d375fef14\transformed\material-icons-core-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-android:1.6.6] C:\Users\huynh\.gradle\caches\8.10.2\transforms\882e00c547fc53e7f003e65166781b49\transformed\material-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.foundation:foundation-layout-android:1.7.2] C:\Users\huynh\.gradle\caches\8.10.2\transforms\dd66d688949bddcd67e6b3c529cee1aa\transformed\foundation-layout-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.foundation:foundation-android:1.7.2] C:\Users\huynh\.gradle\caches\8.10.2\transforms\9d149ad10b05b5d56503994fa5235632\transformed\foundation-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.animation:animation-core-android:1.7.2] C:\Users\huynh\.gradle\caches\8.10.2\transforms\deae585be00b88e1db21a52ba3d6b508\transformed\animation-core-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.ui:ui-tooling-data-android:1.7.2] C:\Users\huynh\.gradle\caches\8.10.2\transforms\269f2c4c5c1f24b3291c8ec47640f135\transformed\ui-tooling-data-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.ui:ui-util-android:1.7.2] C:\Users\huynh\.gradle\caches\8.10.2\transforms\6a802e7a60015e0fe9345bd026089e38\transformed\ui-util-release\AndroidManifest.xml:2:1-7:12
@@ -57,6 +60,8 @@ MERGED from [com.google.android.gms:play-services-fido:20.1.0] C:\Users\huynh\.g
 MERGED from [com.google.android.gms:play-services-auth-base:18.0.4] C:\Users\huynh\.gradle\caches\8.10.2\transforms\2073aa0c6087ca84252fe064f9b2ad87\transformed\play-services-auth-base-18.0.4\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.gms:play-services-base:18.5.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\beee89f025c9552c28ff4740b3d126a1\transformed\play-services-base-18.5.0\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.firebase:firebase-installations-interop:17.1.1] C:\Users\huynh\.gradle\caches\8.10.2\transforms\037fd9bf81f9cd69c614296b63b4e08e\transformed\firebase-installations-interop-17.1.1\AndroidManifest.xml:15:1-19:12
+MERGED from [io.coil-kt:coil:2.4.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\11380acccef1ee76c938db1c9c433a5e\transformed\coil-2.4.0\AndroidManifest.xml:2:1-7:12
+MERGED from [io.coil-kt:coil-base:2.4.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\500fe4eb4d210d8049287c628b8b7047\transformed\coil-base-2.4.0\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.fragment:fragment:1.1.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\e31e57ff93926e02349486d6bd560d71\transformed\fragment-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.activity:activity:1.10.1] C:\Users\huynh\.gradle\caches\8.10.2\transforms\c4c374ca6800b17fb91c3d87995729b0\transformed\activity-1.10.1\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] C:\Users\huynh\.gradle\caches\8.10.2\transforms\efa292bc6b368bfa0afff50598bd564e\transformed\savedstate-ktx-1.2.1\AndroidManifest.xml:17:1-22:12
@@ -80,8 +85,11 @@ MERGED from [com.google.android.gms:play-services-tasks:18.2.0] C:\Users\huynh\.
 MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\c5962df2a651d6a21ca24890f2b96f00\transformed\firebase-measurement-connector-19.0.0\AndroidManifest.xml:17:1-25:12
 MERGED from [com.google.android.gms:play-services-basement:18.5.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\baff95dfbc443deb6e21cef741e728bb\transformed\play-services-basement-18.5.0\AndroidManifest.xml:16:1-26:12
 MERGED from [androidx.browser:browser:1.4.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\c5070a1ef8c3b11f03145517da369740\transformed\browser-1.4.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\huynh\.gradle\caches\8.10.2\transforms\01de338d1277ee1620ab48e31ff2cc1e\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\3141f9364565f0f1ac74f0f9617e9ba3\transformed\autofill-1.0.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\64e717faf44709a3c23f2e711252bf91\transformed\viewpager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\63146935c74a9a8eaebb80fda7ae1fd1\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\652a73c804a46f14042f2069ddb71d6f\transformed\vectordrawable-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.customview:customview:1.0.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\b3cb9c84fe431b05d107cd91f183ea03\transformed\customview-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.graphics:graphics-path:1.0.1] C:\Users\huynh\.gradle\caches\8.10.2\transforms\4ecf6521f6d40436f89e6cfaf25a0b9f\transformed\graphics-path-1.0.1\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.core:core:1.15.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\f9eb5d87a1736e1a96919f784c71f978\transformed\core-1.15.0\AndroidManifest.xml:17:1-30:12
@@ -102,6 +110,7 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\huynh\.gradle\cach
 MERGED from [androidx.tracing:tracing:1.2.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\6f2c50cd8cf3205350df3793bb43be71\transformed\tracing-1.2.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\huynh\.gradle\caches\8.10.2\transforms\c946eed71c54641a18952a96104e016f\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:17:1-27:12
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\7836e0211412964a892ec8561f19d940\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.exifinterface:exifinterface:1.3.6] C:\Users\huynh\.gradle\caches\8.10.2\transforms\6ae2a8ef8c93ede3ea0dffb3873ffcd0\transformed\exifinterface-1.3.6\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\d05bc76322c60bf1fe65f8055af572a8\transformed\documentfile-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.print:print:1.0.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\917a0b5b0536f35264412683c9d31d68\transformed\print-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\cfbc82baca5a0e449c84b86accce493e\transformed\core-runtime-2.2.0\AndroidManifest.xml:17:1-22:12
@@ -253,18 +262,24 @@ MERGED from [androidx.navigation:navigation-runtime-ktx:2.8.9] C:\Users\huynh\.g
 MERGED from [androidx.navigation:navigation-runtime-ktx:2.8.9] C:\Users\huynh\.gradle\caches\8.10.2\transforms\11fde7240f3398d4540ae5c983741b3a\transformed\navigation-runtime-ktx-2.8.9\AndroidManifest.xml:5:5-44
 MERGED from [androidx.navigation:navigation-compose:2.8.9] C:\Users\huynh\.gradle\caches\8.10.2\transforms\22999be8c3a6cdbba7e6888b42096aa6\transformed\navigation-compose-2.8.9\AndroidManifest.xml:5:5-44
 MERGED from [androidx.navigation:navigation-compose:2.8.9] C:\Users\huynh\.gradle\caches\8.10.2\transforms\22999be8c3a6cdbba7e6888b42096aa6\transformed\navigation-compose-2.8.9\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-compose:2.4.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\1e5699a358157b96b0556f1d7e97af64\transformed\coil-compose-2.4.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-compose:2.4.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\1e5699a358157b96b0556f1d7e97af64\transformed\coil-compose-2.4.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-compose-base:2.4.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\f9f21ea35ce1b6047f378139dc764ca1\transformed\coil-compose-base-2.4.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-compose-base:2.4.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\f9f21ea35ce1b6047f378139dc764ca1\transformed\coil-compose-base-2.4.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.accompanist:accompanist-drawablepainter:0.30.1] C:\Users\huynh\.gradle\caches\8.10.2\transforms\f907562f5d37f5d40c7d7981d9559417\transformed\accompanist-drawablepainter-0.30.1\AndroidManifest.xml:21:5-23:42
+MERGED from [com.google.accompanist:accompanist-drawablepainter:0.30.1] C:\Users\huynh\.gradle\caches\8.10.2\transforms\f907562f5d37f5d40c7d7981d9559417\transformed\accompanist-drawablepainter-0.30.1\AndroidManifest.xml:21:5-23:42
 MERGED from [androidx.compose.material3:material3-android:1.2.1] C:\Users\huynh\.gradle\caches\8.10.2\transforms\b9c370803d85dfe530e45a86df4fa013\transformed\material3-release\AndroidManifest.xml:20:5-44
 MERGED from [androidx.compose.material3:material3-android:1.2.1] C:\Users\huynh\.gradle\caches\8.10.2\transforms\b9c370803d85dfe530e45a86df4fa013\transformed\material3-release\AndroidManifest.xml:20:5-44
-MERGED from [androidx.compose.material:material-android:1.6.6] C:\Users\huynh\.gradle\caches\8.10.2\transforms\882e00c547fc53e7f003e65166781b49\transformed\material-release\AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.material:material-android:1.6.6] C:\Users\huynh\.gradle\caches\8.10.2\transforms\882e00c547fc53e7f003e65166781b49\transformed\material-release\AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.material:material-icons-core-android:1.6.6] C:\Users\huynh\.gradle\caches\8.10.2\transforms\69431e774a165c90a38ca93d375fef14\transformed\material-icons-core-release\AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.material:material-icons-core-android:1.6.6] C:\Users\huynh\.gradle\caches\8.10.2\transforms\69431e774a165c90a38ca93d375fef14\transformed\material-icons-core-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.material:material-ripple-android:1.6.6] C:\Users\huynh\.gradle\caches\8.10.2\transforms\8f4f4c44b2a4aad1c2e93efae008bcea\transformed\material-ripple-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.material:material-ripple-android:1.6.6] C:\Users\huynh\.gradle\caches\8.10.2\transforms\8f4f4c44b2a4aad1c2e93efae008bcea\transformed\material-ripple-release\AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.foundation:foundation-android:1.7.2] C:\Users\huynh\.gradle\caches\8.10.2\transforms\9d149ad10b05b5d56503994fa5235632\transformed\foundation-release\AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.foundation:foundation-android:1.7.2] C:\Users\huynh\.gradle\caches\8.10.2\transforms\9d149ad10b05b5d56503994fa5235632\transformed\foundation-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-core-android:1.6.6] C:\Users\huynh\.gradle\caches\8.10.2\transforms\69431e774a165c90a38ca93d375fef14\transformed\material-icons-core-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-core-android:1.6.6] C:\Users\huynh\.gradle\caches\8.10.2\transforms\69431e774a165c90a38ca93d375fef14\transformed\material-icons-core-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-android:1.6.6] C:\Users\huynh\.gradle\caches\8.10.2\transforms\882e00c547fc53e7f003e65166781b49\transformed\material-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-android:1.6.6] C:\Users\huynh\.gradle\caches\8.10.2\transforms\882e00c547fc53e7f003e65166781b49\transformed\material-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.foundation:foundation-layout-android:1.7.2] C:\Users\huynh\.gradle\caches\8.10.2\transforms\dd66d688949bddcd67e6b3c529cee1aa\transformed\foundation-layout-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.foundation:foundation-layout-android:1.7.2] C:\Users\huynh\.gradle\caches\8.10.2\transforms\dd66d688949bddcd67e6b3c529cee1aa\transformed\foundation-layout-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-android:1.7.2] C:\Users\huynh\.gradle\caches\8.10.2\transforms\9d149ad10b05b5d56503994fa5235632\transformed\foundation-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-android:1.7.2] C:\Users\huynh\.gradle\caches\8.10.2\transforms\9d149ad10b05b5d56503994fa5235632\transformed\foundation-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.animation:animation-core-android:1.7.2] C:\Users\huynh\.gradle\caches\8.10.2\transforms\deae585be00b88e1db21a52ba3d6b508\transformed\animation-core-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.animation:animation-core-android:1.7.2] C:\Users\huynh\.gradle\caches\8.10.2\transforms\deae585be00b88e1db21a52ba3d6b508\transformed\animation-core-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.ui:ui-tooling-data-android:1.7.2] C:\Users\huynh\.gradle\caches\8.10.2\transforms\269f2c4c5c1f24b3291c8ec47640f135\transformed\ui-tooling-data-release\AndroidManifest.xml:5:5-44
@@ -349,6 +364,10 @@ MERGED from [com.google.android.gms:play-services-base:18.5.0] C:\Users\huynh\.g
 MERGED from [com.google.android.gms:play-services-base:18.5.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\beee89f025c9552c28ff4740b3d126a1\transformed\play-services-base-18.5.0\AndroidManifest.xml:3:5-44
 MERGED from [com.google.firebase:firebase-installations-interop:17.1.1] C:\Users\huynh\.gradle\caches\8.10.2\transforms\037fd9bf81f9cd69c614296b63b4e08e\transformed\firebase-installations-interop-17.1.1\AndroidManifest.xml:17:5-44
 MERGED from [com.google.firebase:firebase-installations-interop:17.1.1] C:\Users\huynh\.gradle\caches\8.10.2\transforms\037fd9bf81f9cd69c614296b63b4e08e\transformed\firebase-installations-interop-17.1.1\AndroidManifest.xml:17:5-44
+MERGED from [io.coil-kt:coil:2.4.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\11380acccef1ee76c938db1c9c433a5e\transformed\coil-2.4.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil:2.4.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\11380acccef1ee76c938db1c9c433a5e\transformed\coil-2.4.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-base:2.4.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\500fe4eb4d210d8049287c628b8b7047\transformed\coil-base-2.4.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-base:2.4.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\500fe4eb4d210d8049287c628b8b7047\transformed\coil-base-2.4.0\AndroidManifest.xml:5:5-44
 MERGED from [androidx.fragment:fragment:1.1.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\e31e57ff93926e02349486d6bd560d71\transformed\fragment-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.fragment:fragment:1.1.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\e31e57ff93926e02349486d6bd560d71\transformed\fragment-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.activity:activity:1.10.1] C:\Users\huynh\.gradle\caches\8.10.2\transforms\c4c374ca6800b17fb91c3d87995729b0\transformed\activity-1.10.1\AndroidManifest.xml:20:5-44
@@ -395,10 +414,16 @@ MERGED from [com.google.android.gms:play-services-basement:18.5.0] C:\Users\huyn
 MERGED from [com.google.android.gms:play-services-basement:18.5.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\baff95dfbc443deb6e21cef741e728bb\transformed\play-services-basement-18.5.0\AndroidManifest.xml:18:5-43
 MERGED from [androidx.browser:browser:1.4.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\c5070a1ef8c3b11f03145517da369740\transformed\browser-1.4.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.browser:browser:1.4.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\c5070a1ef8c3b11f03145517da369740\transformed\browser-1.4.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\huynh\.gradle\caches\8.10.2\transforms\01de338d1277ee1620ab48e31ff2cc1e\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\huynh\.gradle\caches\8.10.2\transforms\01de338d1277ee1620ab48e31ff2cc1e\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:20:5-44
 MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\3141f9364565f0f1ac74f0f9617e9ba3\transformed\autofill-1.0.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\3141f9364565f0f1ac74f0f9617e9ba3\transformed\autofill-1.0.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\64e717faf44709a3c23f2e711252bf91\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\64e717faf44709a3c23f2e711252bf91\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\63146935c74a9a8eaebb80fda7ae1fd1\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\63146935c74a9a8eaebb80fda7ae1fd1\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\652a73c804a46f14042f2069ddb71d6f\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\652a73c804a46f14042f2069ddb71d6f\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.customview:customview:1.0.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\b3cb9c84fe431b05d107cd91f183ea03\transformed\customview-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.customview:customview:1.0.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\b3cb9c84fe431b05d107cd91f183ea03\transformed\customview-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.graphics:graphics-path:1.0.1] C:\Users\huynh\.gradle\caches\8.10.2\transforms\4ecf6521f6d40436f89e6cfaf25a0b9f\transformed\graphics-path-1.0.1\AndroidManifest.xml:5:5-44
@@ -439,6 +464,8 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\hu
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\huynh\.gradle\caches\8.10.2\transforms\c946eed71c54641a18952a96104e016f\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\7836e0211412964a892ec8561f19d940\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\7836e0211412964a892ec8561f19d940\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.exifinterface:exifinterface:1.3.6] C:\Users\huynh\.gradle\caches\8.10.2\transforms\6ae2a8ef8c93ede3ea0dffb3873ffcd0\transformed\exifinterface-1.3.6\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.6] C:\Users\huynh\.gradle\caches\8.10.2\transforms\6ae2a8ef8c93ede3ea0dffb3873ffcd0\transformed\exifinterface-1.3.6\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\d05bc76322c60bf1fe65f8055af572a8\transformed\documentfile-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\d05bc76322c60bf1fe65f8055af572a8\transformed\documentfile-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.print:print:1.0.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\917a0b5b0536f35264412683c9d31d68\transformed\print-1.0.0\AndroidManifest.xml:20:5-44
@@ -459,6 +486,8 @@ MERGED from [com.google.android.play:core-common:2.0.3] C:\Users\huynh\.gradle\c
 		ADDED from [com.google.firebase:firebase-auth:23.2.0] C:\Users\huynh\.gradle\caches\8.10.2\transforms\017e078377e03e2563a5d76711448396\transformed\firebase-auth-23.2.0\AndroidManifest.xml:23:9-148
 	android:targetSdkVersion
 		INJECTED from D:\Study\HK6\Mobile\Project\UserApp\app\src\main\AndroidManifest.xml
+	tools:ignore
+		ADDED from [com.google.accompanist:accompanist-drawablepainter:0.30.1] C:\Users\huynh\.gradle\caches\8.10.2\transforms\f907562f5d37f5d40c7d7981d9559417\transformed\accompanist-drawablepainter-0.30.1\AndroidManifest.xml:23:9-39
 	android:minSdkVersion
 		INJECTED from D:\Study\HK6\Mobile\Project\UserApp\app\src\main\AndroidManifest.xml
 activity#androidx.activity.ComponentActivity

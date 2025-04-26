@@ -96,7 +96,7 @@ fun CustomTopAppBar() {
             IconWithText(R.drawable.map_spa, "Spa", true)
             IconWithText(R.drawable.emojione_nail_polish, "Nail", false)
             IconWithText(R.drawable.twemoji_man_getting_massage, "Massage", false)
-            IconWithText(R.drawable.solar_cosmetic_bold, "Mỹ phẩm", false)
+            IconWithText(R.drawable.goi_dau, "Mỹ phẩm", false)
             IconWithText(R.drawable.twemoji_girl_light_skin_tone, "Chăm sóc da", false)
         }
     }
