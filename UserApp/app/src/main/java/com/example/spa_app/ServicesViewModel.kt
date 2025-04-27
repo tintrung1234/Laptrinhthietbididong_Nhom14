@@ -23,6 +23,8 @@ class ServiceViewModel : ViewModel() {
     private val db = FirebaseFirestore.getInstance()
     var services by mutableStateOf<List<Service>>(emptyList())
         private set
+    var servicesID by mutableStateOf<List<Int>>(emptyList())
+        private set
 
     init {
         fetchServices()
@@ -32,6 +34,7 @@ class ServiceViewModel : ViewModel() {
         db.collection("Services")
             .get()
             .addOnSuccessListener { result ->
+                servicesID = result.mapNotNull { it.id.toIntOrNull() }
                 services = result.mapNotNull { it.toObject(Service::class.java) }
             }
             .addOnFailureListener {
