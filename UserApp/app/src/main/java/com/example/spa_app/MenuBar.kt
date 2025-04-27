@@ -55,7 +55,13 @@ fun MenuBar(navController: NavController, viewModel: AuthViewModel = viewModel()
             listOf(
                 Triple(R.drawable.icon_trang_chu, "Trang chủ", "TrangChu"),
                 Triple(R.drawable.icon_dat_lich, "Đặt lịch", "DatLich"),
-                Triple(R.drawable.icon_lich_su, "Lịch sử", "LichSu"),
+                Triple(R.drawable.icon_lich_su, "Lịch sử",
+                    if (user != null) {
+                        "LichSu"
+                    } else {
+                        "DangNhapDangKy"
+                    }
+                ),
                 Triple(
                     R.drawable.icon_tai_khoan, "Tài khoản",
                     if (user != null) {

@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.spa_app"
-        minSdk = 34
+        minSdk = 33
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -58,6 +58,11 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.firebase.database.ktx)
+    implementation(libs.firebase.auth)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
+    implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

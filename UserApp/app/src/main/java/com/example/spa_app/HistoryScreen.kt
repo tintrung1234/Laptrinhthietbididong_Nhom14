@@ -1,5 +1,6 @@
 package com.example.spa_app
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,12 +32,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 //@Preview(showBackground = true)
 @Composable
 fun HistoryScreen(
     navController: NavController,
-    appointmentViewModel: AppointmentViewModel,
+    appointmentViewModel: AppointmentViewModel = viewModel(),
 ){
     val currentUser = FirebaseAuth.getInstance().currentUser
     val appointments = appointmentViewModel.appointments.filter { it.UserId == currentUser?.uid }
@@ -75,10 +77,6 @@ fun itemCardHistory(appointment: Appointment, navController: NavController){
     var servicesID = serviceViewModel.servicesID
     val index = servicesID.indexOf(appointment.ServicesId)
     val service = serviceViewModel.services.getOrNull(index)
-    if (service != null) {
-        itemServiceHistory(service, appointmentsID[appointments.indexOf(appointment)], navController)
-    }
-
 
     Card(
         colors = CardDefaults.cardColors(
@@ -106,12 +104,12 @@ fun itemCardHistory(appointment: Appointment, navController: NavController){
             Column(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                if (service != null) {
+                if (service != null && appointments.indexOf(appointment) != -1) {
                     itemServiceHistory(service, appointmentsID[appointments.indexOf(appointment)],navController)
                 }
             }
             Text(
-                text = "Tổng tiền: ${appointment.TotalValues}}",
+                text = "Tổng tiền: ${formatCost(appointment.TotalValues)}",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
                 modifier = Modifier.fillMaxWidth(),

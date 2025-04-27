@@ -35,7 +35,6 @@ class AuthViewModel : ViewModel() {
                 Log.w("Firebase", "Error saving user", e)
             }
     }
-
     private val auth = FirebaseAuth.getInstance()
 
     var authState by mutableStateOf<FirebaseUser?>(auth.currentUser)
@@ -71,4 +70,22 @@ class AuthViewModel : ViewModel() {
         auth.signOut()
         authState = null
     }
+
+    fun fetchUserData(userID: String, onResult: (User?) -> Unit) {
+
+        val database = FirebaseDatabase.getInstance()
+        val userRef = database.getReference("Users").child(userID)
+
+        userRef.get()
+            .addOnSuccessListener { dataSnapshot ->
+                var user = dataSnapshot.getValue(User::class.java)
+                user = user?.copy(uid = userID)
+                onResult(user)
+            }
+            .addOnFailureListener { exception ->
+                Log.w("Firebase", "Error fetching user", exception)
+                onResult(null)
+            }
+    }
+
 }

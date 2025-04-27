@@ -14,7 +14,7 @@ data class Appointment(
     val OrderDate: String = "",
     val PickedDate: String = "",
     val State: Int = 0,
-    val TotalValues: Int = 0,
+    val TotalValues: Float = 0f,
     val PaymentMethod: Boolean = false,
 )
 class AppointmentViewModel: ViewModel() {

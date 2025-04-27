@@ -165,11 +165,11 @@ fun IconWithText(icon: Int, title: String, id: Int, isSelection: Boolean, onClic
 }
 
 @Composable
-fun itemCardService(services: List<Service>, title: String, img: Int, navController: NavController){
+fun itemCardService(servicess: List<Service>, title: String, img: Int, navController: NavController){
     val serviceViewModel: ServiceViewModel = viewModel()
     val services = serviceViewModel.services
     val servicesID = serviceViewModel.servicesID
-    val filteredServices = services.filter {
+    val filteredServices = servicess.filter {
         when (title) {
             "Bán chạy nhất" -> it.Visitors >= 900
             "Ưu đãi" -> it.Discount > 0
@@ -215,8 +215,11 @@ fun itemCardService(services: List<Service>, title: String, img: Int, navControl
                     modifier = Modifier.fillMaxWidth()
                         .heightIn(max = 300.dp),
                 ) {
+
                     items(filteredServices){service ->
-                        itemDisplayService(service,servicesID[services.indexOf(service)],navController)
+                        if (services.indexOf(service) != -1){
+                            itemDisplayService(service,servicesID[services.indexOf(service)],navController)
+                        }
                     }
                 }
             }

@@ -1,72 +1,74 @@
-com.example.spa_app-lifecycle-livedata-core-2.8.7-0 C:\Users\huynh\.gradle\caches\8.10.2\transforms\00006806041023c8d3d97193ee89e9fc\transformed\lifecycle-livedata-core-2.8.7\res
-com.example.spa_app-startup-runtime-1.1.1-1 C:\Users\huynh\.gradle\caches\8.10.2\transforms\009961a4ed53a2b195e8706dcef416eb\transformed\startup-runtime-1.1.1\res
-com.example.spa_app-activity-ktx-1.10.1-2 C:\Users\huynh\.gradle\caches\8.10.2\transforms\012e1e61447d6769a10b1bbbb5b1eb1a\transformed\activity-ktx-1.10.1\res
-com.example.spa_app-appcompat-resources-1.6.1-3 C:\Users\huynh\.gradle\caches\8.10.2\transforms\01de338d1277ee1620ab48e31ff2cc1e\transformed\appcompat-resources-1.6.1\res
-com.example.spa_app-lifecycle-livedata-core-ktx-2.8.7-4 C:\Users\huynh\.gradle\caches\8.10.2\transforms\0540d2c48d4073e2129e2fb1b771dda1\transformed\lifecycle-livedata-core-ktx-2.8.7\res
-com.example.spa_app-emoji2-1.3.0-5 C:\Users\huynh\.gradle\caches\8.10.2\transforms\07f1f3455c1693b29d63ddc2a05e69b1\transformed\emoji2-1.3.0\res
-com.example.spa_app-navigation-runtime-ktx-2.8.9-6 C:\Users\huynh\.gradle\caches\8.10.2\transforms\11fde7240f3398d4540ae5c983741b3a\transformed\navigation-runtime-ktx-2.8.9\res
-com.example.spa_app-lifecycle-runtime-compose-release-7 C:\Users\huynh\.gradle\caches\8.10.2\transforms\128a8cbf7dd709ea38f1b2f29deb74b7\transformed\lifecycle-runtime-compose-release\res
-com.example.spa_app-credentials-play-services-auth-1.2.0-rc01-8 C:\Users\huynh\.gradle\caches\8.10.2\transforms\1aacae51bb6bc1f52844c890ea1b145b\transformed\credentials-play-services-auth-1.2.0-rc01\res
-com.example.spa_app-ui-unit-release-9 C:\Users\huynh\.gradle\caches\8.10.2\transforms\1f5876e46efabbccf9d8dfe809e88685\transformed\ui-unit-release\res
-com.example.spa_app-navigation-compose-2.8.9-10 C:\Users\huynh\.gradle\caches\8.10.2\transforms\22999be8c3a6cdbba7e6888b42096aa6\transformed\navigation-compose-2.8.9\res
-com.example.spa_app-ads-adservices-java-1.1.0-beta11-11 C:\Users\huynh\.gradle\caches\8.10.2\transforms\230bba602d22db3be895fa2f521f2a9d\transformed\ads-adservices-java-1.1.0-beta11\res
-com.example.spa_app-ui-test-manifest-1.7.2-12 C:\Users\huynh\.gradle\caches\8.10.2\transforms\23adbdecd8099d1ec2c4f58d45a7ef95\transformed\ui-test-manifest-1.7.2\res
-com.example.spa_app-runtime-saveable-release-13 C:\Users\huynh\.gradle\caches\8.10.2\transforms\24788cb1594434518d24f8e1185c7e5b\transformed\runtime-saveable-release\res
-com.example.spa_app-ui-tooling-data-release-14 C:\Users\huynh\.gradle\caches\8.10.2\transforms\269f2c4c5c1f24b3291c8ec47640f135\transformed\ui-tooling-data-release\res
-com.example.spa_app-animation-release-15 C:\Users\huynh\.gradle\caches\8.10.2\transforms\4a622a61a59e8ab3b7639de634a2778e\transformed\animation-release\res
-com.example.spa_app-graphics-path-1.0.1-16 C:\Users\huynh\.gradle\caches\8.10.2\transforms\4ecf6521f6d40436f89e6cfaf25a0b9f\transformed\graphics-path-1.0.1\res
-com.example.spa_app-coil-base-2.4.0-17 C:\Users\huynh\.gradle\caches\8.10.2\transforms\500fe4eb4d210d8049287c628b8b7047\transformed\coil-base-2.4.0\res
-com.example.spa_app-runtime-release-18 C:\Users\huynh\.gradle\caches\8.10.2\transforms\59f605adc9b54d0400e747b0c808d9a5\transformed\runtime-release\res
-com.example.spa_app-lifecycle-viewmodel-compose-release-19 C:\Users\huynh\.gradle\caches\8.10.2\transforms\5d3fb73208acaa641ca74f0cb230c6f6\transformed\lifecycle-viewmodel-compose-release\res
-com.example.spa_app-ui-geometry-release-20 C:\Users\huynh\.gradle\caches\8.10.2\transforms\653505d2ac0dbd204e5deb2f0c83461a\transformed\ui-geometry-release\res
-com.example.spa_app-material-icons-core-release-21 C:\Users\huynh\.gradle\caches\8.10.2\transforms\69431e774a165c90a38ca93d375fef14\transformed\material-icons-core-release\res
-com.example.spa_app-credentials-1.2.0-rc01-22 C:\Users\huynh\.gradle\caches\8.10.2\transforms\694df0c481a63cd75ca80e6f1e430f42\transformed\credentials-1.2.0-rc01\res
-com.example.spa_app-ui-util-release-23 C:\Users\huynh\.gradle\caches\8.10.2\transforms\6a802e7a60015e0fe9345bd026089e38\transformed\ui-util-release\res
-com.example.spa_app-tracing-1.2.0-24 C:\Users\huynh\.gradle\caches\8.10.2\transforms\6f2c50cd8cf3205350df3793bb43be71\transformed\tracing-1.2.0\res
-com.example.spa_app-navigation-runtime-2.8.9-25 C:\Users\huynh\.gradle\caches\8.10.2\transforms\79da03829c59b2529dbd6e7b8f5b6494\transformed\navigation-runtime-2.8.9\res
-com.example.spa_app-annotation-experimental-1.4.1-26 C:\Users\huynh\.gradle\caches\8.10.2\transforms\7ac9ff0523a869779ee66ccc66ca0df9\transformed\annotation-experimental-1.4.1\res
-com.example.spa_app-activity-compose-1.10.1-27 C:\Users\huynh\.gradle\caches\8.10.2\transforms\802702571fba70d8ef503b6fc01d2156\transformed\activity-compose-1.10.1\res
-com.example.spa_app-core-common-2.0.3-28 C:\Users\huynh\.gradle\caches\8.10.2\transforms\87dbad4c7baf51353fd6e627d78f1bbe\transformed\core-common-2.0.3\res
-com.example.spa_app-material-release-29 C:\Users\huynh\.gradle\caches\8.10.2\transforms\882e00c547fc53e7f003e65166781b49\transformed\material-release\res
-com.example.spa_app-material-ripple-release-30 C:\Users\huynh\.gradle\caches\8.10.2\transforms\8f4f4c44b2a4aad1c2e93efae008bcea\transformed\material-ripple-release\res
-com.example.spa_app-lifecycle-viewmodel-savedstate-2.8.7-31 C:\Users\huynh\.gradle\caches\8.10.2\transforms\95a175318b1bec6a2bdb98b1cd09a7cb\transformed\lifecycle-viewmodel-savedstate-2.8.7\res
-com.example.spa_app-ui-release-32 C:\Users\huynh\.gradle\caches\8.10.2\transforms\9a2ea1ae75c0aba07a0d483ce8a8eb89\transformed\ui-release\res
-com.example.spa_app-ui-tooling-preview-release-33 C:\Users\huynh\.gradle\caches\8.10.2\transforms\9d073ed8e2e0d622c26ad3887691aae9\transformed\ui-tooling-preview-release\res
-com.example.spa_app-foundation-release-34 C:\Users\huynh\.gradle\caches\8.10.2\transforms\9d149ad10b05b5d56503994fa5235632\transformed\foundation-release\res
-com.example.spa_app-lifecycle-runtime-ktx-release-35 C:\Users\huynh\.gradle\caches\8.10.2\transforms\a1acfad8690939433138b034859ac227\transformed\lifecycle-runtime-ktx-release\res
-com.example.spa_app-core-viewtree-1.0.0-36 C:\Users\huynh\.gradle\caches\8.10.2\transforms\a6d8f9d1f7438cfc18a87826b42e7ec5\transformed\core-viewtree-1.0.0\res
-com.example.spa_app-play-services-auth-20.7.0-37 C:\Users\huynh\.gradle\caches\8.10.2\transforms\a9b4ba3eb7961ff1bb77b97cc6cf6b17\transformed\play-services-auth-20.7.0\res
-com.example.spa_app-navigation-common-2.8.9-38 C:\Users\huynh\.gradle\caches\8.10.2\transforms\aafc68b41e2948c42006e0d3042346ac\transformed\navigation-common-2.8.9\res
-com.example.spa_app-lifecycle-viewmodel-ktx-2.8.7-39 C:\Users\huynh\.gradle\caches\8.10.2\transforms\ac3cfe82eedb33a0f3a98451fae1991c\transformed\lifecycle-viewmodel-ktx-2.8.7\res
-com.example.spa_app-ads-adservices-1.1.0-beta11-40 C:\Users\huynh\.gradle\caches\8.10.2\transforms\b7692b67da5c9b9a511a0ef67878bd76\transformed\ads-adservices-1.1.0-beta11\res
-com.example.spa_app-core-ktx-1.15.0-41 C:\Users\huynh\.gradle\caches\8.10.2\transforms\b92fffbecbe5a411369317e8c2f756c8\transformed\core-ktx-1.15.0\res
-com.example.spa_app-material3-release-42 C:\Users\huynh\.gradle\caches\8.10.2\transforms\b9c370803d85dfe530e45a86df4fa013\transformed\material3-release\res
-com.example.spa_app-play-services-basement-18.5.0-43 C:\Users\huynh\.gradle\caches\8.10.2\transforms\baff95dfbc443deb6e21cef741e728bb\transformed\play-services-basement-18.5.0\res
-com.example.spa_app-play-services-base-18.5.0-44 C:\Users\huynh\.gradle\caches\8.10.2\transforms\beee89f025c9552c28ff4740b3d126a1\transformed\play-services-base-18.5.0\res
-com.example.spa_app-ui-tooling-release-45 C:\Users\huynh\.gradle\caches\8.10.2\transforms\c096942616a794df6aba5a54b8a1d0e7\transformed\ui-tooling-release\res
-com.example.spa_app-savedstate-1.2.1-46 C:\Users\huynh\.gradle\caches\8.10.2\transforms\c2e7d3b01f1f6f4e549bd4217ea80a85\transformed\savedstate-1.2.1\res
-com.example.spa_app-activity-1.10.1-47 C:\Users\huynh\.gradle\caches\8.10.2\transforms\c4c374ca6800b17fb91c3d87995729b0\transformed\activity-1.10.1\res
-com.example.spa_app-browser-1.4.0-48 C:\Users\huynh\.gradle\caches\8.10.2\transforms\c5070a1ef8c3b11f03145517da369740\transformed\browser-1.4.0\res
-com.example.spa_app-ui-graphics-release-49 C:\Users\huynh\.gradle\caches\8.10.2\transforms\cb23dc8125ebd766cd8f361d6648eef3\transformed\ui-graphics-release\res
-com.example.spa_app-core-runtime-2.2.0-50 C:\Users\huynh\.gradle\caches\8.10.2\transforms\cfbc82baca5a0e449c84b86accce493e\transformed\core-runtime-2.2.0\res
-com.example.spa_app-customview-poolingcontainer-1.0.0-51 C:\Users\huynh\.gradle\caches\8.10.2\transforms\d84db43c2a5c833a70a48d71969f5501\transformed\customview-poolingcontainer-1.0.0\res
-com.example.spa_app-foundation-layout-release-52 C:\Users\huynh\.gradle\caches\8.10.2\transforms\dd66d688949bddcd67e6b3c529cee1aa\transformed\foundation-layout-release\res
-com.example.spa_app-animation-core-release-53 C:\Users\huynh\.gradle\caches\8.10.2\transforms\deae585be00b88e1db21a52ba3d6b508\transformed\animation-core-release\res
-com.example.spa_app-profileinstaller-1.4.0-54 C:\Users\huynh\.gradle\caches\8.10.2\transforms\e511b9c99b9b7cc4b4470c0fc1c71b5f\transformed\profileinstaller-1.4.0\res
-com.example.spa_app-lifecycle-livedata-2.8.7-55 C:\Users\huynh\.gradle\caches\8.10.2\transforms\e8543fcff6e44cc06ab589800305a8c2\transformed\lifecycle-livedata-2.8.7\res
-com.example.spa_app-lifecycle-runtime-release-56 C:\Users\huynh\.gradle\caches\8.10.2\transforms\e94e192baaf484f8687292daa26a50ba\transformed\lifecycle-runtime-release\res
-com.example.spa_app-firebase-common-21.0.0-57 C:\Users\huynh\.gradle\caches\8.10.2\transforms\e9fe4da8fbba7aad15ba1a55c97d9c21\transformed\firebase-common-21.0.0\res
-com.example.spa_app-lifecycle-viewmodel-release-58 C:\Users\huynh\.gradle\caches\8.10.2\transforms\ef98fdcabb85e8a6804627bc756ae22f\transformed\lifecycle-viewmodel-release\res
-com.example.spa_app-savedstate-ktx-1.2.1-59 C:\Users\huynh\.gradle\caches\8.10.2\transforms\efa292bc6b368bfa0afff50598bd564e\transformed\savedstate-ktx-1.2.1\res
-com.example.spa_app-ui-text-release-60 C:\Users\huynh\.gradle\caches\8.10.2\transforms\f03a7c7d8f155073ef6628967b05fbf8\transformed\ui-text-release\res
-com.example.spa_app-lifecycle-process-2.8.7-61 C:\Users\huynh\.gradle\caches\8.10.2\transforms\f2e84e32eb6642320c6a39785a0a7fdd\transformed\lifecycle-process-2.8.7\res
-com.example.spa_app-navigation-common-ktx-2.8.9-62 C:\Users\huynh\.gradle\caches\8.10.2\transforms\f8fc0032d1b1058f5043b88898300574\transformed\navigation-common-ktx-2.8.9\res
-com.example.spa_app-core-1.15.0-63 C:\Users\huynh\.gradle\caches\8.10.2\transforms\f9eb5d87a1736e1a96919f784c71f978\transformed\core-1.15.0\res
-com.example.spa_app-pngs-64 D:\Study\HK6\Mobile\Project\UserApp\app\build\generated\res\pngs\debug
-com.example.spa_app-res-65 D:\Study\HK6\Mobile\Project\UserApp\app\build\generated\res\processDebugGoogleServices
-com.example.spa_app-resValues-66 D:\Study\HK6\Mobile\Project\UserApp\app\build\generated\res\resValues\debug
-com.example.spa_app-packageDebugResources-67 D:\Study\HK6\Mobile\Project\UserApp\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
-com.example.spa_app-packageDebugResources-68 D:\Study\HK6\Mobile\Project\UserApp\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
-com.example.spa_app-debug-69 D:\Study\HK6\Mobile\Project\UserApp\app\build\intermediates\merged_res\debug\mergeDebugResources
-com.example.spa_app-debug-70 D:\Study\HK6\Mobile\Project\UserApp\app\src\debug\res
-com.example.spa_app-main-71 D:\Study\HK6\Mobile\Project\UserApp\app\src\main\res
+com.example.spa_app-animation-core-release-0 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\03888cfe739f998479970ab4547a8232\transformed\animation-core-release\res
+com.example.spa_app-material-release-1 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\047e58acc28bf106912f080c3ceebaa4\transformed\material-release\res
+com.example.spa_app-activity-compose-1.10.1-2 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\050ba9af03b8ab8b0fd61632287ee074\transformed\activity-compose-1.10.1\res
+com.example.spa_app-material3-release-3 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\092e4b11edc0373b85a1be6606e128b0\transformed\material3-release\res
+com.example.spa_app-core-1.15.0-4 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\0b74a85533e9c8d4b8b763c5d042ffb0\transformed\core-1.15.0\res
+com.example.spa_app-lifecycle-viewmodel-ktx-2.8.7-5 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\0d779105520e51651f4c2cd235c59f3b\transformed\lifecycle-viewmodel-ktx-2.8.7\res
+com.example.spa_app-emoji2-1.3.0-6 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\0eda5fa21cdc243736c46c3d06377bc1\transformed\emoji2-1.3.0\res
+com.example.spa_app-ui-util-release-7 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\119662a1b2bcf8e10ca54b38ff140c88\transformed\ui-util-release\res
+com.example.spa_app-emoji2-views-helper-1.3.0-8 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\1533d2754557239e0bd6097d298ae532\transformed\emoji2-views-helper-1.3.0\res
+com.example.spa_app-foundation-release-9 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\1a4a605527cc10c7214cc5c5c476af21\transformed\foundation-release\res
+com.example.spa_app-foundation-layout-release-10 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\1b27640bdef0c25bfc688f9b82b1e822\transformed\foundation-layout-release\res
+com.example.spa_app-fragment-1.5.7-11 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\1c9070bb6d01d1de34572a7f0e4fea8a\transformed\fragment-1.5.7\res
+com.example.spa_app-biometric-1.1.0-12 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\21122d8e5098f882864e0d1d50dfdb42\transformed\biometric-1.1.0\res
+com.example.spa_app-savedstate-ktx-1.2.1-13 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\28e3b3af0c72c8ccb47ed79d325f2920\transformed\savedstate-ktx-1.2.1\res
+com.example.spa_app-ui-test-manifest-1.7.2-14 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\29de6451169d7dc1bd18c9b20adebb06\transformed\ui-test-manifest-1.7.2\res
+com.example.spa_app-lifecycle-process-2.8.7-15 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\2c38018f0f7bc3a84ed45525b7d1882e\transformed\lifecycle-process-2.8.7\res
+com.example.spa_app-lifecycle-runtime-release-16 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\353f5eb96f5f3cc94bdab1630dd53c42\transformed\lifecycle-runtime-release\res
+com.example.spa_app-lifecycle-viewmodel-release-17 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\36a7f750b290b68d6dcb60e8a727e28b\transformed\lifecycle-viewmodel-release\res
+com.example.spa_app-ui-tooling-preview-release-18 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\38fd96fc01ab2bbaf972f8a613d23378\transformed\ui-tooling-preview-release\res
+com.example.spa_app-ui-tooling-data-release-19 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\3bbad716b32a62001bc4e47589d58d56\transformed\ui-tooling-data-release\res
+com.example.spa_app-ui-graphics-release-20 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\3de4274ea3a59918c701f5013052ac75\transformed\ui-graphics-release\res
+com.example.spa_app-core-ktx-1.15.0-21 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\40ffdc06eedd18a1b322bbbba5d9caca\transformed\core-ktx-1.15.0\res
+com.example.spa_app-ads-adservices-1.1.0-beta11-22 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\4d488b7f9a7b46372e21c33f29ab4ba9\transformed\ads-adservices-1.1.0-beta11\res
+com.example.spa_app-appcompat-resources-1.6.1-23 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\4dd8d36a6014b5b804bc6465f4fb9787\transformed\appcompat-resources-1.6.1\res
+com.example.spa_app-ui-unit-release-24 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\4e665cc2d78c9d39d63fbdaddc651734\transformed\ui-unit-release\res
+com.example.spa_app-savedstate-1.2.1-25 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\4e71310cd4cbfe95cbc41477c314c541\transformed\savedstate-1.2.1\res
+com.example.spa_app-material-icons-core-release-26 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\4f9bab5e0627d45c0a52546670e18834\transformed\material-icons-core-release\res
+com.example.spa_app-tracing-1.2.0-27 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\6516fedc68e9275abd5f42c64c22988a\transformed\tracing-1.2.0\res
+com.example.spa_app-appcompat-1.6.1-28 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\6f07fc728661523dce234a409772c5ec\transformed\appcompat-1.6.1\res
+com.example.spa_app-navigation-common-2.8.9-29 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\70a74bff688069bfae7c2fa2d0546839\transformed\navigation-common-2.8.9\res
+com.example.spa_app-credentials-play-services-auth-1.5.0-30 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\7598a40349d0f8c260532b906ecfd4ec\transformed\credentials-play-services-auth-1.5.0\res
+com.example.spa_app-activity-1.10.1-31 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\7c309b08a82a648480f41449fd2a0073\transformed\activity-1.10.1\res
+com.example.spa_app-animation-release-32 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\7ea1922dc1324114bef611118c884499\transformed\animation-release\res
+com.example.spa_app-play-services-basement-18.5.0-33 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\80a6fd2f5e78a97c9779602f6f4959d8\transformed\play-services-basement-18.5.0\res
+com.example.spa_app-ui-tooling-release-34 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\81637fc06addbcca26ba98183d9467cd\transformed\ui-tooling-release\res
+com.example.spa_app-runtime-saveable-release-35 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\8501caea53875800a397cdd62f240fea\transformed\runtime-saveable-release\res
+com.example.spa_app-ui-release-36 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\85f73445f163aff0dd0eaee0b12b8599\transformed\ui-release\res
+com.example.spa_app-material-ripple-release-37 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\89af7fcc9409751a8aa65f4339d0878d\transformed\material-ripple-release\res
+com.example.spa_app-credentials-1.5.0-38 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\8b85cb22d6e9e9c66446f8bb1d99005d\transformed\credentials-1.5.0\res
+com.example.spa_app-graphics-path-1.0.1-39 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\90878f88807847cd65f7a771c32d3a0a\transformed\graphics-path-1.0.1\res
+com.example.spa_app-profileinstaller-1.4.0-40 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\93a847db4c2bb7a24e759deb292ba072\transformed\profileinstaller-1.4.0\res
+com.example.spa_app-activity-ktx-1.10.1-41 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\945c7b836d9f77ed17c6efa87d5508e8\transformed\activity-ktx-1.10.1\res
+com.example.spa_app-firebase-common-21.0.0-42 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\9571a30c750a102de9baeaee9ede28aa\transformed\firebase-common-21.0.0\res
+com.example.spa_app-core-viewtree-1.0.0-43 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\989fe450e40c0e18b61852aec9a56490\transformed\core-viewtree-1.0.0\res
+com.example.spa_app-lifecycle-runtime-ktx-release-44 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\998e94256dffb9abcd2b5a1c7be52080\transformed\lifecycle-runtime-ktx-release\res
+com.example.spa_app-play-services-auth-21.1.1-45 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\a8ee7381ed3aa96dc46806bdd146b70f\transformed\play-services-auth-21.1.1\res
+com.example.spa_app-lifecycle-runtime-compose-release-46 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\a9f0b2f8c2b07684cea052f1b4a53938\transformed\lifecycle-runtime-compose-release\res
+com.example.spa_app-browser-1.4.0-47 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\ac05ded8465b2ee077c20ac7219c1ef5\transformed\browser-1.4.0\res
+com.example.spa_app-core-runtime-2.2.0-48 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\ae337034f8f465946356925c5177abe5\transformed\core-runtime-2.2.0\res
+com.example.spa_app-lifecycle-livedata-core-2.8.7-49 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\b16512f577995840c769f52c8f8d4904\transformed\lifecycle-livedata-core-2.8.7\res
+com.example.spa_app-navigation-runtime-2.8.9-50 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\b517a29f70dad24aa327c4ac0ce127a0\transformed\navigation-runtime-2.8.9\res
+com.example.spa_app-annotation-experimental-1.4.1-51 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\b68a16604a20ea0969cf8c3f15360b43\transformed\annotation-experimental-1.4.1\res
+com.example.spa_app-ui-text-release-52 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\be9dc507ba702b756df4bd7810ad6651\transformed\ui-text-release\res
+com.example.spa_app-ads-adservices-java-1.1.0-beta11-53 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\c20b501b32592c63c6d5b30bfc3f8ea6\transformed\ads-adservices-java-1.1.0-beta11\res
+com.example.spa_app-lifecycle-viewmodel-savedstate-2.8.7-54 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\c46fcc45a8736f53d3b352d70872fc99\transformed\lifecycle-viewmodel-savedstate-2.8.7\res
+com.example.spa_app-navigation-common-ktx-2.8.9-55 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\c9cf35f723706ebf6bad81ef0e5d41c6\transformed\navigation-common-ktx-2.8.9\res
+com.example.spa_app-lifecycle-viewmodel-compose-release-56 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\ccad0f9ad77b9b47d36f459e8df2ac58\transformed\lifecycle-viewmodel-compose-release\res
+com.example.spa_app-coil-base-2.4.0-57 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\cebe6a7b79ae0d102addd1d8b8729ee0\transformed\coil-base-2.4.0\res
+com.example.spa_app-customview-poolingcontainer-1.0.0-58 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\e3e20481cc34d8be98dd7461f5de26bd\transformed\customview-poolingcontainer-1.0.0\res
+com.example.spa_app-ui-geometry-release-59 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\e42b4606ab59811ab789a47fb4835235\transformed\ui-geometry-release\res
+com.example.spa_app-core-common-2.0.3-60 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\e791d49a685f4238e0d48602b63db4b4\transformed\core-common-2.0.3\res
+com.example.spa_app-runtime-release-61 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\e7d55585f72be85bbd06a25d25f2575b\transformed\runtime-release\res
+com.example.spa_app-navigation-compose-2.8.9-62 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\e95e204173a6bdd356d09d6c7c53b88e\transformed\navigation-compose-2.8.9\res
+com.example.spa_app-play-services-base-18.5.0-63 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\f0230e28b8035deea97af998f99252bd\transformed\play-services-base-18.5.0\res
+com.example.spa_app-startup-runtime-1.1.1-64 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\f1b53827d94398c5930db572d5a219bf\transformed\startup-runtime-1.1.1\res
+com.example.spa_app-navigation-runtime-ktx-2.8.9-65 C:\Users\Thanh Dat\.gradle\caches\8.10.2\transforms\f5613d31262982bd67b088a51e72939c\transformed\navigation-runtime-ktx-2.8.9\res
+com.example.spa_app-pngs-66 E:\Mobile\Laptrinhthietbididong_Nhom14\UserApp\app\build\generated\res\pngs\debug
+com.example.spa_app-res-67 E:\Mobile\Laptrinhthietbididong_Nhom14\UserApp\app\build\generated\res\processDebugGoogleServices
+com.example.spa_app-resValues-68 E:\Mobile\Laptrinhthietbididong_Nhom14\UserApp\app\build\generated\res\resValues\debug
+com.example.spa_app-packageDebugResources-69 E:\Mobile\Laptrinhthietbididong_Nhom14\UserApp\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.example.spa_app-packageDebugResources-70 E:\Mobile\Laptrinhthietbididong_Nhom14\UserApp\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.example.spa_app-debug-71 E:\Mobile\Laptrinhthietbididong_Nhom14\UserApp\app\build\intermediates\merged_res\debug\mergeDebugResources
+com.example.spa_app-debug-72 E:\Mobile\Laptrinhthietbididong_Nhom14\UserApp\app\src\debug\res
+com.example.spa_app-main-73 E:\Mobile\Laptrinhthietbididong_Nhom14\UserApp\app\src\main\res
