@@ -60,6 +60,7 @@ fun Controller() {
         composable("TaiKhoan") { InforScreen(navConTroller) }
         composable("TrangThanhToan") { PaymentScreen(navConTroller) }
         composable("TrangDatLich") { Trangdatlich(navConTroller) }
+        composable("TimKiem") { Search(navConTroller, servicesViewModel) }
     }
 }
 

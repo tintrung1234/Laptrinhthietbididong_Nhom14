@@ -97,33 +97,27 @@ fun TrangChu(
                             modifier = Modifier
                                 .size(300.dp, 35.dp)
                                 .background(color = Color.White, shape = RoundedCornerShape(25.dp))
-                                .padding(horizontal = 15.dp),
+                                .padding(horizontal = 15.dp)
+                                .clickable(onClick = { navController.navigate("TimKiem") }),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            var text by remember { mutableStateOf("") }
-                            BasicTextField(
-                                value = text,
-                                onValueChange = { text = it },
+                            Row(
                                 modifier = Modifier
                                     .size(250.dp, 30.dp)
                                     .background(color = Color.White),
-                                decorationBox = { innerTextField ->
-                                    Box(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        contentAlignment = Alignment.CenterStart
-                                    ) {
-                                        if (text.isEmpty()) {
-                                            Text(
-                                                "Tìm kiếm",
-                                                color = Color(rgb(204, 204, 204)),
-                                                fontSize = 18.sp
-                                            )
-                                        }
-                                        innerTextField()
-                                    }
+                            ) {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    contentAlignment = Alignment.CenterStart
+                                ) {
+                                    Text(
+                                        "Tìm kiếm",
+                                        color = Color(rgb(204, 204, 204)),
+                                        fontSize = 18.sp
+                                    )
                                 }
-                            )
+                            }
 
                             Button(
                                 onClick = {},
@@ -139,6 +133,7 @@ fun TrangChu(
                                 )
                             }
                         }
+
 
                         //Button notification
                         Button(
@@ -407,7 +402,8 @@ fun TrangChu(
                 modifier = Modifier.padding(start = 20.dp, top = 20.dp)
             )
             LazyColumn(
-                modifier = Modifier.padding(20.dp)
+                modifier = Modifier
+                    .padding(20.dp)
                     .height(500.dp)
             ) {
                 items(services) { service ->
@@ -495,7 +491,7 @@ fun TrangChu(
 
         }
 
-        //Menu
+//Menu
         val viewModel: AuthViewModel = viewModel()
         MenuBar(navController, viewModel)
     }
