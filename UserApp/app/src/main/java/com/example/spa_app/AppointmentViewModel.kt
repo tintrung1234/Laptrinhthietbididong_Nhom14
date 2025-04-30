@@ -8,20 +8,21 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 
 data class Appointment(
-    val UserId: String = "",
-    val StaffId: Int = 0,
-    val ServicesId: Int = 0,
-    val OrderDate: String = "",
-    val PickedDate: String = "",
-    val State: Int = 0,
-    val TotalValues: Int = 0,
-    val PaymentMethod: Boolean = false,
+    val id: String = "",
+    val userId: String = "",
+    val staffId: Any = 0,
+    val servicesId: Int = 0,
+    val orderDate: String = "",
+    val pickedDate: String = "",
+    val state: Int = 0,
+    val totalValues: Float = 0f,
+    val paymentMethod: Boolean = false,
 )
 class AppointmentViewModel: ViewModel() {
     private val db = FirebaseFirestore.getInstance()
     var appointments by mutableStateOf<List<Appointment>>(emptyList())
         private set
-    var appointmentsID by mutableStateOf<List<Int>>(emptyList())
+    var appointmentsID by mutableStateOf<List<String>>(emptyList())
         private set
     init {
         fetchAppointments()
@@ -30,12 +31,21 @@ class AppointmentViewModel: ViewModel() {
         db.collection("Appointments")
             .get()
             .addOnSuccessListener { result ->
-                appointmentsID = result.mapNotNull { it.id.toIntOrNull() }
-                appointments = result.mapNotNull { it.toObject(Appointment::class.java) }
+                val newAppointments = mutableListOf<Appointment>()
+                val newIds = mutableListOf<String>()
+
+                for (doc in result) {
+                    val appointment = doc.toObject(Appointment::class.java).copy(id = doc.id)
+                    newAppointments.add(appointment)
+                    newIds.add(doc.id)
+                }
+
+                appointments = newAppointments
+                appointmentsID = newIds
             }
-            .addOnFailureListener {
-                    exception ->
+            .addOnFailureListener { exception ->
                 Log.e("AppointmentViewModel", "Error getting appointments", exception)
             }
     }
+
 }

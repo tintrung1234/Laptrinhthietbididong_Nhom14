@@ -36,7 +36,7 @@ fun Controller() {
     val appointmentViewModel: AppointmentViewModel = viewModel()
     NavHost(navController = navConTroller, startDestination = "TrangChu") {
         composable("TrangChu") { TrangChu(navConTroller, servicesViewModel, staffsViewModel) }
-        composable("DatLich") { Trangdatlich(navConTroller) }
+        composable("DatLich") { TrangDatLich(navConTroller) }
         composable("DanhGia") { ReviewPage(navConTroller) }
         composable("ThongBao") { NotifyScreen(navConTroller) }
         composable(
@@ -52,14 +52,14 @@ fun Controller() {
         composable("LienHe") { TrangLienHe(navConTroller) }
         composable(
             "ChiTietLichHen/{appointmentId}",
-            arguments = listOf(navArgument("appointmentId") { type = NavType.IntType })
+            arguments = listOf(navArgument("appointmentId") { type = NavType.StringType })
         ) {backStackEntry ->
-            val appointmentId = backStackEntry.arguments?.getInt("appointmentId")
+            val appointmentId = backStackEntry.arguments?.getString("appointmentId")
             AppointmentDetailScreen(navConTroller, appointmentId) }
         composable("CacGoiDichVu") { ServiceScreen(navConTroller, servicesViewModel, categoryViewModel) }
         composable("TaiKhoan") { InforScreen(navConTroller) }
         composable("TrangThanhToan") { PaymentScreen(navConTroller) }
-        composable("TrangDatLich") { Trangdatlich(navConTroller) }
+        composable("TrangDatLich") { TrangDatLich(navConTroller) }
         composable("TimKiem") { Search(navConTroller, servicesViewModel) }
     }
 }

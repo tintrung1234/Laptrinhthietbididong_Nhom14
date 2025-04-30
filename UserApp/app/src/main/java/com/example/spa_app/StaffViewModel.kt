@@ -18,6 +18,8 @@ class StaffViewModel : ViewModel() {
     private val db = FirebaseFirestore.getInstance()
     var staffs by mutableStateOf<List<Staff>>(emptyList())
         private set
+    var staffsID by mutableStateOf<List<String>>(emptyList())
+        private set
 
     init {
         fetchStaffs()
@@ -27,6 +29,7 @@ class StaffViewModel : ViewModel() {
         db.collection("Staff")
             .get()
             .addOnSuccessListener { result ->
+                staffsID = result.mapNotNull { it.id}
                 staffs = result.mapNotNull { it.toObject(Staff::class.java) }
             }
             .addOnFailureListener {

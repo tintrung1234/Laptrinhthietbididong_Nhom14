@@ -59,6 +59,7 @@ fun TrangChu(
 ) {
     val services = serviceViewModel.services
     val staffs = staffViewModel.staffs
+    val servicesID = serviceViewModel.servicesID
     Box {
         //Content
         Column(
@@ -319,10 +320,11 @@ fun TrangChu(
                     .fillMaxWidth()
             ) {
                 items(services.filter { it.Rating == 5 }) { service ->
+                    val serviceId = servicesID[services.indexOf(service)]
                     Column(
                         modifier = Modifier
                             .width(116.dp)
-                            .clickable(onClick = { navController.navigate("ChiTietDichVu") })
+                            .clickable(onClick = { navController.navigate("ChiTietDichVu/$serviceId") })
                     ) {
                         AsyncImage(
                             model = service.Image,

@@ -1,6 +1,6 @@
 package com.example.spa_app
 
-import androidx.compose.foundation.Image
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,7 +20,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -36,17 +35,29 @@ import com.google.firebase.auth.FirebaseAuth
 @Composable
 fun HistoryScreen(
     navController: NavController,
-    appointmentViewModel: AppointmentViewModel,
-){
+    appointmentViewModel: AppointmentViewModel = viewModel(),
+) {
     val currentUser = FirebaseAuth.getInstance().currentUser
-    val appointments = appointmentViewModel.appointments.filter { it.UserId == currentUser?.uid }
+    val appointments = appointmentViewModel.appointments
 
+    //List index nhung appointment duoc chon
+    val appointmentIndices = mutableListOf<String>()
+//    val appointment = appointments.mapIndexedNotNull { index, appointment ->
+//        if (appointment.UserId == currentUser?.uid) {
+//            appointmentIndices.add(index.toString())
+//            appointment
+//        } else null
+//    }
+    val appointment = appointmentViewModel.appointments.filter { it.userId == currentUser?.uid }
+
+    val appointmentIds = appointmentViewModel.appointmentsID
+    Log.d("Appointment", "$appointment")
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(vertical = 30.dp, horizontal = 20.dp)
-    ){
-        TopLayout("Lịch sử", {navController.popBackStack() })
+    ) {
+        TopLayout("Lịch sử", { navController.popBackStack() })
         Card(
             colors = CardDefaults.cardColors(
                 containerColor = Color(0xFFD9D9D9)
@@ -57,8 +68,11 @@ fun HistoryScreen(
                     .fillMaxSize()
                     .padding(8.dp)
             ) {
-                items(appointments){appointment ->
-                    itemCardHistory(appointment, navController)
+                val Apid = appointment
+                Log.d("ApId","$Apid")
+                val appointmentsWithId = appointment.filter { it.id in appointmentIds }
+                items(appointmentsWithId) { appointment ->
+                    itemCardHistory(appointment, appointment.id , navController)
                 }
             }
         }
@@ -67,19 +81,14 @@ fun HistoryScreen(
 
 //@Preview(showBackground = true)
 @Composable
-fun itemCardHistory(appointment: Appointment, navController: NavController){
+fun itemCardHistory(appointment: Appointment, appointmentId: String, navController: NavController) {
+    Log.d("appointmentIdH", "$appointmentId")
     val serviceViewModel: ServiceViewModel = viewModel()
     val appointmentViewModel: AppointmentViewModel = viewModel()
     var appointments = appointmentViewModel.appointments
-    var appointmentsID = appointmentViewModel.appointmentsID
     var servicesID = serviceViewModel.servicesID
-    val index = servicesID.indexOf(appointment.ServicesId)
+    val index = servicesID.indexOf(appointment.servicesId)
     val service = serviceViewModel.services.getOrNull(index)
-    if (service != null) {
-        itemServiceHistory(service, appointmentsID[appointments.indexOf(appointment)], navController)
-    }
-
-
     Card(
         colors = CardDefaults.cardColors(
             containerColor = Color.White
@@ -98,34 +107,35 @@ fun itemCardHistory(appointment: Appointment, navController: NavController){
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = appointment.OrderDate,
+                    text = appointment.orderDate,
                     color = Color(0x801E1E1E),
                 )
-                CheckStateOrder(appointment.State)
+                CheckStateOrder(appointment.state)
             }
             Column(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                if (service != null) {
-                    itemServiceHistory(service, appointmentsID[appointments.indexOf(appointment)],navController)
+                if (service != null && appointments.indexOf(appointment) != -1) {
+                    itemServiceHistory(service, appointmentId, navController)
                 }
             }
             Text(
-                text = "Tổng tiền: ${appointment.TotalValues}}",
+                text = "Tổng tiền: ${formatCost(appointment.totalValues)}",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.End // Căn văn bản bên phải
             )
-            CheckPayment(appointment.PaymentMethod)
+            CheckPayment(appointment.paymentMethod)
         }
     }
     Spacer(modifier = Modifier.height(12.dp))
 }
 
 @Composable
-fun itemServiceHistory(service: Service, appointmentID: Int, navController: NavController){
-    Row (
+fun itemServiceHistory(service: Service, appointmentID: String, navController: NavController) {
+    Log.d("appoinmentID", "$appointmentID")
+    Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 30.dp)
@@ -135,7 +145,7 @@ fun itemServiceHistory(service: Service, appointmentID: Int, navController: NavC
     ) {
         AsyncImage(
             model = service.Image,
-            contentDescription ="",
+            contentDescription = "",
             modifier = Modifier.size(100.dp)
         )
         Spacer(modifier = Modifier.width(10.dp))
@@ -160,7 +170,7 @@ fun itemServiceHistory(service: Service, appointmentID: Int, navController: NavC
                 )
                 Spacer(modifier = Modifier.width(5.dp))
                 Text(
-                    text = formatCost((100-service.Discount)*service.Price/100),
+                    text = formatCost((100 - service.Discount) * service.Price / 100),
                     fontSize = 18.sp,
                     color = Color.Red
                 )
