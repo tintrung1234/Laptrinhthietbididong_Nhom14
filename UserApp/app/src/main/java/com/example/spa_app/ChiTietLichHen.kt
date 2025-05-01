@@ -51,12 +51,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 @Composable
-fun AppointmentDetailScreen(navController: NavController, appointmentID: String?) {
-    val appointmentViewModel: AppointmentViewModel = viewModel()
-    val serviceViewModel: ServiceViewModel = viewModel()
-    val categoryViewModel: CategoryViewModel = viewModel()
-    val staffViewModel: StaffViewModel = viewModel()
-
+fun AppointmentDetailScreen(
+    navController: NavController,
+    appointmentID: String?,
+    appointmentViewModel: AppointmentViewModel = viewModel(),
+    serviceViewModel: ServiceViewModel = viewModel(),
+    categoryViewModel: CategoryViewModel = viewModel(),
+    staffViewModel: StaffViewModel = viewModel()
+) {
     Scaffold { paddingValues ->
         LazyColumn(
             modifier = Modifier
@@ -70,14 +72,14 @@ fun AppointmentDetailScreen(navController: NavController, appointmentID: String?
                 TopLayout("Thông tin lịch hẹn", { navController.popBackStack() })
                 Spacer(modifier = Modifier.height(8.dp))
             }
-            Log.d("IDappointment", "$appointmentID")
             item {
                 // Banner
                 if (appointmentID != null) {
                     val firestore = FirebaseFirestore.getInstance()
                     val auth = FirebaseAuth.getInstance()
                     val currentUser = auth.currentUser
-                    val userDocRef = currentUser?.let { firestore.collection("Users").document(it.uid) }
+                    val userDocRef =
+                        currentUser?.let { firestore.collection("Users").document(it.uid) }
 
                     // State for user info
                     var name by remember { mutableStateOf("") }
@@ -88,25 +90,30 @@ fun AppointmentDetailScreen(navController: NavController, appointmentID: String?
                     val appointmentIndex = appointmentID
 
                     if (appointmentIndex != null) {
-                        val appointment = appointmentViewModel.appointments.find { it.id == appointmentID }
+                        val appointment =
+                            appointmentViewModel.appointments.find { it.id == appointmentID }
+                        Log.d("appointment", "$appointment")
 
-                        Log.d("IDappointment", "$appointment")
-                        // Fetch service and staff data
-                        val serviceIndex = appointment?.let { serviceViewModel.servicesID.indexOf(it.servicesId) }
-                        val staffIndex = appointment?.let { staffViewModel.staffsID.indexOf(it.staffId) }
+                        // Get service and staff id
+                        val serviceIndex = appointment?.servicesId.toString()
+                        val staffIndex = appointment?.staffId.toString()
 
-                        if (serviceIndex != -1 && staffIndex != -1) {
-                            val service = serviceViewModel.services[serviceIndex!!]
-                            val staff = staffViewModel.staffs[staffIndex!!]
+                        if (serviceIndex != null && staffIndex != null) {
+
+                            val service = serviceViewModel.services.find { it.id == serviceIndex }
+                            val staff = staffViewModel.staffs.find { it.id == staffIndex }
 
                             LaunchedEffect(Unit) {
                                 if (userDocRef != null) {
                                     userDocRef.get()
                                         .addOnSuccessListener { document ->
                                             if (document != null && document.exists()) {
-                                                name = document.getString("name") ?: currentUser.displayName.orEmpty()
-                                                phone = document.getString("phone") ?: currentUser.phoneNumber.orEmpty()
-                                                email = document.getString("email") ?: currentUser.email.orEmpty()
+                                                name = document.getString("name")
+                                                    ?: currentUser.displayName.orEmpty()
+                                                phone = document.getString("phone")
+                                                    ?: currentUser.phoneNumber.orEmpty()
+                                                email = document.getString("email")
+                                                    ?: currentUser.email.orEmpty()
                                             } else {
                                                 name = currentUser.displayName.orEmpty()
                                                 phone = currentUser.phoneNumber.orEmpty()
@@ -119,46 +126,49 @@ fun AppointmentDetailScreen(navController: NavController, appointmentID: String?
                                 }
                             }
 
-                            AsyncImage(
-                                model = service.Image,
-                                contentDescription = "Service Banner",
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(160.dp)
-                                    .clip(RoundedCornerShape(8.dp))
-                            )
-
-                            Spacer(modifier = Modifier.height(8.dp))
-
-                            // Service Info
-                            Text(
-                                text = service.Name,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 16.sp
-                            )
-
-                            Row {
-                                Text(
-                                    text = formatCost(service.Price),
-                                    textDecoration = TextDecoration.LineThrough,
-                                    color = Color.Gray
+                            if (service != null && staff != null && appointment != null) {
+                                AsyncImage(
+                                    model = service.Image,
+                                    contentDescription = "Service Banner",
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(160.dp)
+                                        .clip(RoundedCornerShape(8.dp))
                                 )
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Text(
-                                    text = formatCost((100 - service.Discount) * service.Price / 100),
-                                    color = Color.Red,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            }
 
-                            if (categoryViewModel.categoriesID.indexOf(service.CategoryId) != -1) {
+                                Spacer(modifier = Modifier.height(8.dp))
+
+                                // Service Info
                                 Text(
-                                    text = "Dịch vụ: ${
-                                        categoryViewModel.categoriesName[categoryViewModel.categoriesID.indexOf(service.CategoryId)]
-                                    }", fontSize = 14.sp, color = Color.Gray
+                                    text = service.Name,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 16.sp
                                 )
-                            }
+
+                                Row {
+                                    Text(
+                                        text = formatCost(service.Price),
+                                        textDecoration = TextDecoration.LineThrough,
+                                        color = Color.Gray
+                                    )
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Text(
+                                        text = formatCost((100 - service.Discount) * service.Price / 100),
+                                        color = Color.Red,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+
+                                if (categoryViewModel.categoriesID.indexOf(service.CategoryId) != -1) {
+                                    Text(
+                                        text = "Dịch vụ: ${
+                                            categoryViewModel.categoriesName[categoryViewModel.categoriesID.indexOf(
+                                                service.CategoryId
+                                            )]
+                                        }", fontSize = 14.sp, color = Color.Gray
+                                    )
+                                }
 
                             Spacer(modifier = Modifier.height(8.dp))
 
@@ -182,11 +192,13 @@ fun AppointmentDetailScreen(navController: NavController, appointmentID: String?
                                     DetailRow("Khách hàng:", name, Icons.Default.Person)
                                     DetailRow("Số điện thoại:", phone, Icons.Default.Phone)
                                     // DetailRow("Địa chỉ:", "123/321 ABC", Icons.Default.LocationOn)
-                                    DetailRow(
-                                        "Thời gian phục vụ:",
-                                        appointment.pickedDate,
-                                        R.drawable.donghocat
-                                    )
+                                    if (appointment != null) {
+                                        DetailRow(
+                                            "Thời gian phục vụ:",
+                                            appointment.pickedDate,
+                                            R.drawable.donghocat
+                                        )
+                                    }
                                     DetailRow(
                                         "Thời gian đặt đơn:",
                                         appointment.orderDate,
@@ -244,6 +256,7 @@ fun AppointmentDetailScreen(navController: NavController, appointmentID: String?
                                 }
                             }
                         }
+                        }
                     }
                 } else {
                     Text("Không tìm thấy lịch hẹn", color = Color.Red)
@@ -252,8 +265,6 @@ fun AppointmentDetailScreen(navController: NavController, appointmentID: String?
         }
     }
 }
-
-
 
 
 @Composable
@@ -265,6 +276,7 @@ fun DetailRow(label: String, value: String, icon: Any) {
                 contentDescription = null,
                 modifier = Modifier.size(18.dp)
             )
+
             is Int -> Icon(
                 painter = painterResource(id = icon),
                 contentDescription = null,

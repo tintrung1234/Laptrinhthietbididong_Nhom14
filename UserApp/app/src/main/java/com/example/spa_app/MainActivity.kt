@@ -41,10 +41,10 @@ fun Controller() {
         composable("ThongBao") { NotifyScreen(navConTroller) }
         composable(
             "ChiTietDichVu/{serviceId}",
-            arguments = listOf(navArgument("serviceId") { type = NavType.IntType })
+            arguments = listOf(navArgument("serviceId") { type = NavType.StringType })
         ) {backStackEntry ->
-            val serviceId = backStackEntry.arguments?.getInt("serviceId")
-            DetailServiceScreen(navConTroller, serviceId)
+            val serviceId = backStackEntry.arguments?.getString("serviceId")
+            DetailServiceScreen(navConTroller, serviceId, servicesViewModel, categoryViewModel)
         }
         composable("LichSu") { HistoryScreen(navConTroller,appointmentViewModel) }
         composable("MaGiamGia") { TrangMaGiamGia(navConTroller) }
@@ -55,7 +55,7 @@ fun Controller() {
             arguments = listOf(navArgument("appointmentId") { type = NavType.StringType })
         ) {backStackEntry ->
             val appointmentId = backStackEntry.arguments?.getString("appointmentId")
-            AppointmentDetailScreen(navConTroller, appointmentId) }
+            AppointmentDetailScreen(navConTroller, appointmentId, appointmentViewModel, servicesViewModel, categoryViewModel,staffsViewModel) }
         composable("CacGoiDichVu") { ServiceScreen(navConTroller, servicesViewModel, categoryViewModel) }
         composable("TaiKhoan") { InforScreen(navConTroller) }
         composable("TrangThanhToan") { PaymentScreen(navConTroller) }

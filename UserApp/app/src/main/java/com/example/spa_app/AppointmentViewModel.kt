@@ -11,7 +11,7 @@ data class Appointment(
     val id: String = "",
     val userId: String = "",
     val staffId: Any = 0,
-    val servicesId: Int = 0,
+    val servicesId: String = "",
     val orderDate: String = "",
     val pickedDate: String = "",
     val state: Int = 0,
@@ -21,8 +21,6 @@ data class Appointment(
 class AppointmentViewModel: ViewModel() {
     private val db = FirebaseFirestore.getInstance()
     var appointments by mutableStateOf<List<Appointment>>(emptyList())
-        private set
-    var appointmentsID by mutableStateOf<List<String>>(emptyList())
         private set
     init {
         fetchAppointments()
@@ -41,7 +39,6 @@ class AppointmentViewModel: ViewModel() {
                 }
 
                 appointments = newAppointments
-                appointmentsID = newIds
             }
             .addOnFailureListener { exception ->
                 Log.e("AppointmentViewModel", "Error getting appointments", exception)

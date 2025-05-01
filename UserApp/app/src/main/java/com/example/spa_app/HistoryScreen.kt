@@ -38,20 +38,9 @@ fun HistoryScreen(
     appointmentViewModel: AppointmentViewModel = viewModel(),
 ) {
     val currentUser = FirebaseAuth.getInstance().currentUser
-    val appointments = appointmentViewModel.appointments
-
-    //List index nhung appointment duoc chon
-    val appointmentIndices = mutableListOf<String>()
-//    val appointment = appointments.mapIndexedNotNull { index, appointment ->
-//        if (appointment.UserId == currentUser?.uid) {
-//            appointmentIndices.add(index.toString())
-//            appointment
-//        } else null
-//    }
     val appointment = appointmentViewModel.appointments.filter { it.userId == currentUser?.uid }
+    val servicesViewModel: ServiceViewModel = viewModel()
 
-    val appointmentIds = appointmentViewModel.appointmentsID
-    Log.d("Appointment", "$appointment")
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -68,11 +57,8 @@ fun HistoryScreen(
                     .fillMaxSize()
                     .padding(8.dp)
             ) {
-                val Apid = appointment
-                Log.d("ApId","$Apid")
-                val appointmentsWithId = appointment.filter { it.id in appointmentIds }
-                items(appointmentsWithId) { appointment ->
-                    itemCardHistory(appointment, appointment.id , navController)
+                items(appointment) { appointment ->
+                    itemCardHistory(appointment, appointment.id , navController, servicesViewModel)
                 }
             }
         }
@@ -81,14 +67,11 @@ fun HistoryScreen(
 
 //@Preview(showBackground = true)
 @Composable
-fun itemCardHistory(appointment: Appointment, appointmentId: String, navController: NavController) {
-    Log.d("appointmentIdH", "$appointmentId")
-    val serviceViewModel: ServiceViewModel = viewModel()
+fun itemCardHistory(appointment: Appointment, appointmentId: String, navController: NavController, serviceViewModel: ServiceViewModel = viewModel()) {
     val appointmentViewModel: AppointmentViewModel = viewModel()
     var appointments = appointmentViewModel.appointments
-    var servicesID = serviceViewModel.servicesID
-    val index = servicesID.indexOf(appointment.servicesId)
-    val service = serviceViewModel.services.getOrNull(index)
+
+    val service = serviceViewModel.services.find { it.id == appointment.servicesId }
     Card(
         colors = CardDefaults.cardColors(
             containerColor = Color.White

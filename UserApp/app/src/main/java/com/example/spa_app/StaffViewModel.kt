@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 
 data class Staff(
+    val id: String = "",
     val image: String = "",
     val name: String = "",
     val rating: Int = 0,
@@ -18,9 +19,6 @@ class StaffViewModel : ViewModel() {
     private val db = FirebaseFirestore.getInstance()
     var staffs by mutableStateOf<List<Staff>>(emptyList())
         private set
-    var staffsID by mutableStateOf<List<String>>(emptyList())
-        private set
-
     init {
         fetchStaffs()
     }
@@ -29,8 +27,16 @@ class StaffViewModel : ViewModel() {
         db.collection("Staff")
             .get()
             .addOnSuccessListener { result ->
-                staffsID = result.mapNotNull { it.id}
-                staffs = result.mapNotNull { it.toObject(Staff::class.java) }
+                val newStaffs = mutableListOf<Staff>()
+                val newIds = mutableListOf<String>()
+
+                for (doc in result) {
+                    val staff = doc.toObject(Staff::class.java).copy(id = doc.id)
+                    newStaffs.add(staff)
+                    newIds.add(doc.id)
+                }
+
+                staffs = newStaffs
             }
             .addOnFailureListener {
                     exception ->

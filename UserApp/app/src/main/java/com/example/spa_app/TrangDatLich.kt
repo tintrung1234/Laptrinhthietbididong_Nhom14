@@ -26,6 +26,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
@@ -282,11 +284,11 @@ fun TrangDatLich(navController: NavController) {
                         .padding(horizontal = 4.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    // Hình ảnh kỹ thuật viên (thay bằng logic tải ảnh thực tế nếu có)
-                    Image(
-                        painterResource(R.drawable.ktv1), // Thay bằng ảnh động nếu có
+                    AsyncImage(
+                        model = staff.image,
                         contentDescription = null,
-                        modifier = Modifier.size(90.dp)
+                        modifier = Modifier.size(90.dp),
+                        contentScale = ContentScale.Crop
                     )
                     Column(
                         modifier = Modifier
@@ -383,13 +385,13 @@ fun TrangDatLich(navController: NavController) {
                         return@Button
                     }
 
-                    val staffIndex = staffViewModel.staffs.indexOf(selectedStaff)
-                    val serviceIndex = serviceViewModel.services.indexOf(selectedService)
+                    val staffIndex = selectedStaff!!.id
+                    val serviceIndex = selectedService!!.id
                     val userId = authViewModel.authState?.uid ?: "anonymous"
                     val appointment = Appointment(
                         userId = userId,
-                        staffId = staffViewModel.staffsID.getOrNull(staffIndex) ?: 0,
-                        servicesId = serviceViewModel.servicesID.getOrNull(serviceIndex) ?: 0,
+                        staffId = staffIndex,
+                        servicesId = serviceIndex,
                         orderDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
                         pickedDate = "$selectedDate $selectedTime",
                         state = 0,

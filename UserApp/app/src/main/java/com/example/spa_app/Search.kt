@@ -5,6 +5,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -176,10 +177,13 @@ fun Search(navController: NavController, serviceViewModel: ServiceViewModel = vi
                     val discountPercent = service.Discount.toFloat() / 100f
                     val discountAmount = service.Price * discountPercent
                     val finalPrice = service.Price - discountAmount
+
+                    val serviceId = service.id
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = 16.dp)
+                            .clickable(onClick = { navController.navigate("ChiTietDichVu/$serviceId") })
                     ) {
                         AsyncImage(
                             model = service.Image,
