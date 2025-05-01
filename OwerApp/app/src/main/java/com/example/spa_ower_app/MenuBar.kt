@@ -29,13 +29,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
-fun MenuBar(navController: NavController) {
+fun MenuBar(navController: NavController, viewModel: AuthViewModel = viewModel()) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+    val user = viewModel.authState
 
     Row(
         modifier = Modifier.fillMaxSize(),
@@ -53,8 +55,15 @@ fun MenuBar(navController: NavController) {
             listOf(
                 Triple(R.drawable.icon_trang_chu,"Trang Chủ", "TrangChu"),
                 Triple(R.drawable.icon_lich_su,"Lịch sử", "LichSu"),
-                Triple(R.drawable.dichvu_icon, "Chỉnh Sửa","ThemDichVu"),
-                Triple(R.drawable.icon_tai_khoan,"Tài khoản","TaiKhoan"),
+                Triple(R.drawable.dichvu_icon, "Chỉnh Sửa","ThemSuaDichVu"),
+                Triple(
+                    R.drawable.icon_tai_khoan, "Tài khoản",
+                    if (user != null) {
+                        "TaiKhoan"
+                    } else {
+                        "DangNhapDangKy"
+                    }
+                ),
             ).forEach { (icon, title, route) ->
                 val isSelected = currentRoute == route
                 val interactionSource = remember { MutableInteractionSource() }
@@ -99,3 +108,6 @@ fun MenuBar(navController: NavController) {
         }
     }
 }
+
+
+

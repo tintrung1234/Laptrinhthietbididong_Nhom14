@@ -1,5 +1,6 @@
 package com.example.spa_ower_app
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -36,6 +37,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,11 +51,38 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 @Composable
-fun ThemSuaDichVu(navController: NavController) {
+fun ThemSuaDichVu(
+    navController: NavController,
+    serviceViewModel: ServiceViewModel = viewModel()
+) {
     var isThemDichVu by remember { mutableStateOf(true) }
+    //Get info user
+    val firestore = FirebaseFirestore.getInstance()
+    val auth = FirebaseAuth.getInstance()
+    val currentUser = auth.currentUser
+    val userDocRef = currentUser?.let { firestore.collection("Users").document(it.uid) }
+
+    // State cho thông tinS
+    var admin by remember { mutableStateOf(0) }
+
+    LaunchedEffect(Unit) {
+        userDocRef?.get()
+            ?.addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    admin = document.getLong("admin")?.toInt() ?: 0
+                }
+            }
+            ?.addOnFailureListener { e ->
+                Log.e("InforLayout", "Error getting user info", e)
+            }
+    }
+
 
     Column(
         modifier = Modifier
@@ -61,7 +90,8 @@ fun ThemSuaDichVu(navController: NavController) {
             .background(color = Color.White)
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(horizontal = 10.dp),
         ) {
             Box(
@@ -127,10 +157,20 @@ fun ThemSuaDichVu(navController: NavController) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        if (isThemDichVu) {
-            FormThemDichVu(navController)
+        if (currentUser != null && admin == 1) {
+            if (isThemDichVu) {
+                FormThemDichVu(navController)
+            } else {
+                FormSuaDichVu(navController)
+            }
         } else {
-            FormSuaDichVu(navController)
+            Text(
+                text = "Bạn chưa đăng nhập",
+                color = Color.Red,
+                modifier = Modifier
+                    .padding(top = 4.dp)
+                    .align(alignment = Alignment.CenterHorizontally)
+            )
         }
     }
 }

@@ -4,7 +4,6 @@ import android.graphics.Color.rgb
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,12 +18,16 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,19 +36,29 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 
 @Composable
-fun TrangChu(navController: NavController) {
+fun TrangChu(
+    navController: NavController,
+    serviceViewModel: ServiceViewModel = viewModel(),
+    staffViewModel: StaffViewModel = viewModel()
+) {
+    val services = serviceViewModel.services
+    val staffs = staffViewModel.staffs
     Box {
         //Content
         Column(
@@ -78,38 +91,33 @@ fun TrangChu(navController: NavController) {
                             .offset(y = 30.dp),
                         horizontalArrangement = Arrangement.Center
                     ) {
+
                         //Search bar
                         Row(
                             modifier = Modifier
                                 .size(300.dp, 35.dp)
                                 .background(color = Color.White, shape = RoundedCornerShape(25.dp))
-                                .padding(horizontal = 15.dp),
+                                .padding(horizontal = 15.dp)
+                                .clickable(onClick = { navController.navigate("TimKiem") }),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            var text by remember { mutableStateOf("") }
-                            BasicTextField(
-                                value = text,
-                                onValueChange = { text = it },
+                            Row(
                                 modifier = Modifier
                                     .size(250.dp, 30.dp)
                                     .background(color = Color.White),
-                                decorationBox = { innerTextField ->
-                                    Box(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        contentAlignment = Alignment.CenterStart
-                                    ) {
-                                        if (text.isEmpty()) {
-                                            Text(
-                                                "Tìm kiếm",
-                                                color = Color(rgb(204, 204, 204)),
-                                                fontSize = 18.sp
-                                            )
-                                        }
-                                        innerTextField()
-                                    }
+                            ) {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    contentAlignment = Alignment.CenterStart
+                                ) {
+                                    Text(
+                                        "Tìm kiếm",
+                                        color = Color(rgb(204, 204, 204)),
+                                        fontSize = 18.sp
+                                    )
                                 }
-                            )
+                            }
 
                             Button(
                                 onClick = {},
@@ -126,9 +134,10 @@ fun TrangChu(navController: NavController) {
                             }
                         }
 
+
                         //Button notification
                         Button(
-                            onClick = {navController.navigate("ThongBao")},
+                            onClick = { navController.navigate("ThongBao") },
                             colors = ButtonDefaults.buttonColors(containerColor = Color.White),
                             modifier = Modifier
                                 .size(35.dp)
@@ -185,7 +194,7 @@ fun TrangChu(navController: NavController) {
                                         modifier = Modifier.width(50.dp)
                                     ) {
                                         Button(
-                                            onClick = {navController.navigate(route)},
+                                            onClick = { navController.navigate(route) },
                                             colors = ButtonDefaults.buttonColors(
                                                 containerColor = Color(
                                                     rgb(
@@ -205,7 +214,12 @@ fun TrangChu(navController: NavController) {
                                                 modifier = Modifier.size(24.dp)
                                             )
                                         }
-                                        Text(text, fontSize = 8.sp, lineHeight = 11.sp, textAlign = TextAlign.Center)
+                                        Text(
+                                            text,
+                                            fontSize = 9.sp,
+                                            lineHeight = 11.sp,
+                                            textAlign = TextAlign.Center
+                                        )
                                     }
                                 }
                             }
@@ -234,18 +248,22 @@ fun TrangChu(navController: NavController) {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     listOf(
-                        Triple(R.drawable.map_spa,"Spa","CacGoiDichVu"),
-                        Triple(R.drawable.emojione_nail_polish,"Nail","CacGoiDichVu"),
-                        Triple(R.drawable.twemoji_man_getting_massage,"Massage","CacGoiDichVu"),
-                        Triple(R.drawable.solar_cosmetic_bold,"Mỹ phẩm","CacGoiDichVu"),
-                        Triple(R.drawable.twemoji_girl_light_skin_tone,"Chăm sóc da","CacGoiDichVu")
+                        Triple(R.drawable.map_spa, "Spa", "CacGoiDichVu"),
+                        Triple(R.drawable.emojione_nail_polish, "Nail", "CacGoiDichVu"),
+                        Triple(R.drawable.twemoji_man_getting_massage, "Massage", "CacGoiDichVu"),
+                        Triple(R.drawable.goi_dau, "Gọi đầu", "CacGoiDichVu"),
+                        Triple(
+                            R.drawable.twemoji_girl_light_skin_tone,
+                            "Chăm sóc da",
+                            "CacGoiDichVu"
+                        )
                     ).forEach { (icon, text, route) ->
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             modifier = Modifier.width(70.dp)
                         ) {
                             Button(
-                                onClick = {navController.navigate(route)},
+                                onClick = { navController.navigate(route) },
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = Color(rgb(219, 195, 124)).copy(alpha = 0.75f)
                                 ),
@@ -259,7 +277,7 @@ fun TrangChu(navController: NavController) {
                                     modifier = Modifier.size(24.dp)
                                 )
                             }
-                            Text(text, fontSize = 8.sp)
+                            Text(text, fontSize = 9.sp)
                         }
                     }
                 }
@@ -285,7 +303,8 @@ fun TrangChu(navController: NavController) {
                         modifier = Modifier.size(43.dp)
                     )
                 }
-                Text("Xem tất cả",
+                Text(
+                    "Xem tất cả",
                     fontSize = 8.sp,
                     fontStyle = FontStyle.Italic,
                     modifier = Modifier
@@ -294,42 +313,48 @@ fun TrangChu(navController: NavController) {
             }
 
             // Products
-            Row(
+            LazyRow(
                 modifier = Modifier
                     .padding(start = 20.dp)
                     .fillMaxWidth()
-                    .horizontalScroll(rememberScrollState())
             ) {
-                repeat(5) {
+                items(services.filter { it.Rating == 5 }) { service ->
+                    val serviceId = service.id
                     Column(
                         modifier = Modifier
                             .width(116.dp)
-                            .clickable(onClick = { navController.navigate("ChiTietDichVu") })
+                            .clickable(onClick = { navController.navigate("ChiTietDichVu/$serviceId") })
                     ) {
-                        Image(
-                            painterResource(R.drawable.khuyen_mai2),
-                            contentDescription = null,
-                            modifier = Modifier.size(116.dp)
+                        AsyncImage(
+                            model = service.Image,
+                            contentScale = ContentScale.Crop,
+                            contentDescription = service.Name,
+                            modifier = Modifier
+                                .size(116.dp)
+                                .clip(RoundedCornerShape(5.dp))
                         )
                         Spacer(Modifier.height(4.dp))
                         Text(
-                            "MASSAGE XUA TAN NHỨC MỎI ",
+                            service.Name,
                             fontSize = 11.sp,
                             lineHeight = 12.sp
                         )
                         Text(
-                            "70.000đ",
+                            text = formatCost(service.Price),
                             fontSize = 16.sp,
                             color = Color(rgb(255, 75, 75))
                         )
+                        val discountPercent = service.Discount.toFloat() / 100f
+                        val discountAmount = service.Price * discountPercent
+                        val finalPrice = service.Price - discountAmount
+
                         Text(
-                            "360.000đ",
+                            text = formatCost(finalPrice),
                             fontSize = 13.sp,
                             color = Color(rgb(189, 189, 189)),
                             textDecoration = TextDecoration.LineThrough
                         )
                     }
-
                     Spacer(Modifier.width(10.dp))
                 }
             }
@@ -341,33 +366,136 @@ fun TrangChu(navController: NavController) {
             )
 
             //Doctor
-            Row(
+            LazyRow(
                 modifier = Modifier.padding(20.dp)
             ) {
-                Image(
-                    painterResource(R.drawable.doi_ngu_bs1),
-                    contentDescription = null,
-                    modifier = Modifier.size(133.dp)
-                )
-
-                Column {
-                    Text("Bác sĩ chuyên khoa da liễu 10 năm kinh nghiệm")
+                items(staffs) { staff ->
                     Row {
-                        repeat(5) {
-                            Image(
-                                painterResource(R.drawable.group2),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(17.dp)
-                                    .padding(1.dp)
-                            )
+                        AsyncImage(
+                            model = staff.image,
+                            contentScale = ContentScale.Crop,
+                            contentDescription = staff.name,
+                            modifier = Modifier.size(133.dp)
+                        )
+
+                        Column(
+                            modifier = Modifier.padding(10.dp)
+                        ) {
+                            Text(staff.name)
+                            Row {
+                                repeat(staff.rating) {
+                                    Image(
+                                        painterResource(R.drawable.group2),
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .size(17.dp)
+                                            .padding(1.dp)
+                                    )
+                                }
+                            }
                         }
                     }
                 }
             }
+            Text(
+                "Dịch vụ",
+                fontSize = 20.sp,
+                modifier = Modifier.padding(start = 20.dp, top = 20.dp)
+            )
+            LazyColumn(
+                modifier = Modifier
+                    .padding(20.dp)
+                    .height(500.dp)
+            ) {
+                items(services) { service ->
+                    val discountPercent = service.Discount.toFloat() / 100f
+                    val discountAmount = service.Price * discountPercent
+                    val finalPrice = service.Price - discountAmount
+
+                    val serviceId = service.id
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 16.dp)
+                            .clickable(onClick = { navController.navigate("ChiTietDichVu/$serviceId") })
+                    ) {
+                        AsyncImage(
+                            model = service.Image,
+                            contentScale = ContentScale.Crop,
+                            contentDescription = service.Name,
+                            modifier = Modifier
+                                .size(133.dp)
+                                .clip(RoundedCornerShape(8.dp))
+                        )
+
+                        Column(
+                            modifier = Modifier
+                                .padding(start = 12.dp)
+                        ) {
+                            Text(
+                                text = service.Name,
+                                fontSize = 20.sp,
+                                lineHeight = 12.sp
+                            )
+
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                repeat(service.Rating) {
+                                    Image(
+                                        painter = painterResource(R.drawable.group2),
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .size(17.dp)
+                                            .padding(1.dp)
+                                    )
+                                }
+                            }
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    painter = painterResource(R.drawable.image10),
+                                    contentDescription = "",
+                                    tint = Color(0xFF818181),
+                                    modifier = Modifier.size(18.dp)
+                                )
+                                Text(
+                                    text = "Lượt khách: " + service.Visitors.toString(),
+                                    color = Color(0xFF818181)
+                                )
+                            }
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = formatCost(service.Price),
+                                    style = TextStyle(
+                                        textDecoration = TextDecoration.LineThrough,
+                                        color = Color.Gray,
+                                        fontSize = 13.sp
+                                    )
+                                )
+                                Spacer(modifier = Modifier.width(7.dp))
+                                Text(
+                                    text = formatCost(finalPrice),
+                                    fontSize = 18.sp,
+                                    color = Color.Red
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            Spacer(Modifier.height(75.dp))
+
         }
 
-        //Menu
-        MenuBar(navController)
+        val viewModel: AuthViewModel = viewModel()
+        MenuBar(navController, viewModel)
     }
 }

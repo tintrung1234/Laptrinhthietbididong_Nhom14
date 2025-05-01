@@ -13,21 +13,13 @@ fun CheckStateOrder(state: Int){
     var text: String
     var color: Int
     when(state){
-        1 -> {
+        0 -> {
             text = "Chờ xác nhận"
             color = 0xFFDF2D2D.toInt()
         }
-        2 -> {
+        else -> {
             text = "Đã xác nhận"
             color = 0xFF09E932.toInt()
-        }
-        3 -> {
-            text = "Hoàn thành"
-            color = 0xFFFFDC5D.toInt()
-        }
-        else -> {
-            text = "Không xác định"
-            color = 0xFFFFDC5D.toInt()
         }
     }
     Text(

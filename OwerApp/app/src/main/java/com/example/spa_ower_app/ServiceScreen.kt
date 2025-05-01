@@ -1,5 +1,6 @@
 package com.example.spa_ower_app
 
+import android.graphics.Color.rgb
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -7,20 +8,26 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -30,6 +37,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,12 +51,25 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import com.google.firebase.components.Lazy
 
 @Composable
-fun ServiceScreen(navController: NavController){
+fun ServiceScreen(
+    navController: NavController,
+    serviceViewModel: ServiceViewModel = viewModel(),
+    categoryViewModel: CategoryViewModel = viewModel()
+){
+    val services = serviceViewModel.services
+    var categoriesID = categoryViewModel.categoriesID
+    var categoriesName = categoryViewModel.categoriesName
+    var categoryID by remember { mutableStateOf(1) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -52,9 +77,9 @@ fun ServiceScreen(navController: NavController){
     ) {
         Box(
             modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 20.dp))
-        { TopLayout("Dịch vụ",{navController.navigate("TrangChu")})}
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp))
+        { TopLayout("Dịch vụ",{navController.popBackStack()})}
         Card(
             modifier = Modifier.fillMaxSize()
                 .shadow(
@@ -66,45 +91,50 @@ fun ServiceScreen(navController: NavController){
             colors = CardDefaults.cardColors(containerColor = Color.White),
             elevation = CardDefaults.cardElevation(defaultElevation = 0.dp) // Đặt elevation = 0 để tránh đổ bóng mặc định,
         ) {
-            CustomTopAppBar()
+            CustomTopAppBar(categoriesID, categoriesName, categoryID) {categoryID = it}
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
                     .padding(20.dp)
             ) {
-                item { itemCardService(1, "Bán chạy nhất", R.drawable.ic_hot, navController) }
-                item { itemCardService(2, "Ưu đãi", R.drawable.ic_sale, navController) }
-                item { itemCardService(3, "Các gói khác",-1, navController) }
+                item { itemCardService(services.filter { it.CategoryId==categoryID }, "Bán chạy nhất", R.drawable.ic_hot, navController) }
+                item { itemCardService(services.filter { it.CategoryId==categoryID }, "Ưu đãi", R.drawable.ic_sale, navController) }
+                item { itemCardService(services.filter { it.CategoryId==categoryID }, "Các gói khác",-1, navController) }
 
             }
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomTopAppBar() {
+fun CustomTopAppBar(categoriesID: List<Int>, categoriesName: List<String>, selectedCategoryId: Int, onClick: (Int) -> Unit) {
     Surface(
         color = Color.White,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Row(
+        LazyRow(
             modifier = Modifier
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconWithText(R.drawable.map_spa, "Spa", true)
-            IconWithText(R.drawable.emojione_nail_polish, "Nail", false)
-            IconWithText(R.drawable.twemoji_man_getting_massage, "Massage", false)
-            IconWithText(R.drawable.solar_cosmetic_bold, "Mỹ phẩm", false)
-            IconWithText(R.drawable.twemoji_girl_light_skin_tone, "Chăm sóc da", false)
+            items(categoriesID){id ->
+                IconWithText(when(id){
+                    1 ->R.drawable.map_spa
+                    2 ->R.drawable.emojione_nail_polish
+                    3 ->R.drawable.twemoji_man_getting_massage
+                    4 ->R.drawable.goi_dau
+                    5 ->R.drawable.twemoji_girl_light_skin_tone
+                    else -> R.drawable.map_spa
+                }
+                    , categoriesName[id-1], id,id == selectedCategoryId){onClick(it)}
+            }
         }
     }
 }
 
 
 @Composable
-fun IconWithText(icon: Int, title: String, isSelection: Boolean){
+fun IconWithText(icon: Int, title: String, id: Int, isSelection: Boolean, onClick: (Int) -> Unit){
     Column(
         modifier = Modifier.padding(top = 15.dp)
             .clip(RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
@@ -112,18 +142,18 @@ fun IconWithText(icon: Int, title: String, isSelection: Boolean){
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         IconButton (
-            onClick = { /* hành động khi click */ },
+            onClick = { onClick(id) },
             modifier = Modifier
                 .padding(7.dp)
                 .size(48.dp) // kích thước tổng thể nút
                 .clip(CircleShape) // bo tròn
                 .background(Color(0xD9DBC37C)) // màu nền tùy ý (optional)
         ){
-            Icon(
-                painter = painterResource(id = icon),
-                contentDescription = "",
-                tint = Color.Unspecified,
-                )
+            Image(
+                painterResource(icon),
+                contentDescription = null,
+                modifier = Modifier.size(24.dp)
+            )
         }
         Text(
             text = title,
@@ -135,61 +165,74 @@ fun IconWithText(icon: Int, title: String, isSelection: Boolean){
 }
 
 @Composable
-fun itemCardService(testLoop: Int, title: String, img: Int, navController: NavController){
-    Card(
-        modifier = Modifier.fillMaxWidth()
-            .border(
-                width = 1.dp,
-                color = Color(0x4C1E1E1E),
-                shape = RoundedCornerShape(15.dp) // phải giống shape của Card
-            ),
-        shape = RoundedCornerShape(15.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
-    ) {
-        Column(
+fun itemCardService(services: List<Service>, title: String, img: Int, navController: NavController){
+    val serviceViewModel: ServiceViewModel = viewModel()
+    val services = serviceViewModel.services
+    val filteredServices = services.filter {
+        when (title) {
+            "Bán chạy nhất" -> it.Visitors >= 900
+            "Ưu đãi" -> it.Discount > 0
+            else -> it.Discount <= 0 && it.Visitors < 900
+        }
+    }
+    if(filteredServices.isNotEmpty()){
+        Card(
             modifier = Modifier.fillMaxWidth()
-                .padding(10.dp),
-
-            ) {
-            Row(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(bottom = 3.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = title,
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.width(5.dp))
-                if (img != -1)
-                    Image(
-                        painter = painterResource(id = img),
-                        contentDescription = ""
-                    )
-            }
+                .border(
+                    width = 1.dp,
+                    color = Color(0x4C1E1E1E),
+                    shape = RoundedCornerShape(15.dp) // phải giống shape của Card
+                ),
+            shape = RoundedCornerShape(15.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White),
+            elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
+        ) {
             Column(
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                for (i in 1..testLoop){
-                    itemDisplayService(R.drawable.khuyen_mai1,"COMBO 4 CHĂM SÓC DA LẤY NHÂN MỤN 88K", 3107,4.8f,88000f, 400000f, navController)
+                modifier = Modifier.fillMaxWidth()
+                    .padding(10.dp),
+
+                ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(bottom = 3.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = title,
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Spacer(modifier = Modifier.width(5.dp))
+                    if (img != -1)
+                        Image(
+                            painter = painterResource(id = img),
+                            contentDescription = ""
+                        )
+                }
+
+                LazyColumn(
+                    modifier = Modifier.fillMaxWidth()
+                        .heightIn(max = 300.dp),
+                ) {
+                    items(filteredServices){service ->
+                        itemDisplayService(service, service.id,navController)
+                    }
                 }
             }
         }
+        Spacer(modifier = Modifier.height(12.dp))
     }
-    Spacer(modifier = Modifier.height(12.dp))
 }
 
 @Composable
-fun itemDisplayService(img: Int, name: String, quantity: Int, star: Float,costSale: Float, cost: Float, navController: NavController){
+fun itemDisplayService(service: Service, serviceID: String, navController: NavController){
     Row (
         modifier = Modifier.fillMaxWidth()
             .padding(top = 15.dp)
-            .clickable(onClick = {navController.navigate("ChiTietDichVu")})
+            .clickable(onClick = {navController.navigate("ChiTietDichVu/$serviceID")})
     ) {
-        Image(
-            painter = painterResource(id = img),
+        AsyncImage(
+            model = service.Image,
             contentDescription ="",
             modifier = Modifier.size(120.dp)
         )
@@ -198,7 +241,7 @@ fun itemDisplayService(img: Int, name: String, quantity: Int, star: Float,costSa
             modifier = Modifier.fillMaxSize()
         ) {
             Text(
-                text = name,
+                text = service.Name,
                 fontSize = 14.sp
             )
             Row(
@@ -211,7 +254,7 @@ fun itemDisplayService(img: Int, name: String, quantity: Int, star: Float,costSa
                     modifier = Modifier.size(18.dp)
                 )
                 Text(
-                    text = " Đã bán: ${quantity}",
+                    text = " Lượt khách: ${service.Visitors}",
                     color = Color(0xFF818181)
                 )
             }
@@ -219,7 +262,7 @@ fun itemDisplayService(img: Int, name: String, quantity: Int, star: Float,costSa
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically){
                 Text(
-                    text = "Đánh giá: ${star}",
+                    text = "Đánh giá: ${service.Rating}",
                     color = Color(0xFF818181)
                 )
                 Icon(
@@ -236,7 +279,7 @@ fun itemDisplayService(img: Int, name: String, quantity: Int, star: Float,costSa
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = formatCost(cost),
+                    text = formatCost(service.Price),
                     style = TextStyle(
                         textDecoration = TextDecoration.LineThrough,
                         color = Color.Gray,
@@ -245,7 +288,7 @@ fun itemDisplayService(img: Int, name: String, quantity: Int, star: Float,costSa
                 )
                 Spacer(modifier = Modifier.width(5.dp))
                 Text(
-                    text = formatCost(costSale),
+                    text = formatCost((100-service.Discount)*service.Price/100),
                     fontSize = 22.sp,
                     color = Color.Red
                 )
@@ -253,3 +296,4 @@ fun itemDisplayService(img: Int, name: String, quantity: Int, star: Float,costSa
         }
     }
 }
+

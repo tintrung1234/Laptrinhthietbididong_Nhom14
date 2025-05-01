@@ -62,11 +62,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.spa_ower_app.ThemSuaDichVu
 import java.time.format.TextStyle
 
@@ -78,32 +81,39 @@ class MainActivity : ComponentActivity() {
         setContent {
             Controller()
         }
-
-
     }
 }
 
 @Composable
 fun Controller() {
     val navConTroller = rememberNavController()
+    val servicesViewModel: ServiceViewModel = viewModel()
+    val staffsViewModel: StaffViewModel = viewModel()
+    val categoryViewModel: CategoryViewModel = viewModel()
+    val appointmentViewModel: AppointmentViewModel = viewModel()
     NavHost(navController = navConTroller, startDestination = "TrangChu") {
-        composable("DoanhThu") { RevenueScreen(navConTroller) }
-        composable("TrangChu") { TrangChu(navConTroller) }
-        composable("ThongBao") { NotifyScreen(navConTroller) }
-        composable("ChiTietDichVu") { DetailServiceScreen(navConTroller) }
-        composable("LichSu") { HistoryScreen(navConTroller) }
-        composable("LienHe") { TrangLienHe(navConTroller) }
-        composable("CacGoiDichVu") { ServiceScreen(navConTroller) }
-        composable("TaiKhoan") { InforScreen(navConTroller) }
-        composable("ThemDichVu") { ThemSuaDichVu(navConTroller) }
+        composable("TrangChu") { TrangChu(navConTroller, servicesViewModel, staffsViewModel) }
         composable("DanhGia") { ReviewPage(navConTroller) }
-        composable("DangNhapDangKy") { LoginRegisterScreen(navConTroller) }
+        composable("ThongBao") { NotifyScreen(navConTroller) }
+        composable("ThemSuaDichVu") { ThemSuaDichVu(navConTroller, servicesViewModel) }
+        composable(
+            "ChiTietDichVu/{serviceId}",
+            arguments = listOf(navArgument("serviceId") { type = NavType.StringType })
+        ) {backStackEntry ->
+            val serviceId = backStackEntry.arguments?.getString("serviceId")
+            DetailServiceScreen(navConTroller, serviceId, servicesViewModel, categoryViewModel)
+        }
+        composable("LichSu") { HistoryScreen(navConTroller,appointmentViewModel) }
         composable("MaGiamGia") { TrangMaGiamGia(navConTroller) }
+        composable("DangNhapDangKy") { LoginRegisterScreen(navConTroller) }
+        composable("LienHe") { TrangLienHe(navConTroller) }
+        composable(
+            "ChiTietLichHen/{appointmentId}",
+            arguments = listOf(navArgument("appointmentId") { type = NavType.StringType })
+        ) {backStackEntry ->
+            val appointmentId = backStackEntry.arguments?.getString("appointmentId")
+            AppointmentDetailScreen(navConTroller, appointmentId, appointmentViewModel, servicesViewModel, categoryViewModel,staffsViewModel) }
+        composable("CacGoiDichVu") { ServiceScreen(navConTroller, servicesViewModel, categoryViewModel) }
+        composable("TaiKhoan") { InforScreen(navConTroller) }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Controller()
 }
