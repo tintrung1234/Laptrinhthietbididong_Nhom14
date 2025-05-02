@@ -36,10 +36,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 
 @Composable
 fun TrangLienHe(navController: NavController) {
+    val contactViewModel: ContactViewModel = viewModel()
+    var name = remember { mutableStateOf("") }
+    var phone = remember { mutableStateOf("") }
+    var address = remember { mutableStateOf("") }
+    var email = remember { mutableStateOf("") }
+    var message = remember { mutableStateOf("") }
+    var successMessage = remember { mutableStateOf("") }
     Column(
         modifier = Modifier.background(color = Color.White)
     ) {
@@ -100,14 +108,13 @@ fun TrangLienHe(navController: NavController) {
                             modifier = Modifier.fillMaxWidth(),
                             horizontalAlignment = Alignment.Start
                         ) {
-                            listOf(
-                                R.drawable.tdesign_user_filled to "Họ và tên",
-                                R.drawable.image13 to "Số điện thoại",
-                                R.drawable.location to "Địa chỉ",
-                                R.drawable.image14 to "Email"
-                            ).forEach { (icon, title) ->
-                                var text = remember { mutableStateOf("") }
-
+                            val fields = listOf(
+                                Triple(R.drawable.tdesign_user_filled, "Họ và tên", name),
+                                Triple(R.drawable.image13, "Số điện thoại", phone),
+                                Triple(R.drawable.location, "Địa chỉ", address),
+                                Triple(R.drawable.image14, "Email", email)
+                            )
+                            fields.forEach { (icon, title, text) ->
                                 Row(
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
@@ -185,13 +192,12 @@ fun TrangLienHe(navController: NavController) {
                                     .padding(horizontal = 16.dp, vertical = 10.dp)
 
                             ) {
-                                var text = remember { mutableStateOf("") }
                                 BasicTextField(
-                                    value = text.value,
-                                    onValueChange = { text.value = it },
+                                    value = message.value,
+                                    onValueChange = { message.value = it },
                                     textStyle = TextStyle(fontSize = 16.sp, color = Color.Black),
                                     decorationBox = { innerTextField ->
-                                        if (text.value.isEmpty()) {
+                                        if (message.value.isEmpty()) {
                                             Text(
                                                 "Chia sẽ một số phản hồi của bạn...",
                                                 color = Color.Gray
@@ -237,7 +243,15 @@ fun TrangLienHe(navController: NavController) {
                 horizontalArrangement = Arrangement.Center
             ) {
                 Button(
-                    onClick = {navController.navigate("TrangChu")},
+                    onClick = {
+                        val contact = Contact(name.value, email.value, message.value)
+                        contactViewModel.submitFeedback(
+                            contact,
+                            onSuccess = { successMessage.value = "Cảm ơn bạn đã liên hệ!" },
+                            onError = { e -> successMessage.value = "Gửi thất bại: ${e.message}" }
+                        )
+                        navController.navigate("TrangChu")
+                    },
                     shape = RoundedCornerShape(8.dp),
                     modifier = Modifier.width(200.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFDBC37C))
