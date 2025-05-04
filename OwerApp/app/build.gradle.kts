@@ -46,6 +46,11 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.12.0"))
     implementation("androidx.navigation:navigation-compose:2.8.9")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+    //use for upload image
+    implementation("com.google.firebase:firebase-storage-ktx")
+    implementation("androidx.activity:activity-compose:1.7.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

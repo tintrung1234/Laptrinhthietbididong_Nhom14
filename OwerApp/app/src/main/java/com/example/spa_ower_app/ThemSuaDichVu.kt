@@ -1,6 +1,8 @@
 package com.example.spa_ower_app
 
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -38,13 +40,17 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -53,23 +59,33 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.storage
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import java.util.UUID
 
 @Composable
 fun ThemSuaDichVu(
     navController: NavController,
     serviceViewModel: ServiceViewModel = viewModel()
 ) {
+    val categoryViewModel: CategoryViewModel = viewModel()
     var isThemDichVu by remember { mutableStateOf(true) }
     //Get info user
     val firestore = FirebaseFirestore.getInstance()
     val auth = FirebaseAuth.getInstance()
     val currentUser = auth.currentUser
     val userDocRef = currentUser?.let { firestore.collection("Users").document(it.uid) }
+    var mode by remember { mutableStateOf("themDichVu") }
 
-    // State cho thông tinS
+    // State cho thông tin
     var admin by remember { mutableStateOf(0) }
+
+
 
     LaunchedEffect(Unit) {
         userDocRef?.get()
@@ -159,9 +175,11 @@ fun ThemSuaDichVu(
 
         if (currentUser != null && admin == 1) {
             if (isThemDichVu) {
-                FormThemDichVu(navController)
+                mode = "themDichVu"
+                Form(navController, mode, serviceViewModel, categoryViewModel)
             } else {
-                FormSuaDichVu(navController)
+                mode = "suaDichVu"
+                Form(navController, mode, serviceViewModel, categoryViewModel)
             }
         } else {
             Text(
@@ -175,9 +193,73 @@ fun ThemSuaDichVu(
     }
 }
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Form(navController: NavController) {
+fun Form(
+    navController: NavController, mode: String,
+    serviceViewModel: ServiceViewModel = viewModel(),
+    categoryViewModel: CategoryViewModel = viewModel()
+) {
+    var serviceId = remember { mutableStateOf("") }
+    var title = remember { mutableStateOf("") }
+    var description = remember { mutableStateOf("") }
+    var price = remember { mutableStateOf("") }
+    var time = remember { mutableStateOf("") }
+    var discount = remember { mutableStateOf("") }
+    //Category
+    var items = listOf("Massage", "Ob2", "Ob3", "Ob4")
+    var expanded by remember { mutableStateOf(false) }
+    var selectedCategory by remember { mutableStateOf(items[0]) }
+
+    //upload image to firebase storeage
+    val context = LocalContext.current
+    val storage = Firebase.storage
+    val coroutineScope = rememberCoroutineScope()
+
+    //Image path
+    var imageUrl by remember { mutableStateOf<String?>(null) }
+    var lastUploadedPath by remember { mutableStateOf<String?>(null) }
+
+    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        uri?.let {
+            val fileName = "${UUID.randomUUID()}.jpg"
+            val storageRef = storage.reference.child(fileName)
+
+            coroutineScope.launch {
+                try {
+                    val uploadTask = storageRef.putFile(it).await()
+                    val url = storageRef.downloadUrl.await().toString()
+                    imageUrl = url
+                    lastUploadedPath = fileName // store path to delete later
+                    Log.d("Firebase", "Uploaded to: $url")
+                } catch (e: Exception) {
+                    Log.e("Firebase", "Upload failed", e)
+                }
+            }
+        }
+    }
+
+    // Thong bao khi thanh cong
+    var message by remember { mutableStateOf<String?>(null) }
+
+    //Sua dich vu
+    var selectedService by remember { mutableStateOf<Service?>(null) }
+
+    LaunchedEffect(selectedService) {
+        selectedService?.let { service ->
+            serviceId.value = service.id
+            selectedCategory = categoryViewModel.categoriesName[service.CategoryId]
+            description.value = service.Description
+            title.value = service.Name
+            price.value = service.Price.toString()
+            time.value = service.OveralTime.toString()
+            imageUrl = service.Image
+            discount.value = service.Discount.toString()
+        }
+    }
+
+
     Column(
         modifier = Modifier.background(color = Color.White)
     ) {
@@ -229,74 +311,105 @@ fun Form(navController: NavController) {
                             tint = Color(0xFFDF2D2D)
                         )
                     }
-                    //Drop box
-                    var items2 = listOf("Massage xua tan nhức mỏi", "Ob2", "Ob3", "Ob4")
-                    var expanded2 by remember { mutableStateOf(false) }
-                    var selectedOption2 by remember { mutableStateOf(items2[0]) }
-
-                    Row(
-                        modifier = Modifier
-                            .wrapContentSize(Alignment.TopStart)
-                            .fillMaxWidth()
-                            .border(
-                                2.dp,
-                                color = Color(0xFF544C4C24).copy(0.14f),
-                                shape = RoundedCornerShape(8.dp)
-                            )
-                            .padding(0.dp)
-                    ) {
-                        ExposedDropdownMenuBox(
-                            expanded = expanded2,
-                            onExpandedChange = { expanded2 = !expanded2 }
-                        ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(54.dp)
-                                    .padding(0.dp),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                TextField(
-                                    value = selectedOption2,
-                                    onValueChange = {},
-                                    readOnly = true,
-                                    trailingIcon = {
-                                        ExposedDropdownMenuDefaults.TrailingIcon(
-                                            expanded = expanded2
-                                        )
-                                    },
-                                    modifier = Modifier
-                                        .menuAnchor()
-                                        .fillMaxWidth()
-                                        .padding(0.dp), // Remove padding for TextField
-                                    textStyle = LocalTextStyle.current.copy(
-                                        fontSize = 12.sp,
-                                        color = Color.Gray
-                                    ),
-                                    colors = TextFieldDefaults.colors(
-                                        unfocusedContainerColor = Color.White,
-                                        focusedContainerColor = Color.White,
-                                        unfocusedIndicatorColor = Color.Transparent,
-                                        focusedIndicatorColor = Color.Transparent
-                                    )
+                    if (mode == "themDichVu") {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(3.dp)
+                                .background(
+                                    Color(0xFFD9D9D9).copy(0.25f),
+                                    shape = RoundedCornerShape(10.dp)
                                 )
-                            }
+                                .border(
+                                    1.dp,
+                                    color = Color.Black.copy(0.4f),
+                                    shape = RoundedCornerShape(8.dp)
+                                )
+                                .padding(horizontal = 14.dp, vertical = 4.dp)
+                        ) {
+                            BasicTextField(
+                                value = title.value,
+                                onValueChange = { title.value = it },
+                                textStyle = TextStyle(fontSize = 13.sp, color = Color.Black),
+                                decorationBox = { innerTextField ->
+                                    if (title.value.isEmpty()) {
+                                        Text(
+                                            "...",
+                                            color = Color.Gray
+                                        )
+                                    }
+                                    innerTextField()
+                                },
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                    } else {
+                        //Drop box
+                        var expanded2 by remember { mutableStateOf(false) }
 
-                            ExposedDropdownMenu(
+                        Row(
+                            modifier = Modifier
+                                .wrapContentSize(Alignment.TopStart)
+                                .fillMaxWidth()
+                                .border(
+                                    2.dp,
+                                    color = Color(0xFF544C4C24).copy(0.14f),
+                                    shape = RoundedCornerShape(8.dp)
+                                )
+                                .padding(0.dp)
+                        ) {
+                            ExposedDropdownMenuBox(
                                 expanded = expanded2,
-                                onDismissRequest = { expanded2 = false },
-                                modifier = Modifier.padding(0.dp) // Remove padding for dropdown menu
+                                onExpandedChange = { expanded2 = !expanded2 }
                             ) {
-                                items2.forEach { selectionOption ->
-                                    DropdownMenuItem(
-                                        text = { Text(selectionOption) },
-                                        onClick = {
-                                            selectedOption2 = selectionOption
-                                            expanded2 = false
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(54.dp)
+                                        .padding(0.dp),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    TextField(
+                                        value = title.value ?: "Chọn dịch vụ",
+                                        onValueChange = {},
+                                        readOnly = true,
+                                        trailingIcon = {
+                                            ExposedDropdownMenuDefaults.TrailingIcon(
+                                                expanded = expanded2
+                                            )
                                         },
-                                        modifier = Modifier.padding(0.dp) // Remove padding for menu items
+                                        modifier = Modifier
+                                            .menuAnchor()
+                                            .fillMaxWidth()
+                                            .padding(0.dp), // Remove padding for TextField
+                                        textStyle = LocalTextStyle.current.copy(
+                                            fontSize = 12.sp,
+                                            color = Color.Gray
+                                        ),
+                                        colors = TextFieldDefaults.colors(
+                                            unfocusedContainerColor = Color.White,
+                                            focusedContainerColor = Color.White,
+                                            unfocusedIndicatorColor = Color.Transparent,
+                                            focusedIndicatorColor = Color.Transparent
+                                        )
                                     )
+                                }
+
+                                ExposedDropdownMenu(
+                                    expanded = expanded2,
+                                    onDismissRequest = { expanded2 = false },
+                                    modifier = Modifier.padding(0.dp) // Remove padding for dropdown menu
+                                ) {
+                                    serviceViewModel.services.forEach { service ->
+                                        DropdownMenuItem(
+                                            text = { Text(service.Name) },
+                                            onClick = {
+                                                selectedService = service
+                                                expanded = false
+                                            }
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -340,18 +453,12 @@ fun Form(navController: NavController) {
                             )
                             .padding(horizontal = 14.dp, vertical = 4.dp)
                     ) {
-                        var text = remember { mutableStateOf("") }
                         BasicTextField(
-                            value = text.value,
-                            onValueChange = { text.value = it },
+                            value = description.value,
+                            onValueChange = { description.value = it },
                             textStyle = TextStyle(fontSize = 13.sp, color = Color.Black),
                             decorationBox = { innerTextField ->
-                                if (text.value.isEmpty()) {
-                                    Text(
-                                        "• Thư giãn toàn thân – Giảm căng thẳng, mệt mỏi.\u2028• Bấm huyệt – Cải thiện tuần hoàn, giảm đau nhức.\u2028• Phục hồi năng lượng – Tăng cường sức khỏe, ngủ ngon hơn.",
-                                        color = Color.Gray
-                                    )
-                                }
+                                description.value
                                 innerTextField()
                             },
                             modifier = Modifier.fillMaxWidth()
@@ -395,13 +502,12 @@ fun Form(navController: NavController) {
                                 )
                                 .padding(horizontal = 14.dp, vertical = 4.dp)
                         ) {
-                            var text = remember { mutableStateOf("") }
                             BasicTextField(
-                                value = text.value,
-                                onValueChange = { text.value = it },
+                                value = price.value,
+                                onValueChange = { price.value = it },
                                 textStyle = TextStyle(fontSize = 13.sp, color = Color.Black),
                                 decorationBox = { innerTextField ->
-                                    if (text.value.isEmpty()) {
+                                    if (price.value.isEmpty()) {
                                         Text("400.000", color = Color.Gray)
                                     }
                                     innerTextField()
@@ -453,13 +559,12 @@ fun Form(navController: NavController) {
                                 )
                                 .padding(horizontal = 10.dp, vertical = 4.dp)
                         ) {
-                            var text = remember { mutableStateOf("") }
                             BasicTextField(
-                                value = text.value,
-                                onValueChange = { text.value = it },
+                                value = time.value,
+                                onValueChange = { time.value = it },
                                 textStyle = TextStyle(fontSize = 13.sp, color = Color.Black),
                                 decorationBox = { innerTextField ->
-                                    if (text.value.isEmpty()) {
+                                    if (time.value.isEmpty()) {
                                         Text("300", color = Color.Gray)
                                     }
                                     innerTextField()
@@ -491,13 +596,12 @@ fun Form(navController: NavController) {
                                 )
                                 .padding(horizontal = 10.dp, vertical = 4.dp)
                         ) {
-                            var text = remember { mutableStateOf("") }
                             BasicTextField(
-                                value = text.value,
-                                onValueChange = { text.value = it },
+                                value = discount.value,
+                                onValueChange = { discount.value = it },
                                 textStyle = TextStyle(fontSize = 13.sp, color = Color.Black),
                                 decorationBox = { innerTextField ->
-                                    if (text.value.isEmpty()) {
+                                    if (discount.value.isEmpty()) {
                                         Text("300", color = Color.Gray)
                                     }
                                     innerTextField()
@@ -531,10 +635,6 @@ fun Form(navController: NavController) {
                         )
                     }
                     //Drop box
-                    var items = listOf("Massage", "Ob2", "Ob3", "Ob4")
-                    var expanded by remember { mutableStateOf(false) }
-                    var selectedOption by remember { mutableStateOf(items[0]) }
-
                     Row(
                         modifier = Modifier
                             .wrapContentSize(Alignment.TopStart)
@@ -559,7 +659,7 @@ fun Form(navController: NavController) {
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 TextField(
-                                    value = selectedOption,
+                                    value = selectedCategory,
                                     onValueChange = {},
                                     readOnly = true,
                                     trailingIcon = {
@@ -589,14 +689,13 @@ fun Form(navController: NavController) {
                                 onDismissRequest = { expanded = false },
                                 modifier = Modifier.padding(0.dp) // Remove padding for dropdown menu
                             ) {
-                                items.forEach { selectionOption ->
+                                categoryViewModel.categoriesName.forEach { category ->
                                     DropdownMenuItem(
-                                        text = { Text(selectionOption) },
+                                        text = { Text(category) },
                                         onClick = {
-                                            selectedOption = selectionOption
+                                            selectedCategory = category
                                             expanded = false
-                                        },
-                                        modifier = Modifier.padding(0.dp) // Remove padding for menu items
+                                        }
                                     )
                                 }
                             }
@@ -630,6 +729,7 @@ fun Form(navController: NavController) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
+                                .clickable(onClick = { launcher.launch("image/*") })
                                 .border(
                                     1.dp,
                                     color = Color.Black,
@@ -651,21 +751,61 @@ fun Form(navController: NavController) {
                     Column(
                         modifier = Modifier
                             .width(116.dp)
-                            .border(
-                                1.dp,
-                                color = Color.Black,
-                                shape = RoundedCornerShape(8.dp)
-                            )
+                            .border(1.dp, color = Color.Black, shape = RoundedCornerShape(8.dp))
                     ) {
-                        Image(
-                            painterResource(R.drawable.khuyen_mai2),
-                            contentDescription = null,
-                            modifier = Modifier.size(116.dp)
-                        )
+                        if (imageUrl != null) {
+                            AsyncImage(
+                                model = imageUrl,
+                                contentDescription = null,
+                                modifier = Modifier.size(116.dp),
+                                contentScale = ContentScale.Crop
+                            )
+                        }
                     }
 
-                    Spacer(Modifier.height(12.dp))
+                    Spacer(Modifier.height(5.dp))
+
+                    // Delete button
+                    if (imageUrl != null) {
+                        Spacer(Modifier.height(8.dp))
+                        Button(
+                            onClick = {
+                                coroutineScope.launch {
+                                    try {
+                                        lastUploadedPath?.let {
+                                            storage.reference.child(it).delete().await()
+                                            Log.d("Firebase", "Deleted: $it")
+                                        }
+                                    } catch (e: Exception) {
+                                        Log.e("Firebase", "Delete failed", e)
+                                    }
+                                    imageUrl = null
+                                    lastUploadedPath = null
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFDBC37C)),
+                            shape = RoundedCornerShape(8.dp),
+                            contentPadding = PaddingValues(horizontal = 10.dp),
+                        ) {
+                            Text("Delete Image", color = Color.White)
+                        }
+                    }
                 }
+
+                Spacer(Modifier.height(12.dp))
+
+            }
+
+            Spacer(Modifier.height(10.dp))
+
+            if (message != null) {
+                Text(
+                    text = message!!,
+                    color = Color.Green,
+                    modifier = Modifier
+                        .padding(top = 4.dp)
+                        .align(alignment = Alignment.CenterHorizontally)
+                )
             }
 
             Spacer(Modifier.height(10.dp))
@@ -675,9 +815,42 @@ fun Form(navController: NavController) {
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
-
                 Button(
-                    onClick = { navController.navigate("TrangChu") },
+                    onClick = {
+                        if (mode == "themDichVu") {
+                            serviceViewModel.saveService(
+                                id = "",
+                                CategoryId = 1,
+                                Description = description.value,
+                                Discount = discount.value.toIntOrNull() ?: 0,
+                                Image = imageUrl ?: "",
+                                Name = title.value,
+                                OveralTime = time.value.toIntOrNull() ?: 0,
+                                Price = price.value.toFloatOrNull() ?: 0f,
+                                Rating = 0,
+                                Visitors = 0,
+                                onSuccess = {
+                                    message = "Lưu thành công"
+                                }
+                            )
+                        } else {
+                            serviceViewModel.updateService(
+                                id = serviceId.value,
+                                CategoryId = 1,
+                                Description = description.value,
+                                Discount = discount.value.toIntOrNull() ?: 0,
+                                Image = imageUrl ?: "",
+                                Name = title.value,
+                                OveralTime = time.value.toIntOrNull() ?: 0,
+                                Price = price.value.toFloatOrNull() ?: 0f,
+                                Rating = 0,
+                                Visitors = 0,
+                                onSuccess = {
+                                    message = "Lưu thành công"
+                                }
+                            )
+                        }
+                    },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFDBC37C)),
                     shape = RoundedCornerShape(8.dp),
                     contentPadding = PaddingValues(horizontal = 10.dp),
@@ -695,18 +868,4 @@ fun Form(navController: NavController) {
             }
         }
     }
-}
-
-@Composable
-fun FormThemDichVu(navController: NavController) {
-    // Them code xu li sau
-    // ..............
-    Form(navController)
-}
-
-@Composable
-fun FormSuaDichVu(navController: NavController) {
-    // Them code xu li sau
-    // ..............
-    Form(navController)
 }

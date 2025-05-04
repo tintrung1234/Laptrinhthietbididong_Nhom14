@@ -115,5 +115,6 @@ fun Controller() {
             AppointmentDetailScreen(navConTroller, appointmentId, appointmentViewModel, servicesViewModel, categoryViewModel,staffsViewModel) }
         composable("CacGoiDichVu") { ServiceScreen(navConTroller, servicesViewModel, categoryViewModel) }
         composable("TaiKhoan") { InforScreen(navConTroller) }
+        composable("TimKiem") { Search(navConTroller, servicesViewModel) }
     }
 }
