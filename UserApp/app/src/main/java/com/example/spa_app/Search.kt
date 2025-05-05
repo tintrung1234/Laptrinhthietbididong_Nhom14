@@ -165,7 +165,7 @@ fun Search(navController: NavController, serviceViewModel: ServiceViewModel = vi
             } else {
                 val searchQuery = removeAccents(text).lowercase()
                 services.filter {
-                    removeAccents(it.Name).lowercase().contains(searchQuery)
+                    removeAccents(it.name).lowercase().contains(searchQuery)
                 }
             }
 
@@ -174,9 +174,9 @@ fun Search(navController: NavController, serviceViewModel: ServiceViewModel = vi
                     .fillMaxHeight()
             ) {
                 items(filteredServices) { service ->
-                    val discountPercent = service.Discount.toFloat() / 100f
-                    val discountAmount = service.Price * discountPercent
-                    val finalPrice = service.Price - discountAmount
+                    val discountPercent = service.discount.toFloat() / 100f
+                    val discountAmount = service.price * discountPercent
+                    val finalPrice = service.price - discountAmount
 
                     val serviceId = service.id
                     Row(
@@ -186,9 +186,9 @@ fun Search(navController: NavController, serviceViewModel: ServiceViewModel = vi
                             .clickable(onClick = { navController.navigate("ChiTietDichVu/$serviceId") })
                     ) {
                         AsyncImage(
-                            model = service.Image,
+                            model = service.image,
                             contentScale = ContentScale.Crop,
-                            contentDescription = service.Name,
+                            contentDescription = service.name,
                             modifier = Modifier
                                 .size(133.dp)
                                 .clip(RoundedCornerShape(8.dp))
@@ -199,7 +199,7 @@ fun Search(navController: NavController, serviceViewModel: ServiceViewModel = vi
                                 .padding(start = 12.dp)
                         ) {
                             Text(
-                                text = service.Name,
+                                text = service.name,
                                 fontSize = 20.sp,
                                 lineHeight = 12.sp
                             )
@@ -207,7 +207,7 @@ fun Search(navController: NavController, serviceViewModel: ServiceViewModel = vi
                             Row(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                repeat(service.Rating) {
+                                repeat(service.rating) {
                                     Image(
                                         painter = painterResource(R.drawable.group2),
                                         contentDescription = null,
@@ -227,7 +227,7 @@ fun Search(navController: NavController, serviceViewModel: ServiceViewModel = vi
                                     modifier = Modifier.size(18.dp)
                                 )
                                 Text(
-                                    text = "Lượt khách: " + service.Visitors.toString(),
+                                    text = "Lượt khách: " + service.visitors.toString(),
                                     color = Color(0xFF818181)
                                 )
                             }
@@ -236,7 +236,7 @@ fun Search(navController: NavController, serviceViewModel: ServiceViewModel = vi
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Text(
-                                    text = formatCost(service.Price),
+                                    text = formatCost(service.price),
                                     style = TextStyle(
                                         textDecoration = TextDecoration.LineThrough,
                                         color = Color.Gray,

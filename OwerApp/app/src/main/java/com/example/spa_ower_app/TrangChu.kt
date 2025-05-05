@@ -318,7 +318,7 @@ fun TrangChu(
                     .padding(start = 20.dp)
                     .fillMaxWidth()
             ) {
-                items(services.filter { it.Rating == 5 }) { service ->
+                items(services.filter { it.rating == 5 }) { service ->
                     val serviceId = service.id
                     Column(
                         modifier = Modifier
@@ -326,27 +326,27 @@ fun TrangChu(
                             .clickable(onClick = { navController.navigate("ChiTietDichVu/$serviceId") })
                     ) {
                         AsyncImage(
-                            model = service.Image,
+                            model = service.image,
                             contentScale = ContentScale.Crop,
-                            contentDescription = service.Name,
+                            contentDescription = service.name,
                             modifier = Modifier
                                 .size(116.dp)
                                 .clip(RoundedCornerShape(5.dp))
                         )
                         Spacer(Modifier.height(4.dp))
                         Text(
-                            service.Name,
+                            service.name,
                             fontSize = 11.sp,
                             lineHeight = 12.sp
                         )
                         Text(
-                            text = formatCost(service.Price),
+                            text = formatCost(service.price),
                             fontSize = 16.sp,
                             color = Color(rgb(255, 75, 75))
                         )
-                        val discountPercent = service.Discount.toFloat() / 100f
-                        val discountAmount = service.Price * discountPercent
-                        val finalPrice = service.Price - discountAmount
+                        val discountPercent = service.discount.toFloat() / 100f
+                        val discountAmount = service.price * discountPercent
+                        val finalPrice = service.price - discountAmount
 
                         Text(
                             text = formatCost(finalPrice),
@@ -408,9 +408,9 @@ fun TrangChu(
                     .height(500.dp)
             ) {
                 items(services) { service ->
-                    val discountPercent = service.Discount.toFloat() / 100f
-                    val discountAmount = service.Price * discountPercent
-                    val finalPrice = service.Price - discountAmount
+                    val discountPercent = service.discount.toFloat() / 100f
+                    val discountAmount = service.price * discountPercent
+                    val finalPrice = service.price - discountAmount
 
                     val serviceId = service.id
 
@@ -421,9 +421,9 @@ fun TrangChu(
                             .clickable(onClick = { navController.navigate("ChiTietDichVu/$serviceId") })
                     ) {
                         AsyncImage(
-                            model = service.Image,
+                            model = service.image,
                             contentScale = ContentScale.Crop,
-                            contentDescription = service.Name,
+                            contentDescription = service.name,
                             modifier = Modifier
                                 .size(133.dp)
                                 .clip(RoundedCornerShape(8.dp))
@@ -434,7 +434,7 @@ fun TrangChu(
                                 .padding(start = 12.dp)
                         ) {
                             Text(
-                                text = service.Name,
+                                text = service.name,
                                 fontSize = 20.sp,
                                 lineHeight = 12.sp
                             )
@@ -442,7 +442,7 @@ fun TrangChu(
                             Row(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                repeat(service.Rating) {
+                                repeat(service.rating) {
                                     Image(
                                         painter = painterResource(R.drawable.group2),
                                         contentDescription = null,
@@ -462,7 +462,7 @@ fun TrangChu(
                                     modifier = Modifier.size(18.dp)
                                 )
                                 Text(
-                                    text = "Lượt khách: " + service.Visitors.toString(),
+                                    text = "Lượt khách: " + service.visitors.toString(),
                                     color = Color(0xFF818181)
                                 )
                             }
@@ -471,7 +471,7 @@ fun TrangChu(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Text(
-                                    text = formatCost(service.Price),
+                                    text = formatCost(service.price),
                                     style = TextStyle(
                                         textDecoration = TextDecoration.LineThrough,
                                         color = Color.Gray,

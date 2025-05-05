@@ -9,15 +9,15 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 data class Service(
     val id: String = "",
-    val CategoryId: Int = 0,
-    val Description: String = "",
-    val Discount: Int = 0,
-    val Image: String = "",
-    val Name: String = "",
-    val OveralTime: Int = 0,
-    val Price: Float = 0f,
-    val Rating: Int = 0,
-    val Visitors: Int = 0
+    val categoryId: Int = 0,
+    val description: String = "",
+    val discount: Int = 0,
+    val image: String = "",
+    val name: String = "",
+    val overalTime: Int = 0,
+    val price: Float = 0f,
+    val rating: Int = 0,
+    val visitors: Int = 0
 )
 
 class ServiceViewModel : ViewModel() {

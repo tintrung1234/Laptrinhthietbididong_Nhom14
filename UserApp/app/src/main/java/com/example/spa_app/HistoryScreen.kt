@@ -127,7 +127,7 @@ fun itemServiceHistory(service: Service, appointmentID: String, navController: N
             }),
     ) {
         AsyncImage(
-            model = service.Image,
+            model = service.image,
             contentDescription = "",
             modifier = Modifier.size(100.dp)
         )
@@ -136,7 +136,7 @@ fun itemServiceHistory(service: Service, appointmentID: String, navController: N
             modifier = Modifier.fillMaxSize()
         ) {
             Text(
-                text = service.Name,
+                text = service.name,
                 fontSize = 13.sp
             )
             Row(
@@ -144,7 +144,7 @@ fun itemServiceHistory(service: Service, appointmentID: String, navController: N
                 horizontalArrangement = Arrangement.End
             ) {
                 Text(
-                    text = formatCost(service.Price),
+                    text = formatCost(service.price),
                     style = TextStyle(
                         textDecoration = TextDecoration.LineThrough,
                         color = Color.Gray,
@@ -153,7 +153,7 @@ fun itemServiceHistory(service: Service, appointmentID: String, navController: N
                 )
                 Spacer(modifier = Modifier.width(5.dp))
                 Text(
-                    text = formatCost((100 - service.Discount) * service.Price / 100),
+                    text = formatCost((100 - service.discount) * service.price / 100),
                     fontSize = 18.sp,
                     color = Color.Red
                 )

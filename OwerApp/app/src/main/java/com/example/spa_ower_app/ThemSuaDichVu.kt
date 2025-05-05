@@ -249,14 +249,15 @@ fun Form(
     LaunchedEffect(selectedService) {
         selectedService?.let { service ->
             serviceId.value = service.id
-            selectedCategory = categoryViewModel.categoriesName[service.CategoryId]
-            description.value = service.Description
-            title.value = service.Name
-            price.value = service.Price.toString()
-            time.value = service.OveralTime.toString()
-            imageUrl = service.Image
-            discount.value = service.Discount.toString()
+            selectedCategory = categoryViewModel.categoriesName[service.categoryId]
+            description.value = service.description
+            title.value = service.name
+            price.value = service.price.toString()
+            time.value = service.overalTime.toString()
+            imageUrl = service.image
+            discount.value = service.discount.toString()
         }
+        message = ""
     }
 
 
@@ -403,7 +404,7 @@ fun Form(
                                 ) {
                                     serviceViewModel.services.forEach { service ->
                                         DropdownMenuItem(
-                                            text = { Text(service.Name) },
+                                            text = { Text(service.name) },
                                             onClick = {
                                                 selectedService = service
                                                 expanded = false
@@ -820,15 +821,15 @@ fun Form(
                         if (mode == "themDichVu") {
                             serviceViewModel.saveService(
                                 id = "",
-                                CategoryId = 1,
-                                Description = description.value,
-                                Discount = discount.value.toIntOrNull() ?: 0,
-                                Image = imageUrl ?: "",
-                                Name = title.value,
-                                OveralTime = time.value.toIntOrNull() ?: 0,
-                                Price = price.value.toFloatOrNull() ?: 0f,
-                                Rating = 0,
-                                Visitors = 0,
+                                categoryId = 1,
+                                description = description.value,
+                                discount = discount.value.toIntOrNull() ?: 0,
+                                image = imageUrl ?: "",
+                                name = title.value,
+                                overalTime = time.value.toIntOrNull() ?: 0,
+                                price = price.value.toFloatOrNull() ?: 0f,
+                                rating = 0,
+                                visitors = 0,
                                 onSuccess = {
                                     message = "Lưu thành công"
                                 }
@@ -836,15 +837,15 @@ fun Form(
                         } else {
                             serviceViewModel.updateService(
                                 id = serviceId.value,
-                                CategoryId = 1,
-                                Description = description.value,
-                                Discount = discount.value.toIntOrNull() ?: 0,
-                                Image = imageUrl ?: "",
-                                Name = title.value,
-                                OveralTime = time.value.toIntOrNull() ?: 0,
-                                Price = price.value.toFloatOrNull() ?: 0f,
-                                Rating = 0,
-                                Visitors = 0,
+                                categoryId = 1,
+                                description = description.value,
+                                discount = discount.value.toIntOrNull() ?: 0,
+                                image = imageUrl ?: "",
+                                name = title.value,
+                                overalTime = time.value.toIntOrNull() ?: 0,
+                                price = price.value.toFloatOrNull() ?: 0f,
+                                rating = 0,
+                                visitors = 0,
                                 onSuccess = {
                                     message = "Lưu thành công"
                                 }

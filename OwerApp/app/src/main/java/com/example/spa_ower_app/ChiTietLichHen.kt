@@ -131,7 +131,7 @@ fun AppointmentDetailScreen(
 
                             if (service != null && staff != null && appointment != null) {
                                 AsyncImage(
-                                    model = service.Image,
+                                    model = service.image,
                                     contentDescription = "Service Banner",
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier
@@ -144,30 +144,30 @@ fun AppointmentDetailScreen(
 
                                 // Service Info
                                 Text(
-                                    text = service.Name,
+                                    text = service.name,
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 16.sp
                                 )
 
                                 Row {
                                     Text(
-                                        text = formatCost(service.Price),
+                                        text = formatCost(service.price),
                                         textDecoration = TextDecoration.LineThrough,
                                         color = Color.Gray
                                     )
                                     Spacer(modifier = Modifier.width(8.dp))
                                     Text(
-                                        text = formatCost((100 - service.Discount) * service.Price / 100),
+                                        text = formatCost((100 - service.discount) * service.price / 100),
                                         color = Color.Red,
                                         fontWeight = FontWeight.Bold
                                     )
                                 }
 
-                                if (categoryViewModel.categoriesID.indexOf(service.CategoryId) != -1) {
+                                if (categoryViewModel.categoriesID.indexOf(service.categoryId) != -1) {
                                     Text(
                                         text = "Dịch vụ: ${
                                             categoryViewModel.categoriesName[categoryViewModel.categoriesID.indexOf(
-                                                service.CategoryId
+                                                service.categoryId
                                             )]
                                         }", fontSize = 14.sp, color = Color.Gray
                                     )
@@ -177,7 +177,7 @@ fun AppointmentDetailScreen(
 
                                 // Description
                                 Text(
-                                    text = service.Description,
+                                    text = service.description,
                                     fontSize = 14.sp
                                 )
 
@@ -235,14 +235,14 @@ fun AppointmentDetailScreen(
                                             horizontalArrangement = Arrangement.SpaceBetween
                                         ) {
                                             Text("Tổng tiền:")
-                                            Text(formatCost(service.Price))
+                                            Text(formatCost(service.price))
                                         }
                                         Row(
                                             modifier = Modifier.fillMaxWidth(),
                                             horizontalArrangement = Arrangement.SpaceBetween
                                         ) {
                                             Text("Giảm giá:")
-                                            Text(formatCost(service.Discount * service.Price / 100))
+                                            Text(formatCost(service.discount * service.price / 100))
                                         }
                                         Divider(modifier = Modifier.padding(vertical = 8.dp))
                                         Row(

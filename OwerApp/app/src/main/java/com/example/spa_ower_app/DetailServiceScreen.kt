@@ -65,7 +65,7 @@ fun DetailServiceScreen(
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         AsyncImage(
-                            model = serviceDetail.Image,
+                            model = serviceDetail.image,
                             contentDescription = "",
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
@@ -82,7 +82,7 @@ fun DetailServiceScreen(
                         verticalArrangement = Arrangement.spacedBy(5.dp),
                     ) {
                         Text(
-                            text = serviceDetail.Name,
+                            text = serviceDetail.name,
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold
                         )
@@ -93,7 +93,7 @@ fun DetailServiceScreen(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Text(
-                                    text = serviceDetail.Rating.toString(),
+                                    text = serviceDetail.rating.toString(),
                                     color = Color(0xFF818181)
                                 )
                                 Icon(
@@ -114,7 +114,7 @@ fun DetailServiceScreen(
                                     modifier = Modifier.size(18.dp)
                                 )
                                 Text(
-                                    text = serviceDetail.Visitors.toString() + " lượt khách",
+                                    text = serviceDetail.visitors.toString() + " lượt khách",
                                     color = Color(0xFF818181)
                                 )
                             }
@@ -124,16 +124,16 @@ fun DetailServiceScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                text = formatCost(serviceDetail.Price),
+                                text = formatCost(serviceDetail.price),
                                 style = TextStyle(
                                     textDecoration = TextDecoration.LineThrough,
                                     color = Color.Gray,
                                     fontSize = 13.sp
                                 )
                             )
-                            val discountPercent = serviceDetail.Discount.toFloat() / 100f
-                            val discountAmount = serviceDetail.Price * discountPercent
-                            val finalPrice = serviceDetail.Price - discountAmount
+                            val discountPercent = serviceDetail.discount.toFloat() / 100f
+                            val discountAmount = serviceDetail.price * discountPercent
+                            val finalPrice = serviceDetail.price - discountAmount
                             Spacer(modifier = Modifier.width(7.dp))
                             Text(
                                 text = formatCost(finalPrice),
@@ -141,11 +141,11 @@ fun DetailServiceScreen(
                                 color = Color.Red
                             )
                         }
-                        if (categoryViewModel.categoriesID.indexOf(serviceDetail.CategoryId) != -1) {
+                        if (categoryViewModel.categoriesID.indexOf(serviceDetail.categoryId) != -1) {
                             Text(
                                 text = "Dịch vụ: ${
                                     categoryViewModel.categoriesName[categoryViewModel.categoriesID.indexOf(
-                                        serviceDetail.CategoryId
+                                        serviceDetail.categoryId
                                     )]
                                 }",
                                 color = Color(0xFFDBC37C),
@@ -160,7 +160,7 @@ fun DetailServiceScreen(
                         )
                     ) {
                         Text(
-                            text = serviceDetail.Description,
+                            text = serviceDetail.description,
                             modifier = Modifier.padding(15.dp)
                         )
                     }

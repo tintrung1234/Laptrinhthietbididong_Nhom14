@@ -48,50 +48,6 @@ fun TrangMaGiamGia(navController: NavController) {
             //Top nav
             TopLayout("Mã giảm giá", { navController.navigate("TrangChu") })
 
-//            Row(
-//                modifier = Modifier.fillMaxWidth(),
-//            ) {
-//                Box(
-//                    modifier = Modifier
-//                        .padding(top = 20.dp)
-//                        .fillMaxWidth()
-//                ) {
-//                    Text(
-//                        "Mã giảm giá",
-//                        modifier = Modifier.align(Alignment.Center),
-//                        fontSize = 28.sp
-//                    )
-//                    Row(
-//                        modifier = Modifier.fillMaxWidth(),
-//                        verticalAlignment = Alignment.CenterVertically,
-//                        horizontalArrangement = Arrangement.SpaceBetween
-//                    ) {
-//                        Button(
-//                            onClick = { navController.navigate("Trang Chủ") },
-//                            colors = ButtonDefaults.buttonColors(
-//                                containerColor = Color(0xFFD9D9D9).copy(
-//                                    alpha = 0.79f
-//                                )
-//                            ),
-//                            contentPadding = PaddingValues(0.dp),
-//                            modifier = Modifier.size(55.dp)
-//                        ) {
-//                            Icon(
-//                                painterResource(R.drawable.vector4),
-//                                contentDescription = null,
-//                                modifier = Modifier.size(23.dp, 19.dp),
-//                                tint = Color.Black
-//                            )
-//                        }
-//                        Image(
-//                            painterResource(R.drawable.logo7),
-//                            contentDescription = null,
-//                            modifier = Modifier.size(79.dp)
-//                        )
-//                    }
-//                }
-//            }
-
             Spacer(Modifier.height(10.dp))
 
             Text(

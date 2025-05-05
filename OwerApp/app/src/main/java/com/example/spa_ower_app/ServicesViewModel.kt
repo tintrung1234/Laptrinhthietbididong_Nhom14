@@ -10,15 +10,15 @@ import com.google.firebase.firestore.SetOptions
 
 data class Service(
     val id: String = "",
-    val CategoryId: Int = 0,
-    val Description: String = "",
-    val Discount: Int = 0,
-    val Image: String = "",
-    val Name: String = "",
-    val OveralTime: Int = 0,
-    val Price: Float = 0f,
-    val Rating: Int = 0,
-    val Visitors: Int = 0
+    val categoryId: Int = 0,
+    val description: String = "",
+    val discount: Int = 0,
+    val image: String = "",
+    val name: String = "",
+    val overalTime: Int = 0,
+    val price: Float = 0f,
+    val rating: Int = 0,
+    val visitors: Int = 0
 )
 
 class ServiceViewModel : ViewModel() {
@@ -52,35 +52,35 @@ class ServiceViewModel : ViewModel() {
 
     fun saveService(
         id: String,
-        CategoryId: Int,
-        Description: String,
-        Discount: Int,
-        Image: String,
-        Name: String,
-        OveralTime: Int,
-        Price: Float,
-        Rating: Int,
-        Visitors: Int,
+        categoryId: Int,
+        description: String,
+        discount: Int,
+        image: String,
+        name: String,
+        overalTime: Int,
+        price: Float,
+        rating: Int,
+        visitors: Int,
         onSuccess: () -> Unit = {}, // Callback
         onFailure: (Exception) -> Unit = {}
     ) {
         // Validate required fields
-        if (Name.isBlank() || Description.isBlank() || Image.isBlank()) {
+        if (name.isBlank() || description.isBlank() || image.isBlank()) {
             Log.e("SaveService", "Name, Description, and Image must not be empty.")
             return
         }
 
-        if (Price <= 0f) {
+        if (price <= 0f) {
             Log.e("SaveService", "Price must be greater than 0.")
             return
         }
 
-        if (OveralTime <= 0) {
+        if (overalTime <= 0) {
             Log.e("SaveService", "OveralTime must be greater than 0.")
             return
         }
 
-        if (CategoryId <= 0) {
+        if (categoryId <= 0) {
             Log.e("SaveService", "CategoryId must be valid (> 0).")
             return
         }
@@ -90,15 +90,15 @@ class ServiceViewModel : ViewModel() {
 
         val newService = Service(
             id = docId,
-            CategoryId = CategoryId,
-            Description = Description,
-            Discount = Discount,
-            Image = Image,
-            Name = Name,
-            OveralTime = OveralTime,
-            Price = Price,
-            Rating = Rating,
-            Visitors = Visitors
+            categoryId = categoryId,
+            description = description,
+            discount = discount,
+            image = image,
+            name = name,
+            overalTime = overalTime,
+            price = price,
+            rating = rating,
+            visitors = visitors
         )
 
         docRef.set(newService)
@@ -115,15 +115,15 @@ class ServiceViewModel : ViewModel() {
 
     fun updateService(
         id: String,
-        CategoryId: Int,
-        Description: String,
-        Discount: Int,
-        Image: String,
-        Name: String,
-        OveralTime: Int,
-        Price: Float,
-        Rating: Int,
-        Visitors: Int,
+        categoryId: Int,
+        description: String,
+        discount: Int,
+        image: String,
+        name: String,
+        overalTime: Int,
+        price: Float,
+        rating: Int,
+        visitors: Int,
         onSuccess: () -> Unit = {}, // Callback
         onFailure: (Exception) -> Unit = {}
     ) {
@@ -132,37 +132,37 @@ class ServiceViewModel : ViewModel() {
             return
         }
 
-        if (Name.isBlank() || Description.isBlank() || Image.isBlank()) {
+        if (name.isBlank() || description.isBlank() || image.isBlank()) {
             Log.e("SaveService", "Name, Description, and Image must not be empty.")
             return
         }
 
-        if (Price <= 0f) {
+        if (price <= 0f) {
             Log.e("SaveService", "Price must be greater than 0.")
             return
         }
 
-        if (OveralTime <= 0) {
+        if (overalTime <= 0) {
             Log.e("SaveService", "OveralTime must be greater than 0.")
             return
         }
 
-        if (CategoryId <= 0) {
+        if (categoryId <= 0) {
             Log.e("SaveService", "CategoryId must be valid (> 0).")
             return
         }
 
         val updatedService = Service(
             id = id,
-            CategoryId = CategoryId,
-            Description = Description,
-            Discount = Discount,
-            Image = Image,
-            Name = Name,
-            OveralTime = OveralTime,
-            Price = Price,
-            Rating = Rating,
-            Visitors = Visitors
+            categoryId = categoryId,
+            description = description,
+            discount = discount,
+            image = image,
+            name = name,
+            overalTime = overalTime,
+            price = price,
+            rating = rating,
+            visitors = visitors
         )
 
         val docRef = db.collection("Services").document(id)

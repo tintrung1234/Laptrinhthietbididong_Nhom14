@@ -96,9 +96,9 @@ fun ServiceScreen(
                 modifier = Modifier.fillMaxSize()
                     .padding(20.dp)
             ) {
-                item { itemCardService(services.filter { it.CategoryId==categoryID }, "Bán chạy nhất", R.drawable.ic_hot, navController) }
-                item { itemCardService(services.filter { it.CategoryId==categoryID }, "Ưu đãi", R.drawable.ic_sale, navController) }
-                item { itemCardService(services.filter { it.CategoryId==categoryID }, "Các gói khác",-1, navController) }
+                item { itemCardService(services.filter { it.categoryId==categoryID }, "Bán chạy nhất", R.drawable.ic_hot, navController) }
+                item { itemCardService(services.filter { it.categoryId==categoryID }, "Ưu đãi", R.drawable.ic_sale, navController) }
+                item { itemCardService(services.filter { it.categoryId==categoryID }, "Các gói khác",-1, navController) }
 
             }
         }
@@ -170,9 +170,9 @@ fun itemCardService(services: List<Service>, title: String, img: Int, navControl
     val services = serviceViewModel.services
     val filteredServices = services.filter {
         when (title) {
-            "Bán chạy nhất" -> it.Visitors >= 900
-            "Ưu đãi" -> it.Discount > 0
-            else -> it.Discount <= 0 && it.Visitors < 900
+            "Bán chạy nhất" -> it.visitors >= 900
+            "Ưu đãi" -> it.discount > 0
+            else -> it.discount <= 0 && it.visitors < 900
         }
     }
     if(filteredServices.isNotEmpty()){
@@ -232,7 +232,7 @@ fun itemDisplayService(service: Service, serviceID: String, navController: NavCo
             .clickable(onClick = {navController.navigate("ChiTietDichVu/$serviceID")})
     ) {
         AsyncImage(
-            model = service.Image,
+            model = service.image,
             contentDescription ="",
             modifier = Modifier.size(120.dp)
         )
@@ -241,7 +241,7 @@ fun itemDisplayService(service: Service, serviceID: String, navController: NavCo
             modifier = Modifier.fillMaxSize()
         ) {
             Text(
-                text = service.Name,
+                text = service.name,
                 fontSize = 14.sp
             )
             Row(
@@ -254,7 +254,7 @@ fun itemDisplayService(service: Service, serviceID: String, navController: NavCo
                     modifier = Modifier.size(18.dp)
                 )
                 Text(
-                    text = " Lượt khách: ${service.Visitors}",
+                    text = " Lượt khách: ${service.visitors}",
                     color = Color(0xFF818181)
                 )
             }
@@ -262,7 +262,7 @@ fun itemDisplayService(service: Service, serviceID: String, navController: NavCo
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically){
                 Text(
-                    text = "Đánh giá: ${service.Rating}",
+                    text = "Đánh giá: ${service.rating}",
                     color = Color(0xFF818181)
                 )
                 Icon(
@@ -279,7 +279,7 @@ fun itemDisplayService(service: Service, serviceID: String, navController: NavCo
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = formatCost(service.Price),
+                    text = formatCost(service.price),
                     style = TextStyle(
                         textDecoration = TextDecoration.LineThrough,
                         color = Color.Gray,
@@ -288,7 +288,7 @@ fun itemDisplayService(service: Service, serviceID: String, navController: NavCo
                 )
                 Spacer(modifier = Modifier.width(5.dp))
                 Text(
-                    text = formatCost((100-service.Discount)*service.Price/100),
+                    text = formatCost((100-service.discount)*service.price/100),
                     fontSize = 22.sp,
                     color = Color.Red
                 )

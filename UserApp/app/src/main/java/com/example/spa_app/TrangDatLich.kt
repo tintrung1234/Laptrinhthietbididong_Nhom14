@@ -214,7 +214,7 @@ fun TrangDatLich(navController: NavController) {
                         )
                 ) {
                     TextField(
-                        value = selectedService?.Name ?: "Chọn dịch vụ",
+                        value = selectedService?.name ?: "Chọn dịch vụ",
                         onValueChange = {},
                         readOnly = true,
                         trailingIcon = {
@@ -238,7 +238,7 @@ fun TrangDatLich(navController: NavController) {
                     ) {
                         serviceViewModel.services.forEach { service ->
                             DropdownMenuItem(
-                                text = { Text(service.Name) },
+                                text = { Text(service.name) },
                                 onClick = {
                                     selectedService = service
                                     expanded = false
@@ -395,7 +395,7 @@ fun TrangDatLich(navController: NavController) {
                         orderDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
                         pickedDate = "$selectedDate $selectedTime",
                         state = 0,
-                        totalValues = selectedService!!.Price,
+                        totalValues = selectedService!!.price,
                         paymentMethod = false
                     )
 
