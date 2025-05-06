@@ -33,6 +33,7 @@ fun Controller() {
     val servicesViewModel: ServiceViewModel = viewModel()
     val staffsViewModel: StaffViewModel = viewModel()
     val categoryViewModel: CategoryViewModel = viewModel()
+    val discountViewModel: DiscountViewModel = viewModel()
     val appointmentViewModel: AppointmentViewModel = viewModel()
     NavHost(navController = navConTroller, startDestination = "TrangChu") {
         composable("TrangChu") { TrangChu(navConTroller, servicesViewModel, staffsViewModel) }
@@ -42,23 +43,43 @@ fun Controller() {
         composable(
             "ChiTietDichVu/{serviceId}",
             arguments = listOf(navArgument("serviceId") { type = NavType.StringType })
-        ) {backStackEntry ->
+        ) { backStackEntry ->
             val serviceId = backStackEntry.arguments?.getString("serviceId")
             DetailServiceScreen(navConTroller, serviceId, servicesViewModel, categoryViewModel)
         }
-        composable("LichSu") { HistoryScreen(navConTroller,appointmentViewModel) }
-        composable("MaGiamGia") { TrangMaGiamGia(navConTroller) }
+        composable("LichSu") { HistoryScreen(navConTroller, appointmentViewModel) }
+        composable("MaGiamGia") { TrangMaGiamGia(navConTroller, discountViewModel) }
         composable("DangNhapDangKy") { LoginRegisterScreen(navConTroller) }
         composable("LienHe") { TrangLienHe(navConTroller) }
         composable(
             "ChiTietLichHen/{appointmentId}",
             arguments = listOf(navArgument("appointmentId") { type = NavType.StringType })
-        ) {backStackEntry ->
+        ) { backStackEntry ->
             val appointmentId = backStackEntry.arguments?.getString("appointmentId")
-            AppointmentDetailScreen(navConTroller, appointmentId, appointmentViewModel, servicesViewModel, categoryViewModel,staffsViewModel) }
-        composable("CacGoiDichVu") { ServiceScreen(navConTroller, servicesViewModel, categoryViewModel) }
+            AppointmentDetailScreen(
+                navConTroller,
+                appointmentId,
+                appointmentViewModel,
+                servicesViewModel,
+                categoryViewModel,
+                staffsViewModel
+            )
+        }
+        composable("CacGoiDichVu") {
+            ServiceScreen(
+                navConTroller,
+                servicesViewModel,
+                categoryViewModel
+            )
+        }
         composable("TaiKhoan") { InforScreen(navConTroller) }
-        composable("TrangThanhToan") { PaymentScreen(navConTroller) }
+        composable(
+            "TrangThanhToan/{appointmentId}",
+            arguments = listOf(navArgument("appointmentId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val appointmentId = backStackEntry.arguments?.getString("appointmentId")
+            PaymentScreen(navConTroller, appointmentId, appointmentViewModel, servicesViewModel, discountViewModel)
+        }
         composable("TrangDatLich") { TrangDatLich(navConTroller) }
         composable("TimKiem") { Search(navConTroller, servicesViewModel) }
     }

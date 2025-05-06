@@ -6,6 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 data class Appointment(
     val id: String = "",
@@ -35,15 +37,25 @@ class AppointmentViewModel: ViewModel() {
                 }
 
                 if (snapshot != null && !snapshot.isEmpty) {
+                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
                     val updatedAppointments = snapshot.documents.mapNotNull { doc ->
                         doc.toObject(Appointment::class.java)?.copy(id = doc.id)
+                    }.sortedByDescending { appointment ->
+                        try {
+                            dateFormat.parse(appointment.orderDate)
+                        } catch (e: Exception) {
+                            null
+                        }
                     }
+
                     appointments = updatedAppointments
                 } else {
                     appointments = emptyList()
                 }
             }
     }
+
 
     fun updateAppointmentInFirestore(appointment: Appointment) {
         val db = FirebaseFirestore.getInstance()

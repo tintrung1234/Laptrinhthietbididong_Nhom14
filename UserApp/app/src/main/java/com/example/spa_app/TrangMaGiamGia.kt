@@ -9,12 +9,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -32,10 +35,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 
 @Composable
-fun TrangMaGiamGia(navController: NavController) {
+fun TrangMaGiamGia(
+    navController: NavController,
+    discountViewModel: DiscountViewModel = viewModel()
+) {
+    val Vouchers = discountViewModel.vouchers
+
     Column(
         modifier = Modifier.background(color = Color.White)
     ) {
@@ -43,54 +52,9 @@ fun TrangMaGiamGia(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(20.dp)
-                .verticalScroll(rememberScrollState())
         ) {
             //Top nav
             TopLayout("Mã giảm giá", { navController.navigate("TrangChu") })
-
-//            Row(
-//                modifier = Modifier.fillMaxWidth(),
-//            ) {
-//                Box(
-//                    modifier = Modifier
-//                        .padding(top = 20.dp)
-//                        .fillMaxWidth()
-//                ) {
-//                    Text(
-//                        "Mã giảm giá",
-//                        modifier = Modifier.align(Alignment.Center),
-//                        fontSize = 28.sp
-//                    )
-//                    Row(
-//                        modifier = Modifier.fillMaxWidth(),
-//                        verticalAlignment = Alignment.CenterVertically,
-//                        horizontalArrangement = Arrangement.SpaceBetween
-//                    ) {
-//                        Button(
-//                            onClick = { navController.navigate("Trang Chủ") },
-//                            colors = ButtonDefaults.buttonColors(
-//                                containerColor = Color(0xFFD9D9D9).copy(
-//                                    alpha = 0.79f
-//                                )
-//                            ),
-//                            contentPadding = PaddingValues(0.dp),
-//                            modifier = Modifier.size(55.dp)
-//                        ) {
-//                            Icon(
-//                                painterResource(R.drawable.vector4),
-//                                contentDescription = null,
-//                                modifier = Modifier.size(23.dp, 19.dp),
-//                                tint = Color.Black
-//                            )
-//                        }
-//                        Image(
-//                            painterResource(R.drawable.logo7),
-//                            contentDescription = null,
-//                            modifier = Modifier.size(79.dp)
-//                        )
-//                    }
-//                }
-//            }
 
             Spacer(Modifier.height(10.dp))
 
@@ -100,98 +64,96 @@ fun TrangMaGiamGia(navController: NavController) {
                 lineHeight = 14.sp
             )
 
-            listOf(
-                "10" to "3",
-                "7" to "6",
-                "5" to "10",
-                "15" to "1"
-            ).forEach { (number, quantity) ->
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .padding(8.dp)
+            ) {
+                items(Vouchers) { voucher ->
+                    Spacer(Modifier.height(10.dp))
 
-
-                Spacer(Modifier.height(10.dp))
-
-                Row(
-                    modifier = Modifier.height(112.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Box() {
-                        Box(
-                            modifier = Modifier
-                                .padding(start = 5.dp)
-                                .border(
-                                    1.dp,
-                                    color = Color.Black.copy(0.5f),
-                                    shape = RoundedCornerShape(8.dp)
-                                )
-                        ) {
-                            Column(
+                    Row(
+                        modifier = Modifier.height(112.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box() {
+                            Box(
                                 modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(top = 5.dp, end = 10.dp)
+                                    .padding(start = 5.dp)
+                                    .border(
+                                        1.dp,
+                                        color = Color.Black.copy(0.5f),
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
                             ) {
-                                Text(
-                                    "x$quantity",
-                                    modifier = Modifier.align(Alignment.End)
-                                )
-
                                 Column(
                                     modifier = Modifier
-                                        .fillMaxWidth(0.42f)
-                                        .align(Alignment.End)
-                                        .offset(y = -15.dp)
+                                        .fillMaxSize()
+                                        .padding(top = 5.dp, end = 10.dp)
                                 ) {
-                                    Image(
-                                        painterResource(R.drawable.logo7),
-                                        contentDescription = null,
-                                        modifier = Modifier
-                                            .size(59.dp)
-                                            .align(Alignment.CenterHorizontally)
+                                    Text(
+                                        "x" + voucher.quantity.toString(),
+                                        modifier = Modifier.align(Alignment.End)
                                     )
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.Center
+
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxWidth(0.42f)
+                                            .align(Alignment.End)
+                                            .offset(y = -15.dp)
                                     ) {
-                                        Text(
-                                            "CODE: ",
-                                            color = Color.Black.copy(0.23f),
-                                            fontSize = 13.sp,
-                                            fontWeight = FontWeight.Bold,
-                                            lineHeight = 13.sp
+                                        Image(
+                                            painterResource(R.drawable.logo7),
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .size(59.dp)
+                                                .align(Alignment.CenterHorizontally)
                                         )
-                                        Text(
-                                            "SALE$number",
-                                            color = Color(0xFFDBC37C),
-                                            fontSize = 13.sp,
-                                            lineHeight = 13.sp,
-                                            fontWeight = FontWeight.Bold
-                                        )
+                                        Row(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            horizontalArrangement = Arrangement.Center
+                                        ) {
+                                            Text(
+                                                "CODE: ",
+                                                color = Color.Black.copy(0.23f),
+                                                fontSize = 13.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                lineHeight = 13.sp
+                                            )
+                                            Text(
+                                                voucher.title,
+                                                color = Color(0xFFDBC37C),
+                                                fontSize = 13.sp,
+                                                lineHeight = 13.sp,
+                                                fontWeight = FontWeight.Bold
+                                            )
+                                        }
                                     }
                                 }
                             }
-                        }
-                        Image(
-                            painterResource(R.drawable.image21),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(199.dp, 117.dp)
-                                .offset(x = -5.dp),
-                            contentScale = ContentScale.Fit
-                        )
-                        Column(
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier.size(187.dp, 119.dp)
-
-                        ) {
-                            Text(
-                                "$number%\n OFF",
-                                color = Color.White,
-                                textAlign = TextAlign.Center,
-                                fontSize = 30.sp,
-                                fontWeight = FontWeight.Bold
+                            Image(
+                                painterResource(R.drawable.image21),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .size(199.dp, 117.dp)
+                                    .offset(x = -5.dp),
+                                contentScale = ContentScale.Fit
                             )
+                            Column(
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier.size(187.dp, 119.dp)
+                            ) {
+                                Text(
+                                    "${voucher.value}%\n OFF",
+                                    color = Color.White,
+                                    textAlign = TextAlign.Center,
+                                    fontSize = 30.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
                         }
-
                     }
                 }
             }

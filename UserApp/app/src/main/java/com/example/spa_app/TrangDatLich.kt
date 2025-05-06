@@ -369,6 +369,7 @@ fun TrangDatLich(navController: NavController) {
         ) {
             Button(
                 onClick = {
+                    //Kiem tra day du thong tin
                     if (hoTen.isBlank() || soDienThoai.isBlank() || diaChi.isBlank() ||
                         selectedService == null || selectedTime.isBlank() || selectedStaff == null
                     ) {
@@ -385,6 +386,10 @@ fun TrangDatLich(navController: NavController) {
                         return@Button
                     }
 
+                    val discountPercent = selectedService!!.discount / 100f
+                    val voucherAmount = selectedService!!.price * discountPercent
+                    val finalPrice = selectedService!!.price - voucherAmount
+
                     val staffIndex = selectedStaff!!.id
                     val serviceIndex = selectedService!!.id
                     val userId = authViewModel.authState?.uid ?: "anonymous"
@@ -395,18 +400,25 @@ fun TrangDatLich(navController: NavController) {
                         orderDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
                         pickedDate = "$selectedDate $selectedTime",
                         state = 0,
-                        totalValues = selectedService!!.price,
+                        totalValues = finalPrice,
                         paymentMethod = false
                     )
 
-                    db.collection("Appointments")
-                        .add(appointment)
-                        .addOnSuccessListener {
+                    val appointmentsRef = db.collection("Appointments")
 
-                            navController.navigate("TrangThanhToan")
+                    appointmentsRef.add(appointment)
+                        .addOnSuccessListener { documentReference ->
+                            val appointmentId = documentReference.id
+
+                            // Optionally update Firestore document with this ID inside the object
+                            appointmentsRef.document(appointmentId)
+                                .update("id", appointmentId) // This assumes your Appointment class has an "id" field
+
+                            Log.d("appointmentIDdatlich", "$appointmentId")
+                            navController.navigate("TrangThanhToan/$appointmentId")
                         }
                         .addOnFailureListener { e ->
-                            // Xử lý lỗi (ví dụ: hiển thị toast hoặc snackbar)
+                            // Handle the error
                         }
                 },
                 shape = RoundedCornerShape(8.dp),

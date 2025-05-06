@@ -6,6 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 data class Appointment(
     val id: String = "",
@@ -25,23 +27,45 @@ class AppointmentViewModel: ViewModel() {
     init {
         fetchAppointments()
     }
+
     private fun fetchAppointments() {
         db.collection("Appointments")
-            .get()
-            .addOnSuccessListener { result ->
-                val newAppointments = mutableListOf<Appointment>()
-                val newIds = mutableListOf<String>()
-
-                for (doc in result) {
-                    val appointment = doc.toObject(Appointment::class.java).copy(id = doc.id)
-                    newAppointments.add(appointment)
-                    newIds.add(doc.id)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    Log.e("AppointmentViewModel", "Real-time fetch failed", error)
+                    return@addSnapshotListener
                 }
 
-                appointments = newAppointments
+                if (snapshot != null && !snapshot.isEmpty) {
+                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+                    val updatedAppointments = snapshot.documents.mapNotNull { doc ->
+                        doc.toObject(Appointment::class.java)?.copy(id = doc.id)
+                    }.sortedByDescending { appointment ->
+                        try {
+                            dateFormat.parse(appointment.orderDate)
+                        } catch (e: Exception) {
+                            null
+                        }
+                    }
+
+                    appointments = updatedAppointments
+                } else {
+                    appointments = emptyList()
+                }
             }
-            .addOnFailureListener { exception ->
-                Log.e("AppointmentViewModel", "Error getting appointments", exception)
+    }
+
+    fun updateAppointmentInFirestore(appointment: Appointment, finalprice: Any) {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("Appointments")
+            .document(appointment.id)
+            .update("totalValues", finalprice)
+            .addOnSuccessListener {
+                Log.d("Firestore", "Appointment state updated to 1")
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Error updating state", e)
             }
     }
 

@@ -1,5 +1,6 @@
 package com.example.spa_app
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,6 +30,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,57 +46,210 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.Locale
+
 @Composable
-fun PaymentScreen(navController: NavController){
-    LazyColumn(
-        modifier = Modifier.fillMaxSize()
-            .padding(vertical = 30.dp, horizontal = 20.dp)
-    ){
-        item { TopLayout("Thanh toán", onclick = {navController.navigate("DatLich")}) }
-        item { AddressCustomer("Chị Nguyễn A ", "(+84)980026728", "334/123/42 Phạm Văn Đồng phường 15 quận Bình Thạnh, TP Hồ Chí Minh") }
-        item { ServiceRow() }
-        item { VoucherInput() }
-        item { PaymentMethod() }
-        item { PaymentDetail() }
-        item {
-            Box(
-                modifier = Modifier.fillMaxWidth()
-            ){
-                Button(
-                    onClick = {navController.navigate("LichSu")},
-                    shape = RoundedCornerShape(10.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFDBC37C)
-                    ),
-                    modifier = Modifier.align(Alignment.BottomEnd)
+fun PaymentScreen(
+    navController: NavController,
+    appointmentId: String?,
+    appointmentViewModel: AppointmentViewModel = viewModel(),
+    serviceViewModel: ServiceViewModel = viewModel(),
+    discountViewModel: DiscountViewModel = viewModel()
+) {
+    Log.d("appointmentIDthanhtoan", "$appointmentId")
+
+    // Get the Appointment matching the ID
+    val appointmentIndex = appointmentId
+
+    val vouchers = discountViewModel.vouchers
+    var voucher by remember { mutableStateOf("") }
+    var acceptVoucher = remember { mutableStateOf(false) }
+
+    // Check when voucher input changes
+    LaunchedEffect(voucher) {
+        acceptVoucher.value = vouchers.any { it.code.equals(voucher, ignoreCase = true) }
+    }
+
+    var voucherValue = 0
+
+    var finalPrice = 0f
+
+    val firestore = FirebaseFirestore.getInstance()
+    val auth = FirebaseAuth.getInstance()
+    val currentUser = auth.currentUser
+    val userDocRef =
+        currentUser?.let { firestore.collection("Users").document(it.uid) }
+
+    // State for user info
+    var name by remember { mutableStateOf("") }
+    var phone by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+
+    LaunchedEffect(Unit) {
+        if (userDocRef != null) {
+            userDocRef.get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        name = document.getString("name")
+                            ?: currentUser.displayName.orEmpty()
+                        phone = document.getString("phone")
+                            ?: currentUser.phoneNumber.orEmpty()
+                        email = document.getString("email")
+                            ?: currentUser.email.orEmpty()
+                    } else {
+                        name = currentUser.displayName.orEmpty()
+                        phone = currentUser.phoneNumber.orEmpty()
+                        email = currentUser.email.orEmpty()
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Log.e("InforLayout", "Error getting user info", e)
+                }
+        }
+    }
+
+    if (appointmentIndex != null) {
+        val appointment =
+            appointmentViewModel.appointments.find { it.id == appointmentId }
+        Log.d("appointment", "$appointment")
+
+        // Get service
+        val serviceIndex = appointment?.servicesId.toString()
+        if (serviceIndex != null) {
+
+            val service = serviceViewModel.services.find { it.id == serviceIndex }
+
+            var totalPrice: Float = 0f
+
+            if (service != null) {
+                val discountPercent = service.discount.toFloat() / 100f
+                val discountAmount = service.price * discountPercent
+                totalPrice = service.price - discountAmount
+
+                LazyColumn(
+                    modifier = Modifier
+                        .padding(vertical = 30.dp, horizontal = 20.dp)
                 ) {
-                    Text(
-                        text = "Xác nhận thanh toán",
-                        color = Color.White,
-                        fontSize = 20.sp,
-                        modifier = Modifier
-                            .padding(vertical = 10.dp),
-                    )
+                    item { TopLayout("Thanh toán", onclick = { navController.popBackStack() }) }
+                    item {
+                        AddressCustomer(
+                            name,
+                            phone,
+                            email
+                        )
+                    }
+                    item { ServiceRow(service.image, service.name, service.price, totalPrice) }
+                    item {
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Text(
+                            text = "Mã voucher",
+                            fontSize = 25.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        MyCard {
+                            BasicTextField(
+                                value = voucher,
+                                onValueChange = { voucher = it },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(0.dp),
+                                decorationBox = { innerTextField ->
+                                    Box(
+                                    ) {
+                                        if (voucher.isEmpty()) {
+                                            Text(
+                                                "Nhập mã khuyến mãi",
+                                                color = Color.Gray.copy(alpha = 0.7f)
+                                            )
+                                        }
+                                        innerTextField()
+                                    }
+                                }
+                            )
+                        }
+                    }
+                    item { PaymentMethod() }
+
+                    if(acceptVoucher.value){
+                        val voucher = vouchers.find { it.code == voucher }
+                        if (voucher != null) {
+                            voucherValue = voucher.value
+                        }
+                    item {
+                        MyCard {
+                            Column(
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = "Chi tiết thanh toán",
+                                    fontSize = 23.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                val discountPercent = voucherValue / 100f
+                                val voucherAmount = totalPrice * discountPercent
+                                finalPrice = totalPrice - voucherAmount
+
+                                itemPaymentDetail("Tổng tiền:", totalPrice)
+                                itemPaymentDetail("Giảm giá:", voucherAmount)
+                                itemPaymentDetail("Thành tiền:", finalPrice)
+
+                            }
+                        }
+                    }
+                    item {
+                        Box(
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Button(
+                                onClick = {
+                                    if (appointment != null) {
+                                        appointmentViewModel.updateAppointmentInFirestore(appointment, finalPrice)
+                                        if (voucher != null) {
+                                            discountViewModel.updateVoucherInFirestore(voucher)
+                                        }
+                                    }
+                                    navController.navigate("LichSu")
+                                          },
+                                shape = RoundedCornerShape(10.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFFDBC37C)
+                                ),
+                                modifier = Modifier.align(Alignment.BottomEnd)
+                            ) {
+                                Text(
+                                    text = "Xác nhận thanh toán",
+                                    color = Color.White,
+                                    fontSize = 20.sp,
+                                    modifier = Modifier
+                                        .padding(vertical = 10.dp),
+                                )
+                            }
+                        }
+                    }
+                    }
                 }
             }
         }
     }
 }
 
-private fun onclick(){}
+private fun onclick() {}
 
 @Composable
-fun MyCard(content: @Composable () -> Unit){
+fun MyCard(content: @Composable () -> Unit) {
     Spacer(modifier = Modifier.height(13.dp))
     Card(
         colors = CardDefaults.cardColors(
             containerColor = Color(0xFFD9D9D9)
         )
-    ){
+    ) {
         Card(
             modifier = Modifier.padding(10.dp),
             colors = CardDefaults.cardColors(
@@ -110,29 +265,24 @@ fun MyCard(content: @Composable () -> Unit){
 }
 
 @Composable
-fun AddressCustomer(name: String, phone: String, address: String){
+fun AddressCustomer(name: String, phone: String, email: String) {
     MyCard {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
-        ){
+        ) {
             Column(
                 modifier = Modifier.weight(4f)
             ) {
                 Row {
-                    Icon(
-                        imageVector = Icons.Default.LocationOn,
-                        contentDescription = "",
-                        tint = Color(0xFFF24822)
-                    )
                     Text(name)
                     Text(
-                        text = " ${phone}",
+                        text = " (+84)"+"${phone}",
                         color = Color(0x80000000)
                     )
                 }
                 Text(
-                    text = address,
+                    text = email,
                     fontSize = 12.sp
                 )
             }
@@ -153,32 +303,42 @@ fun AddressCustomer(name: String, phone: String, address: String){
 }
 
 @Composable
-fun ServiceRow(){
+fun ServiceRow(image: String, title: String, price: Float, discount: Float) {
     Spacer(modifier = Modifier.height(12.dp))
     Text(
         text = "Gói dịch vụ",
         color = Color(0xFFDBC37C),
         fontSize = 25.sp
     )
-    LazyRow (
+    LazyRow(
         modifier = Modifier.fillMaxWidth()
     ) {
-        item { itemService(R.drawable.khuyen_mai1, "COMBO 4 CHĂM SÓC DA LẤY NHÂN MỤN 88K", 88000f, 400000f) }
-        item { itemService(R.drawable.khuyen_mai2, "MASSAGE XUA TAN NHỨC MỎI", 70000f, 360000f) }
+        item {
+            itemService(
+                image,
+                title,
+                discount,
+                price
+            )
+        }
     }
 }
 
 //@Preview (showBackground = true)
 @Composable
-fun itemService(img: Int, name: String, costSale: Float, cost: Float){
-    Column (
-        modifier = Modifier.width(130.dp)
+fun itemService(img: String, name: String, costSale: Float, cost: Float) {
+
+    Column(
+        modifier = Modifier
+            .width(130.dp)
             .wrapContentHeight()
-    ){
-        Image(
-            painter = painterResource(id = img),
-            contentDescription ="",
-            modifier = Modifier.height(140.dp).width(140.dp)
+    ) {
+        AsyncImage(
+            model = img,
+            contentDescription = "",
+            modifier = Modifier
+                .height(140.dp)
+                .width(140.dp)
         )
         Text(
             text = name,
@@ -203,40 +363,7 @@ fun itemService(img: Int, name: String, costSale: Float, cost: Float){
 }
 
 @Composable
-fun VoucherInput(){
-    Spacer(modifier = Modifier.height(12.dp))
-    Text(
-        text = "Mã voucher",
-        fontSize = 25.sp,
-        fontWeight = FontWeight.Bold
-    )
-    MyCard {
-        var text by remember { mutableStateOf("") }
-
-        BasicTextField(
-            value = text,
-            onValueChange = { text = it },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(0.dp),
-            decorationBox = { innerTextField ->
-                Box(
-                ) {
-                    if (text.isEmpty()) {
-                        Text(
-                            "Nhập mã khuyến mãi",
-                            color = Color.Gray.copy(alpha = 0.7f)
-                        )
-                    }
-                    innerTextField()
-                }
-            }
-        )
-    }
-}
-
-@Composable
-fun PaymentMethod(){
+fun PaymentMethod() {
     MyCard {
         Column(
             modifier = Modifier.fillMaxWidth()
@@ -247,13 +374,12 @@ fun PaymentMethod(){
                 color = Color(0xFFDBC37C)
             )
             itemPaymentMethod(R.drawable.nimbus_cash, "Thanh toán trực tiếp tại Spa")
-            itemPaymentMethod(R.drawable.logo_momo,"Thanh toán qua momo")
         }
     }
 }
 
 @Composable
-fun itemPaymentMethod(icon: Any, name: String){
+fun itemPaymentMethod(icon: Any, name: String) {
 
     Row(
         verticalAlignment = Alignment.CenterVertically
@@ -267,6 +393,7 @@ fun itemPaymentMethod(icon: Any, name: String){
                     tint = Color(0xFFFFA629)
                 )
             }
+
             is Int -> {
                 // Nếu iconResource là một ID tài nguyên (dành cho ảnh bitmap)
                 Image(
@@ -275,6 +402,7 @@ fun itemPaymentMethod(icon: Any, name: String){
                     modifier = Modifier.size(30.dp) // Cỡ ảnh có thể thay đổi
                 )
             }
+
             else -> {
                 // Xử lý khi tham số không phải kiểu mong đợi
                 Text("Invalid resource")
@@ -298,26 +426,7 @@ fun itemPaymentMethod(icon: Any, name: String){
 }
 
 @Composable
-fun PaymentDetail(){
-    MyCard {
-        Column(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = "Chi tiết thanh toán",
-                fontSize = 23.sp,
-                fontWeight = FontWeight.Bold
-            )
-            itemPaymentDetail("Tổng tiền:", 158000f)
-            itemPaymentDetail("Giảm giá:", 0f)
-            itemPaymentDetail("Thành tiền:", 158000f)
-
-        }
-    }
-}
-
-@Composable
-fun itemPaymentDetail(title: String, cost: Float){
+fun itemPaymentDetail(title: String, cost: Float) {
     Row {
         Text(
             text = title,
@@ -327,7 +436,7 @@ fun itemPaymentDetail(title: String, cost: Float){
             text = formatCost(cost),
             modifier = Modifier.weight(1f),
             textAlign = TextAlign.Center,
-            color = if(title == "Giảm giá") Color(0xFFFF8736) else Color.Black
+            color = if (title == "Giảm giá") Color(0xFFFF8736) else Color.Black
         )
     }
 }
