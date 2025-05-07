@@ -71,6 +71,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.spa_ower_app.ThemSuaDichVu
+import com.example.spa_ower_app.ui.theme.Spa_Ower_AppTheme
 import java.time.format.TextStyle
 
 
@@ -79,7 +80,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            Controller()
+             Spa_Ower_AppTheme{
+                Controller()
+            }
         }
     }
 }

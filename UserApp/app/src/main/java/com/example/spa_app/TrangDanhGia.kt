@@ -47,7 +47,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import com.google.firebase.auth.FirebaseAuth
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,6 +58,24 @@ fun ReviewPage(navController: NavController){
     Column(
         modifier = Modifier.background(color = Color.White)
     ) {
+        val appointmentViewModel: AppointmentViewModel = viewModel()
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val appointment = appointmentViewModel.appointments.filter { it.userId == currentUser?.uid && it.paymentMethod == true }
+        val servicesViewModel: ServiceViewModel = viewModel()
+        val staffViewModel: StaffViewModel = viewModel()
+        val items = mutableMapOf<Appointment, Service>()
+        if (appointment.isNotEmpty()) {
+            for (item in appointment) {
+                servicesViewModel.services.find { it.id == item.servicesId }
+                    ?.let { items[item]=it}
+            }
+        }
+        var selectedOption by remember { mutableStateOf("Chọn") }
+        var appointmentID by remember { mutableStateOf("")}
+        var selectedIndexService by remember { mutableStateOf(-1) }
+        var selectedIndexStaff by remember { mutableStateOf(-1) }
+        var selectedService by remember { mutableStateOf<Service?>(null) }
+        var selectedStaff by remember { mutableStateOf<Staff?>(null) }
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -105,9 +126,8 @@ fun ReviewPage(navController: NavController){
                     Spacer(Modifier.height(12.dp))
 
                     //Drop box
-                    var items = listOf("COMBO 4 CHĂM SÓC DA LẤY NHÂN MỤN 88K", "Ob2", "Ob3", "Ob4")
+
                     var expanded by remember { mutableStateOf(false) }
-                    var selectedOption by remember { mutableStateOf(items[0]) }
 
                     Row(
                         modifier = Modifier
@@ -156,11 +176,14 @@ fun ReviewPage(navController: NavController){
                                 expanded = expanded,
                                 onDismissRequest = { expanded = false }
                             ) {
-                                items.forEach { selectionOption ->
+                                items.forEach { (appointment, service) ->
                                     DropdownMenuItem(
-                                        text = { Text(selectionOption) },
+                                        text = { Text(service.name + " " + appointment.pickedDate) },
                                         onClick = {
-                                            selectedOption = selectionOption
+                                            selectedOption = service.name + " " + appointment.pickedDate
+                                            appointmentID = appointment.id
+                                            selectedService = service
+                                            selectedStaff = staffViewModel.staffs.find { it.id == appointment.staffId }
                                             expanded = false
                                         }
                                     )
@@ -176,148 +199,117 @@ fun ReviewPage(navController: NavController){
             }
 
             Spacer(Modifier.height(20.dp))
-
-            Text("Đánh giá dịch vụ",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold)
-
-            Spacer(Modifier.height(20.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(horizontal = 5.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                var selectedIndex by remember { mutableStateOf(-1) }
-                listOf(
-                    R.drawable.star to "Rất tệ",
-                    R.drawable.star to "Tệ",
-                    R.drawable.star to "Bình thường",
-                    R.drawable.star to "Tốt",
-                    R.drawable.star to "Tuyệt vời"
-                ).forEachIndexed{index, (icon, text) ->
-                    Column(
-                        modifier = Modifier
-                            .width(70.dp)
-                            .padding(horizontal = 5.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally) {
-                        Icon(
-                            painterResource(icon),
-                            contentDescription = "star",
-                            modifier = Modifier.size(37.dp)
-                                .clickable { selectedIndex = index },
-                            tint = if (index <= selectedIndex) Color(0xFFFFC107) else Color(0xFF888888)
-                        )
-                        Text(text, fontSize = 10.sp,
-                            textAlign = TextAlign.Center)
-                    }
-                }
-            }
-
-            Spacer(Modifier.height(20.dp))
-
-            Text("Đánh giá nhân viên",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold)
-
-            Spacer(Modifier.height(20.dp))
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    painterResource(R.drawable.ktv1),
-                    contentDescription = null,
-                    modifier = Modifier.size(90.dp))
-                Spacer(Modifier.width(20.dp))
-                Text("Nguyễn Hoàng Phương",
-                    fontSize = 16.sp,
+            if (appointmentID != null){
+                Text("Đánh giá dịch vụ",
+                    fontSize = 18.sp,
                     fontWeight = FontWeight.Bold)
-            }
 
-            Spacer(Modifier.height(10.dp))
+                Spacer(Modifier.height(20.dp))
 
-            Row(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(horizontal = 5.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                var selectedIndex by remember { mutableStateOf(-1) }
-                listOf(
-                    R.drawable.star to "Rất tệ",
-                    R.drawable.star to "Tệ",
-                    R.drawable.star to "Bình thường",
-                    R.drawable.star to "Tốt",
-                    R.drawable.star to "Tuyệt vời"
-                ).forEachIndexed{index, (icon, text) ->
-                    Column(
-                        modifier = Modifier
-                            .width(70.dp)
-                            .padding(horizontal = 5.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally) {
-                        Icon(
-                            painterResource(icon),
-                            contentDescription = "star",
-                            modifier = Modifier.size(37.dp)
-                                .clickable { selectedIndex = index },
-                            tint = if (index <= selectedIndex) Color(0xFFFFC107) else Color(0xFF888888)
-                        )
-                        Text(text, fontSize = 10.sp,
-                            textAlign = TextAlign.Center)
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(horizontal = 5.dp),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    listOf(
+                        R.drawable.star to "Rất tệ",
+                        R.drawable.star to "Tệ",
+                        R.drawable.star to "Bình thường",
+                        R.drawable.star to "Tốt",
+                        R.drawable.star to "Tuyệt vời"
+                    ).forEachIndexed{index, (icon, text) ->
+                        Column(
+                            modifier = Modifier
+                                .width(70.dp)
+                                .padding(horizontal = 5.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally) {
+                            Icon(
+                                painterResource(icon),
+                                contentDescription = "star",
+                                modifier = Modifier.size(37.dp)
+                                    .clickable { selectedIndexService = index },
+                                tint = if (index <= selectedIndexService) Color(0xFFFFC107) else Color(0xFF888888)
+                            )
+                            Text(text, fontSize = 10.sp,
+                                textAlign = TextAlign.Center)
+                        }
                     }
                 }
-            }
 
-            Spacer(Modifier.height(10.dp))
+                Spacer(Modifier.height(20.dp))
 
-            var text by remember { mutableStateOf("") }
+                Text("Đánh giá nhân viên",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold)
 
-            Box(
-                modifier = Modifier
-                    .border(1.dp, color = Color.Gray, shape = RoundedCornerShape(8.dp))
-                    .shadow(8.dp, RoundedCornerShape(16.dp))
-                    .background(color = Color.White, shape = RoundedCornerShape(8.dp))
-                    .fillMaxWidth()
-            ) {
-                BasicTextField(
-                    value = text,
-                    onValueChange = { text = it },
-                    textStyle = TextStyle(
-                        fontSize = 16.sp,
-                        color = Color.Black
-                    ),
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxSize()
-                        .height(200.dp),
-                    decorationBox = { innerTextField ->
-                        if (text.isEmpty()) {
-                            Text(
-                                text = "Chia sẻ một số cảm nhận của bạn...",
-                                style = TextStyle(
-                                    fontSize = 16.sp,
-                                    color = Color.Gray
-                                )
-                            )
-                        }
-                        innerTextField()
+                Spacer(Modifier.height(20.dp))
+
+                if (selectedStaff != null){
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        AsyncImage(
+                            model = selectedStaff!!.image,
+                            contentDescription = null,
+                            modifier = Modifier.size(90.dp))
+                        Spacer(Modifier.width(20.dp))
+                        Text(
+                            selectedStaff!!.name,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold)
                     }
-                )
-            }
+                }
+                Spacer(Modifier.height(10.dp))
 
-            Spacer(Modifier.height(10.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Button(
-                    onClick = {navController.navigate("TrangChu")},
-                    shape = RoundedCornerShape(8.dp),
-                    modifier = Modifier.width(200.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFDBC37C))
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(horizontal = 5.dp),
+                    horizontalArrangement = Arrangement.Center
                 ) {
-                    Text("Gửi đánh giá")
+                    listOf(
+                        R.drawable.star to "Rất tệ",
+                        R.drawable.star to "Tệ",
+                        R.drawable.star to "Bình thường",
+                        R.drawable.star to "Tốt",
+                        R.drawable.star to "Tuyệt vời"
+                    ).forEachIndexed{index, (icon, text) ->
+                        Column(
+                            modifier = Modifier
+                                .width(70.dp)
+                                .padding(horizontal = 5.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally) {
+                            Icon(
+                                painterResource(icon),
+                                contentDescription = "star",
+                                modifier = Modifier.size(37.dp)
+                                    .clickable { selectedIndexStaff = index },
+                                tint = if (index <= selectedIndexStaff) Color(0xFFFFC107) else Color(0xFF888888)
+                            )
+                            Text(text, fontSize = 10.sp,
+                                textAlign = TextAlign.Center)
+                        }
+                    }
+                }
+                Spacer(Modifier.height(20.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Button(
+                        onClick = {
+                            if (selectedService != null && selectedStaff != null){
+                                servicesViewModel.updateRateFirestore(selectedService!!, selectedIndexService)
+                                staffViewModel.updateRateFirestore(selectedStaff!!, selectedIndexStaff)
+                                navController.navigate("TrangChu")
+                            }
+                        },
+                        shape = RoundedCornerShape(8.dp),
+                        modifier = Modifier.width(200.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFDBC37C))
+                    ) {
+                        Text("Gửi đánh giá")
+                    }
                 }
             }
         }

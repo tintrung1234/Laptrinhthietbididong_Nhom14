@@ -12,7 +12,7 @@ data class Staff(
     val image: String = "",
     val name: String = "",
     val rating: Int = 0,
-    val state: Boolean = false
+    val rateCount: Int = 0,
 )
 
 class StaffViewModel : ViewModel() {
@@ -41,6 +41,25 @@ class StaffViewModel : ViewModel() {
             .addOnFailureListener {
                     exception ->
                 Log.e("StaffViewModel", "Error getting staffs", exception)
+            }
+    }
+
+    fun updateRateFirestore(staff: Staff, rate: Int) {
+        val db = FirebaseFirestore.getInstance()
+        val newRating = calculateAverageRating(staff.rating, rate, staff.rateCount)
+        val newRateCount = staff.rateCount + 1
+        val updates = mapOf(
+            "rating" to newRating,
+            "rateCount" to newRateCount,
+        )
+        db.collection("Staff")
+            .document(staff.id)
+            .update(updates)
+            .addOnSuccessListener {
+                Log.d("Firestore", "Staff rate updated to 1")
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Error updating rate", e)
             }
     }
 }

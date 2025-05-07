@@ -117,7 +117,6 @@ fun itemCardHistory(appointment: Appointment, appointmentId: String, navControll
 
 @Composable
 fun itemServiceHistory(service: Service, appointmentID: String, navController: NavController) {
-    Log.d("appoinmentID", "$appointmentID")
     Row(
         modifier = Modifier
             .fillMaxWidth()

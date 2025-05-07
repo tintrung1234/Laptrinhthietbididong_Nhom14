@@ -35,6 +35,7 @@ fun Controller() {
     val categoryViewModel: CategoryViewModel = viewModel()
     val discountViewModel: DiscountViewModel = viewModel()
     val appointmentViewModel: AppointmentViewModel = viewModel()
+    //TrangThanhToan/1TCPNApprFwQoorJiMtE
     NavHost(navController = navConTroller, startDestination = "TrangChu") {
         composable("TrangChu") { TrangChu(navConTroller, servicesViewModel, staffsViewModel) }
         composable("DatLich") { TrangDatLich(navConTroller) }

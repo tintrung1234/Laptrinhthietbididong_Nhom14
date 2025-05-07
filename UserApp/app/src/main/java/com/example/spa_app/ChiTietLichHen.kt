@@ -103,27 +103,10 @@ fun AppointmentDetailScreen(
                             val service = serviceViewModel.services.find { it.id == serviceIndex }
                             val staff = staffViewModel.staffs.find { it.id == staffIndex }
 
-                            LaunchedEffect(Unit) {
-                                if (userDocRef != null) {
-                                    userDocRef.get()
-                                        .addOnSuccessListener { document ->
-                                            if (document != null && document.exists()) {
-                                                name = document.getString("name")
-                                                    ?: currentUser.displayName.orEmpty()
-                                                phone = document.getString("phone")
-                                                    ?: currentUser.phoneNumber.orEmpty()
-                                                email = document.getString("email")
-                                                    ?: currentUser.email.orEmpty()
-                                            } else {
-                                                name = currentUser.displayName.orEmpty()
-                                                phone = currentUser.phoneNumber.orEmpty()
-                                                email = currentUser.email.orEmpty()
-                                            }
-                                        }
-                                        .addOnFailureListener { e ->
-                                            Log.e("InforLayout", "Error getting user info", e)
-                                        }
-                                }
+                            if (appointment != null) {
+                                name = appointment.userName
+                                phone = appointment.phone
+                                email = appointment.email
                             }
 
                             if (service != null && staff != null && appointment != null) {

@@ -81,39 +81,10 @@ fun PaymentScreen(
 
     var finalPrice = 0f
 
-    val firestore = FirebaseFirestore.getInstance()
-    val auth = FirebaseAuth.getInstance()
-    val currentUser = auth.currentUser
-    val userDocRef =
-        currentUser?.let { firestore.collection("Users").document(it.uid) }
-
     // State for user info
     var name by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
-
-    LaunchedEffect(Unit) {
-        if (userDocRef != null) {
-            userDocRef.get()
-                .addOnSuccessListener { document ->
-                    if (document != null && document.exists()) {
-                        name = document.getString("name")
-                            ?: currentUser.displayName.orEmpty()
-                        phone = document.getString("phone")
-                            ?: currentUser.phoneNumber.orEmpty()
-                        email = document.getString("email")
-                            ?: currentUser.email.orEmpty()
-                    } else {
-                        name = currentUser.displayName.orEmpty()
-                        phone = currentUser.phoneNumber.orEmpty()
-                        email = currentUser.email.orEmpty()
-                    }
-                }
-                .addOnFailureListener { e ->
-                    Log.e("InforLayout", "Error getting user info", e)
-                }
-        }
-    }
 
     if (appointmentIndex != null) {
         val appointment =
@@ -132,6 +103,12 @@ fun PaymentScreen(
                 val discountPercent = service.discount.toFloat() / 100f
                 val discountAmount = service.price * discountPercent
                 totalPrice = service.price - discountAmount
+
+                if (appointment != null) {
+                    name = appointment.userName
+                    phone = appointment.phone
+                    email = appointment.email
+                }
 
                 LazyColumn(
                     modifier = Modifier
@@ -177,11 +154,7 @@ fun PaymentScreen(
                     }
                     item { PaymentMethod() }
 
-                    if(acceptVoucher.value){
-                        val voucher = vouchers.find { it.code == voucher }
-                        if (voucher != null) {
-                            voucherValue = voucher.value
-                        }
+
                     item {
                         MyCard {
                             Column(
@@ -192,9 +165,20 @@ fun PaymentScreen(
                                     fontSize = 23.sp,
                                     fontWeight = FontWeight.Bold
                                 )
-                                val discountPercent = voucherValue / 100f
-                                val voucherAmount = totalPrice * discountPercent
+
+                                var voucherAmount = 0f
                                 finalPrice = totalPrice - voucherAmount
+
+                                if (acceptVoucher.value) {
+                                    val voucher = vouchers.find { it.code == voucher }
+                                    if (voucher != null) {
+                                        voucherValue = voucher.value
+                                    }
+                                    val discountPercent = voucherValue / 100f
+                                    voucherAmount = totalPrice * discountPercent
+                                    finalPrice = totalPrice - voucherAmount
+                                }
+
 
                                 itemPaymentDetail("Tổng tiền:", totalPrice)
                                 itemPaymentDetail("Giảm giá:", voucherAmount)
@@ -210,13 +194,22 @@ fun PaymentScreen(
                             Button(
                                 onClick = {
                                     if (appointment != null) {
-                                        appointmentViewModel.updateAppointmentInFirestore(appointment, finalPrice)
-                                        if (voucher != null) {
-                                            discountViewModel.updateVoucherInFirestore(voucher)
+                                        appointmentViewModel.updateAppointmentInFirestore(
+                                            appointment,
+                                            finalPrice
+                                        )
+                                        if (acceptVoucher.value) {
+                                            val voucher = vouchers.find { it.code == voucher }
+                                            if (voucher != null) {
+                                                voucherValue = voucher.value
+                                            }
+                                            if (voucher != null) {
+                                                discountViewModel.updateVoucherInFirestore(voucher)
+                                            }
                                         }
                                     }
                                     navController.navigate("LichSu")
-                                          },
+                                },
                                 shape = RoundedCornerShape(10.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = Color(0xFFDBC37C)
@@ -232,7 +225,6 @@ fun PaymentScreen(
                                 )
                             }
                         }
-                    }
                     }
                 }
             }
@@ -277,7 +269,7 @@ fun AddressCustomer(name: String, phone: String, email: String) {
                 Row {
                     Text(name)
                     Text(
-                        text = " (+84)"+"${phone}",
+                        text = " (+84)" + "${phone}",
                         color = Color(0x80000000)
                     )
                 }
