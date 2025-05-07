@@ -48,3 +48,8 @@ fun CheckPayment(state: Boolean){
         textAlign = TextAlign.End // Căn văn bản bên phải
     )
 }
+
+fun calculateAverageRating(rateOld: Int, rateNew: Int, rateCount: Int): Int{
+    val rateAvg = (rateOld * rateCount + rateNew)/(rateCount+1)
+    return rateAvg
+}
