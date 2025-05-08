@@ -1,5 +1,11 @@
 package com.example.spa_app
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -39,6 +45,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -46,14 +53,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.NotificationCompat
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.Locale
+import kotlin.random.Random
 
 @Composable
 fun PaymentScreen(
@@ -63,7 +72,17 @@ fun PaymentScreen(
     serviceViewModel: ServiceViewModel = viewModel(),
     discountViewModel: DiscountViewModel = viewModel()
 ) {
-    Log.d("appointmentIDthanhtoan", "$appointmentId")
+
+    var notifyViewModel: NotifyViewModel = viewModel()
+    val context = LocalContext.current
+
+    // Lắng nghe sự kiện thông báo
+    LaunchedEffect(key1 = true) {
+        notifyViewModel.notificationEvents.collect { notification ->
+            showPopupNotification(context, notification.contentForUser)
+        }
+    }
+
 
     // Get the Appointment matching the ID
     val appointmentIndex = appointmentId
@@ -80,6 +99,9 @@ fun PaymentScreen(
     var voucherValue = 0
 
     var finalPrice = 0f
+
+    val auth = FirebaseAuth.getInstance()
+    val currentUser = auth.currentUser
 
     // State for user info
     var name by remember { mutableStateOf("") }
@@ -206,6 +228,10 @@ fun PaymentScreen(
                                             if (voucher != null) {
                                                 discountViewModel.updateVoucherInFirestore(voucher)
                                             }
+                                        }
+
+                                        currentUser?.uid?.let { uid ->
+                                            notifyViewModel.createNotification(uid)
                                         }
                                     }
                                     navController.navigate("LichSu")
@@ -439,4 +465,37 @@ fun formatCost(cost: Float): String {
     }
     val formatter = DecimalFormat("#,###", symbols)
     return formatter.format(cost.toInt()) + "đ"
+}
+
+fun showPopupNotification(context: Context, message: String) {
+    val channelId = "booking_channel"
+    val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val channel = NotificationChannel(channelId, "Thông báo đặt lịch", NotificationManager.IMPORTANCE_HIGH)
+        notificationManager.createNotificationChannel(channel)
+    }
+
+    // Tạo Intent để mở MainActivity và điều hướng đến LichSu
+    val intent = Intent(context, MainActivity::class.java).apply {
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        putExtra("navigate_to", "lichsu") // bạn xử lý intent này trong MainActivity
+    }
+
+    val pendingIntent = PendingIntent.getActivity(
+        context,
+        0,
+        intent,
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
+
+    val notification = NotificationCompat.Builder(context, channelId)
+        .setSmallIcon(R.drawable.ic_logo)
+        .setContentTitle("Spa App")
+        .setContentText(message)
+        .setContentIntent(pendingIntent)
+        .setAutoCancel(true)
+        .build()
+
+    notificationManager.notify(Random.nextInt(), notification)
 }

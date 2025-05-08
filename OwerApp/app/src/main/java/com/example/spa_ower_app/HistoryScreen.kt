@@ -77,7 +77,7 @@ fun HistoryScreen(
             .fillMaxSize()
             .padding(vertical = 30.dp, horizontal = 20.dp)
     ) {
-        TopLayout("Lịch sử", { navController.popBackStack() })
+        TopLayout("Lịch sử", { navController.navigate("TrangChu") })
         if (userDocRef != null && admin == 1) {
             Card(
                 colors = CardDefaults.cardColors(

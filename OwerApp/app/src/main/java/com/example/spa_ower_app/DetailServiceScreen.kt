@@ -165,25 +165,6 @@ fun DetailServiceScreen(
                         )
                     }
                 }
-                Button(
-                    onClick = { navController.navigate("TrangDatLich") },
-                    shape = RoundedCornerShape(7.dp),
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .width(270.dp)
-                        .padding(bottom = 10.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFCFCA81)
-                    ),
-                    elevation = ButtonDefaults.buttonElevation(
-                        defaultElevation = 12.dp,       // khi bình thường
-                    ),
-                ) {
-                    Text(
-                        text = "Đặt lịch ngay",
-                        fontSize = 17.sp
-                    )
-                }
             }
         }
     }
