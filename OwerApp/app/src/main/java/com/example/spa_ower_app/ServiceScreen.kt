@@ -170,8 +170,6 @@ fun IconWithText(icon: Int, title: String, id: Int, isSelection: Boolean, onClic
 
 @Composable
 fun itemCardService(services: List<Service>, title: String, img: Int, navController: NavController){
-    val serviceViewModel: ServiceViewModel = viewModel()
-    val services = serviceViewModel.services
     val filteredServices = services.filter {
         when (title) {
             "Bán chạy nhất" -> it.visitors >= 900
