@@ -174,7 +174,7 @@ fun itemCardService(services: List<Service>, title: String, img: Int, navControl
         when (title) {
             "Bán chạy nhất" -> it.visitors >= 900
             "Ưu đãi" -> it.discount > 0
-            else -> it.discount <= 0 && it.visitors < 900
+            else -> it.discount >= 0 && it.visitors < 900
         }
     }
     if(filteredServices.isNotEmpty()){
