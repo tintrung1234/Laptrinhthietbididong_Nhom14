@@ -46,7 +46,7 @@ fun HistoryScreen(
             .fillMaxSize()
             .padding(vertical = 30.dp, horizontal = 20.dp)
     ) {
-        TopLayout("Lịch sử", { navController.popBackStack() })
+        TopLayout("Lịch sử", { navController.navigate("TrangChu") })
         Card(
             colors = CardDefaults.cardColors(
                 containerColor = Color(0xFFD9D9D9)
@@ -117,7 +117,6 @@ fun itemCardHistory(appointment: Appointment, appointmentId: String, navControll
 
 @Composable
 fun itemServiceHistory(service: Service, appointmentID: String, navController: NavController) {
-    Log.d("appoinmentID", "$appointmentID")
     Row(
         modifier = Modifier
             .fillMaxWidth()

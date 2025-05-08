@@ -17,6 +17,7 @@ data class Service(
     val overalTime: Int = 0,
     val price: Float = 0f,
     val rating: Int = 0,
+    val rateCount: Int = 0,
     val visitors: Int = 0
 )
 
@@ -46,6 +47,38 @@ class ServiceViewModel : ViewModel() {
             .addOnFailureListener {
                     exception ->
                 Log.e("ServiceViewModel", "Error getting services", exception)
+            }
+    }
+
+    fun updateVistor(service: Service) {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("Services")
+            .document(service.id)
+            .update("visitors", service.visitors + 1)
+            .addOnSuccessListener {
+                Log.d("FirestoreVisitor", "Appointment visitor updated to 1")
+            }
+            .addOnFailureListener { e ->
+                Log.e("FirestoreVisitor", "Error updating visitor", e)
+            }
+    }
+
+    fun updateRateFirestore(service: Service, rate: Int) {
+        val db = FirebaseFirestore.getInstance()
+        val newRating = calculateAverageRating(service.rating, rate, service.rateCount)
+        val newRateCount = service.rateCount + 1
+        val updates = mapOf(
+            "rating" to newRating,
+            "rateCount" to newRateCount,
+        )
+        db.collection("Services")
+            .document(service.id)
+            .update(updates)
+            .addOnSuccessListener {
+                Log.d("Firestore", "Services rate updated to 1")
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Error updating rate", e)
             }
     }
 }

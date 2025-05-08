@@ -1,5 +1,14 @@
 package com.example.spa_ower_app
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -26,26 +35,40 @@ import java.util.Locale
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.LifecycleOwner
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.google.firebase.auth.FirebaseAuth
+import kotlin.random.Random
 
 @Composable
 fun NotifyScreen(navController: NavController, notifyViewModel: NotifyViewModel = viewModel()) {
+    val context = LocalContext.current
+    val notifications = notifyViewModel.notifications
 
+    // Lắng nghe sự kiện thông báo
+    LaunchedEffect(Unit) {
+        notifyViewModel.notificationEvent.collect { notification ->
+            showPopupNotification(context, notification.contentForOwner)
+        }
+    }
 
     val auth = FirebaseAuth.getInstance()
     val userId = auth.currentUser?.uid ?: ""
-    val notifications = notifyViewModel.notifications
     if (userId == null) {
-        // Điều hướng đến màn hình đăng nhập hoặc thông báo cho người dùng
         navController.navigate("TaiKhoan")
-        return // Dừng thực thi màn hình này nếu không có userId
+        return
     }
     // Tải thông báo mỗi khi màn hình NotifyScreenOwner được gọi
     LaunchedEffect(Unit) {
         notifyViewModel.loadNotifications(userId )
+    }
+    LaunchedEffect(Unit) {
+        notifyViewModel.addMissingTypeToNotifications()
     }
 
     Column(
@@ -113,3 +136,6 @@ fun convertTimestamp(timestamp: Long): String {
     val sdf = SimpleDateFormat("HH:mm dd/MM/yyyy", Locale.getDefault())
     return sdf.format(Date(timestamp))
 }
+
+
+

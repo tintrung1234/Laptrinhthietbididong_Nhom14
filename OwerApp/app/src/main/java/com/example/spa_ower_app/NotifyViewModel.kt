@@ -6,8 +6,12 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 
 data class UserNotification(
     val id: String = "",
@@ -15,21 +19,23 @@ data class UserNotification(
     val contentForUser: String = "",
     val contentForOwner: String = "",
     val timestamp: Long = System.currentTimeMillis(),
-    val seenByOwner: Boolean = false
+    val seenByOwner: Boolean = false,
+    val type : String = ""
 )
 
 
 class NotifyViewModel : ViewModel() {
     private val db = FirebaseFirestore.getInstance()
-
     private val _notifications = mutableStateListOf<UserNotification>()
     val notifications: List<UserNotification> = _notifications
 
-    // Tải lại thông báo từ Firestore cho UserApp và OwnerApp
-    fun loadNotifications(userId: String) {
+    // Sự kiện notification mới
+    private val _notificationEvent = MutableSharedFlow<UserNotification>()
+    val notificationEvent = _notificationEvent.asSharedFlow()
 
+    fun loadNotifications(userId: String) {
         db.collection("notifications")
-            .whereEqualTo("userId", userId) // Đây là userId của cả UserApp và OwnerApp
+            .whereEqualTo("type", "datlich")
             .orderBy("timestamp", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
@@ -38,15 +44,45 @@ class NotifyViewModel : ViewModel() {
                 }
 
                 snapshot?.let {
-                    _notifications.clear()
-                    _notifications.addAll(
-                        it.documents.mapNotNull { doc ->
-                            doc.toObject(UserNotification::class.java)
+                    val newNotifications = it.documents.mapNotNull { doc ->
+                        doc.toObject(UserNotification::class.java)
+                    }
+
+                    // Kiểm tra và phát thông báo mới (nếu có)
+                    if (newNotifications.isNotEmpty() && newNotifications != _notifications) {
+                        val latest = newNotifications.first()
+                        viewModelScope.launch {
+                            _notificationEvent.emit(latest)
                         }
-                    )
+                    }
+
+                    _notifications.clear()
+                    _notifications.addAll(newNotifications)
                 }
             }
     }
-}
 
+    fun addMissingTypeToNotifications() {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("notifications")
+            .get()
+            .addOnSuccessListener { result ->
+                for (doc in result) {
+                    if (!doc.contains("type")) {
+                        db.collection("notifications").document(doc.id)
+                            .update("type", "") // hoặc "capnhat" tùy thông báo
+                            .addOnSuccessListener {
+                                Log.d("FixNotify", "Cập nhật type cho ${doc.id}")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e("FixNotify", "Lỗi cập nhật type cho ${doc.id}", e)
+                            }
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("FixNotify", "Lỗi lấy danh sách thông báo", e)
+            }
+    }
+}
 

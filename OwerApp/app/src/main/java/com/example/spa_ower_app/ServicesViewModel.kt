@@ -178,4 +178,21 @@ class ServiceViewModel : ViewModel() {
                 onFailure(e)
             }
     }
+
+    fun deleteService(serviceId: String, onSuccess: () -> Unit = {}) {
+        db.collection("Services")
+            .document(serviceId)
+            .delete()
+            .addOnSuccessListener {
+                Log.d("ServiceViewModel", "Service deleted successfully")
+                // Update the local list
+                services = services.filterNot { it.id == serviceId }
+                // Call the success callback
+                onSuccess()
+            }
+            .addOnFailureListener { e ->
+                Log.e("ServiceViewModel", "Error deleting service", e)
+            }
+    }
+
 }

@@ -42,14 +42,15 @@ android {
 }
 
 dependencies {
-    implementation ("com.google.firebase:firebase-messaging:23.4.1")
-
     implementation("io.coil-kt:coil-compose:2.4.0") // Use url image
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation(platform("com.google.firebase:firebase-bom:33.12.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("androidx.navigation:navigation-compose:2.8.9")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+
+    implementation("com.google.firebase:firebase-messaging")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -68,5 +69,3 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }
-
-apply(plugin = "com.google.gms.google-services")

@@ -51,6 +51,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -137,6 +138,7 @@ fun CustomTopAppBar(categoriesID: List<Int>, categoriesName: List<String>, selec
 fun IconWithText(icon: Int, title: String, id: Int, isSelection: Boolean, onClick: (Int) -> Unit){
     Column(
         modifier = Modifier.padding(top = 15.dp)
+            .width(70.dp)
             .clip(RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
             .background(Color(if (isSelection) 0x80D9D9D9 else 0xFFFFFFFF)),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -158,7 +160,9 @@ fun IconWithText(icon: Int, title: String, id: Int, isSelection: Boolean, onClic
         Text(
             text = title,
             style = MaterialTheme.typography.labelSmall,
-            fontSize = 14.sp
+            fontSize = 14.sp,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
         Spacer(modifier = Modifier.height(2.dp))
     }
@@ -166,13 +170,11 @@ fun IconWithText(icon: Int, title: String, id: Int, isSelection: Boolean, onClic
 
 @Composable
 fun itemCardService(services: List<Service>, title: String, img: Int, navController: NavController){
-    val serviceViewModel: ServiceViewModel = viewModel()
-    val services = serviceViewModel.services
     val filteredServices = services.filter {
         when (title) {
             "Bán chạy nhất" -> it.visitors >= 900
             "Ưu đãi" -> it.discount > 0
-            else -> it.discount <= 0 && it.visitors < 900
+            else -> it.discount >= 0 && it.visitors < 900
         }
     }
     if(filteredServices.isNotEmpty()){

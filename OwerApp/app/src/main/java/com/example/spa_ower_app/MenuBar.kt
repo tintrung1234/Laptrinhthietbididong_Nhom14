@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -56,6 +57,7 @@ fun MenuBar(navController: NavController, viewModel: AuthViewModel = viewModel()
                 Triple(R.drawable.icon_trang_chu,"Trang Chủ", "TrangChu"),
                 Triple(R.drawable.icon_lich_su,"Lịch sử", "LichSu"),
                 Triple(R.drawable.dichvu_icon, "Chỉnh Sửa","ThemSuaDichVu"),
+                Triple(R.drawable.doanhthu_ic,"Doanh Thu", "DoanhThu"),
                 Triple(
                     R.drawable.icon_tai_khoan, "Tài khoản",
                     if (user != null) {
@@ -73,7 +75,7 @@ fun MenuBar(navController: NavController, viewModel: AuthViewModel = viewModel()
                 )
 
                 Column(
-                    modifier = Modifier.width(80.dp),
+                    modifier = Modifier.width(70.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Box(
@@ -102,7 +104,8 @@ fun MenuBar(navController: NavController, viewModel: AuthViewModel = viewModel()
                             modifier = Modifier.size(18.dp, 20.dp)
                         )
                     }
-                    Text(title, fontSize = 12.sp, lineHeight = 14.sp)
+                    Text(title, fontSize = 12.sp, lineHeight = 14.sp,
+                        overflow = TextOverflow.Ellipsis)
                 }
             }
         }

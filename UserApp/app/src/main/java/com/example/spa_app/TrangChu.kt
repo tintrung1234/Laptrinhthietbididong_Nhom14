@@ -30,6 +30,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,6 +46,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -55,10 +57,16 @@ import coil.compose.AsyncImage
 fun TrangChu(
     navController: NavController,
     serviceViewModel: ServiceViewModel = viewModel(),
-    staffViewModel: StaffViewModel = viewModel()
+    staffViewModel: StaffViewModel = viewModel(),
+    notifyViewModel: NotifyViewModel = viewModel()
 ) {
+
+    LaunchedEffect(Unit) {
+        notifyViewModel.loadUserNotifications(userId = String())
+    }
     val services = serviceViewModel.services
     val staffs = staffViewModel.staffs
+    val hasUnreadNotifications = notifyViewModel.notifications.any { !it.seenByUser }
     Box {
         //Content
         Column(
@@ -136,23 +144,34 @@ fun TrangChu(
 
 
                         //Button notification
-                        Button(
-                            onClick = { navController.navigate("ThongBao") },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.White),
-                            modifier = Modifier
-                                .size(35.dp)
-                                .offset(x = 5.dp),
-                            contentPadding = PaddingValues(0.dp),
-                        ) {
-                            Image(
-                                painterResource(R.drawable.line_md_bell_loop),
-                                contentDescription = null,
+                        Box {
+                            Button(
+                                onClick = { navController.navigate("ThongBao") },
+                                colors = ButtonDefaults.buttonColors(containerColor = Color.White),
                                 modifier = Modifier
-                                    .size(25.dp)
-                                    .background(color = Color.White)
-                                    .padding(start = 1.dp)
-                            )
+                                    .size(35.dp)
+                                    .offset(x = 5.dp),
+                                contentPadding = PaddingValues(0.dp),
+                            ) {
+                                Image(
+                                    painterResource(R.drawable.line_md_bell_loop),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .size(25.dp)
+                                        .background(color = Color.White)
+                                        .padding(start = 1.dp)
+                                )
+                            }
 
+                            // Red dot for unread notifications
+                            if (hasUnreadNotifications) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(12.dp)
+                                        .offset(x = 25.dp, y = 5.dp)
+                                        .background(Color.Red, shape = RoundedCornerShape(50))
+                                )
+                            }
                         }
                     }
 
@@ -218,7 +237,9 @@ fun TrangChu(
                                             text,
                                             fontSize = 9.sp,
                                             lineHeight = 11.sp,
-                                            textAlign = TextAlign.Center
+                                            textAlign = TextAlign.Center,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis
                                         )
                                     }
                                 }

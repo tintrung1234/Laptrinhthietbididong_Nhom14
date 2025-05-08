@@ -211,6 +211,7 @@ fun Form(
     var items = listOf("Massage", "Ob2", "Ob3", "Ob4")
     var expanded by remember { mutableStateOf(false) }
     var selectedCategory by remember { mutableStateOf(items[0]) }
+    Log.d("category", selectedCategory)
 
     //upload image to firebase storeage
     val context = LocalContext.current
@@ -240,6 +241,9 @@ fun Form(
         }
     }
 
+    var rating = remember { mutableStateOf(0) }
+    var visitor = remember { mutableStateOf(0) }
+
     // Thong bao khi thanh cong
     var message by remember { mutableStateOf<String?>(null) }
 
@@ -256,6 +260,8 @@ fun Form(
             time.value = service.overalTime.toString()
             imageUrl = service.image
             discount.value = service.discount.toString()
+            rating.value = service.rating
+            visitor.value = service.visitors
         }
         message = ""
     }
@@ -793,7 +799,7 @@ fun Form(
                     }
                 }
 
-                Spacer(Modifier.height(12.dp))
+                Spacer(Modifier.height(6.dp))
 
             }
 
@@ -816,56 +822,96 @@ fun Form(
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
-                Button(
-                    onClick = {
-                        if (mode == "themDichVu") {
-                            serviceViewModel.saveService(
-                                id = "",
-                                categoryId = 1,
-                                description = description.value,
-                                discount = discount.value.toIntOrNull() ?: 0,
-                                image = imageUrl ?: "",
-                                name = title.value,
-                                overalTime = time.value.toIntOrNull() ?: 0,
-                                price = price.value.toFloatOrNull() ?: 0f,
-                                rating = 0,
-                                visitors = 0,
-                                onSuccess = {
-                                    message = "Lưu thành công"
+                if (mode == "themDichVu") {
+                    Button(
+                        onClick = {
+                            categoryViewModel.getCategoryIDByName(selectedCategory) { categoryId ->
+                                if (categoryId != null) {
+                                    serviceViewModel.saveService(
+                                        id = "",
+                                        categoryId = categoryId,
+                                        description = description.value,
+                                        discount = discount.value.toIntOrNull() ?: 0,
+                                        image = imageUrl ?: "",
+                                        name = title.value,
+                                        overalTime = time.value.toIntOrNull() ?: 0,
+                                        price = price.value.toFloatOrNull() ?: 0f,
+                                        rating = 0,
+                                        visitors = 0,
+                                        onSuccess = {
+                                            message = "Lưu thành công"
+                                        }
+                                    )
                                 }
-                            )
-
-                        } else {
-                            serviceViewModel.updateService(
-                                id = serviceId.value,
-                                categoryId = 1,
-                                description = description.value,
-                                discount = discount.value.toIntOrNull() ?: 0,
-                                image = imageUrl ?: "",
-                                name = title.value,
-                                overalTime = time.value.toIntOrNull() ?: 0,
-                                price = price.value.toFloatOrNull() ?: 0f,
-                                rating = 0,
-                                visitors = 0,
-                                onSuccess = {
-                                    message = "Lưu thành công"
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFDBC37C)),
+                        shape = RoundedCornerShape(8.dp),
+                        contentPadding = PaddingValues(horizontal = 10.dp)
+                    ) {
+                        Text("Lưu", fontSize = 14.sp)
+                        Icon(
+                            painterResource(R.drawable.ic_baseline_save_all),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(start = 4.dp)
+                                .size(20.dp),
+                            tint = Color.Black
+                        )
+                    }
+                } else {
+                    Row {
+                        Button(
+                            onClick = {
+                                categoryViewModel.getCategoryIDByName(selectedCategory) { categoryId ->
+                                    if (categoryId != null) {
+                                        serviceViewModel.updateService(
+                                            id = serviceId.value,
+                                            categoryId = categoryId,
+                                            description = description.value,
+                                            discount = discount.value.toIntOrNull() ?: 0,
+                                            image = imageUrl ?: "",
+                                            name = title.value,
+                                            overalTime = time.value.toIntOrNull() ?: 0,
+                                            price = price.value.toFloatOrNull() ?: 0f,
+                                            rating = rating.value,
+                                            visitors = visitor.value,
+                                            onSuccess = {
+                                                message = "Lưu thành công"
+                                            }
+                                        )
+                                    }
                                 }
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFDBC37C)),
+                            shape = RoundedCornerShape(8.dp),
+                            contentPadding = PaddingValues(horizontal = 10.dp)
+                        ) {
+                            Text("Lưu", fontSize = 14.sp)
+                            Icon(
+                                painterResource(R.drawable.ic_baseline_save_all),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .padding(start = 4.dp)
+                                    .size(20.dp),
+                                tint = Color.Black
                             )
                         }
-                    },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFDBC37C)),
-                    shape = RoundedCornerShape(8.dp),
-                    contentPadding = PaddingValues(horizontal = 10.dp),
-                ) {
-                    Text("Lưu", fontSize = 14.sp)
-                    Icon(
-                        painterResource(R.drawable.ic_baseline_save_all),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .padding(start = 4.dp)
-                            .size(20.dp),
-                        tint = Color.Black
-                    )
+                        Spacer(Modifier.width(5.dp))
+                        Button(
+                            onClick = {
+                                serviceViewModel.deleteService(serviceId.value,
+                                    onSuccess = {
+                                        message = "Xóa thành công"
+                                    })
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFCB0404)),
+                            shape = RoundedCornerShape(8.dp),
+                            contentPadding = PaddingValues(horizontal = 10.dp)
+                        ) {
+                            Text("Xóa dịch vụ", fontSize = 14.sp)
+                        }
+                    }
                 }
             }
         }

@@ -39,8 +39,12 @@ fun NotifyScreen(
         return // Dừng thực thi màn hình này nếu không có userId
     }
     LaunchedEffect(Unit) {
+        notifyViewModel.addMissingTypeToNotifications()
         notifyViewModel.loadUserNotifications(userId)
     }
+
+
+
 
     Column(
         modifier = Modifier
@@ -56,7 +60,8 @@ fun NotifyScreen(
                 NotiItem(
                     title = item.contentForUser,
                     timestamp = item.timestamp,
-                    navController
+                    navController,
+                    item
                 )
             }
         }
@@ -64,7 +69,7 @@ fun NotifyScreen(
 }
 
 @Composable
-fun NotiItem(title: String, timestamp: Long , navController: NavController) {
+fun NotiItem(title: String, timestamp: Long , navController: NavController,item: UserNotification) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -84,7 +89,11 @@ fun NotiItem(title: String, timestamp: Long , navController: NavController) {
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     TextButton(
-                        onClick = { navController.navigate("lichsu") },
+                        onClick = { when(item.type.lowercase()){
+                            "datlich" -> navController.navigate("lichsu")
+                            "suathongtin"-> navController.navigate("TaiKhoan")
+                            else ->{}
+                        } },
                         contentPadding = PaddingValues(),
                         modifier = Modifier
                             .align(Alignment.Bottom)
@@ -107,3 +116,4 @@ fun convertTimestamp(timestamp: Long): String {
     val sdf = SimpleDateFormat("HH:mm dd/MM/yyyy", Locale.getDefault())
     return sdf.format(Date(timestamp))
 }
+

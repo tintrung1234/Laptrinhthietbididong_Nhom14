@@ -1,6 +1,13 @@
 package com.example.spa_ower_app
 
+import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color.rgb
+import android.os.Build
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -30,6 +37,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,23 +48,56 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.google.firebase.auth.FirebaseAuth
+import kotlin.random.Random
 
 @Composable
 fun TrangChu(
     navController: NavController,
     serviceViewModel: ServiceViewModel = viewModel(),
-    staffViewModel: StaffViewModel = viewModel()
+    staffViewModel: StaffViewModel = viewModel(),
+    notifyViewModel: NotifyViewModel = viewModel()
 ) {
+    val auth = FirebaseAuth.getInstance()
+    val userId = auth.currentUser?.uid ?: ""
+    if (userId == null) {
+        navController.navigate("TaiKhoan")
+        return
+    }
+    var flagNoti by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+    val notifications = notifyViewModel.notifications
+    LaunchedEffect(Unit) {
+        notifyViewModel.notificationEvent.collect { notification ->
+            if(notifications.isNotEmpty() && !flagNoti){
+                flagNoti = true
+                showPopupNotification(context, notification.contentForOwner)
+            }
+
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        notifyViewModel.loadNotifications(userId )
+    }
+
+    LaunchedEffect(notifications) {
+        flagNoti = false
+    }
     val services = serviceViewModel.services
     val staffs = staffViewModel.staffs
     Box {
@@ -191,7 +232,7 @@ fun TrangChu(
                                     //Categories
                                     Column(
                                         horizontalAlignment = Alignment.CenterHorizontally,
-                                        modifier = Modifier.width(50.dp)
+                                        modifier = Modifier.width(55.dp)
                                     ) {
                                         Button(
                                             onClick = { navController.navigate(route) },
@@ -218,7 +259,9 @@ fun TrangChu(
                                             text,
                                             fontSize = 9.sp,
                                             lineHeight = 11.sp,
-                                            textAlign = TextAlign.Center
+                                            textAlign = TextAlign.Center,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis
                                         )
                                     }
                                 }
@@ -498,4 +541,43 @@ fun TrangChu(
         val viewModel: AuthViewModel = viewModel()
         MenuBar(navController, viewModel)
     }
+}
+@SuppressLint("MissingPermission")
+fun showPopupNotification(context: Context, message: String) {
+    val channelId = "owner_channel"
+
+    // Tạo notification channel nếu cần
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val channel = NotificationChannel(
+            channelId,
+            "Thông báo từ khách hàng",
+            NotificationManager.IMPORTANCE_HIGH
+        )
+        val manager = context.getSystemService(NotificationManager::class.java)
+        manager.createNotificationChannel(channel)
+    }
+
+    // Tạo Intent để mở MainActivity và điều hướng đến LichSu
+    val intent = Intent(context, MainActivity::class.java).apply {
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        putExtra("navigate_to", "lichsu")
+    }
+
+    val pendingIntent = PendingIntent.getActivity(
+        context,
+        0,
+        intent,
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
+
+    val notification = NotificationCompat.Builder(context, channelId)
+        .setSmallIcon(R.drawable.ic_logo)
+        .setContentTitle("Spa Owner")
+        .setContentText(message)
+        .setContentIntent(pendingIntent)
+        .setPriority(NotificationCompat.PRIORITY_HIGH)
+        .setAutoCancel(true)
+        .build()
+
+    NotificationManagerCompat.from(context).notify(Random.nextInt(), notification)
 }

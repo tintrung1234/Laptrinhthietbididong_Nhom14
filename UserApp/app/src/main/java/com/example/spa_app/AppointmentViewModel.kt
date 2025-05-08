@@ -12,6 +12,13 @@ import java.util.Locale
 data class Appointment(
     val id: String = "",
     val userId: String = "",
+
+    //use if client want book with new info
+    val userName: String = "",
+    val phone: String = "",
+    val email: String = "",
+    //
+
     val staffId: Any = 0,
     val servicesId: String = "",
     val orderDate: String = "",
@@ -20,10 +27,12 @@ data class Appointment(
     val totalValues: Float = 0f,
     val paymentMethod: Boolean = false,
 )
-class AppointmentViewModel: ViewModel() {
+
+class AppointmentViewModel : ViewModel() {
     private val db = FirebaseFirestore.getInstance()
     var appointments by mutableStateOf<List<Appointment>>(emptyList())
         private set
+
     init {
         fetchAppointments()
     }
@@ -68,6 +77,4 @@ class AppointmentViewModel: ViewModel() {
                 Log.e("Firestore", "Error updating state", e)
             }
     }
-
-
 }

@@ -10,6 +10,8 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -36,40 +38,68 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
+import java.time.DayOfWeek
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrangDatLich(navController: NavController) {
     val authViewModel: AuthViewModel = viewModel()
+    val appointmentViewModel: AppointmentViewModel = viewModel()
     val serviceViewModel: ServiceViewModel = viewModel()
     val staffViewModel: StaffViewModel = viewModel()
     val db = FirebaseFirestore.getInstance()
 
     // Trạng thái thông tin người dùng
-    var hoTen by remember { mutableStateOf("") }
-    var soDienThoai by remember { mutableStateOf("") }
-    var diaChi by remember { mutableStateOf("") }
+
     var selectedService by remember { mutableStateOf<Service?>(null) } // Khai báo selectedService
     var selectedStaff by remember { mutableStateOf<Staff?>(null) }
 
-    // Lấy dữ liệu người dùng đã đăng nhập
-    LaunchedEffect(authViewModel.authState) {
-        authViewModel.authState?.let { user ->
-            authViewModel.fetchUserData(user.uid) { fetchedUser ->
-                fetchedUser?.let {
-                    hoTen = it.name
-                    soDienThoai = it.phone
-                    diaChi = it.email // Giả sử địa chỉ được lưu dưới dạng email, điều chỉnh nếu cần
+    val firestore = FirebaseFirestore.getInstance()
+    val auth = FirebaseAuth.getInstance()
+    val currentUser = auth.currentUser
+    val userDocRef = currentUser?.let { firestore.collection("Users").document(it.uid) }
+
+    var hoTen by remember { mutableStateOf("") }
+    var soDienThoai by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+
+    var selectedDate by remember { mutableStateOf("") }
+    var selectedTime by remember { mutableStateOf("") }
+
+    // Lấy dữ liệu Firestore khi mở
+    LaunchedEffect(Unit) {
+        if (userDocRef != null) {
+            userDocRef.get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        Log.d("UserDoc", "$document")
+                        hoTen = document.getString("name") ?: currentUser.displayName.orEmpty()
+                        soDienThoai =
+                            document.getString("phone") ?: currentUser.phoneNumber.orEmpty()
+                        email = document.getString("email") ?: currentUser.email.orEmpty()
+
+                        Log.d("Họ và tên", "$hoTen")
+                        Log.d("Số điện thoại", "$soDienThoai)")
+                        Log.d("Email", "$email")
+                    } else {
+                        // Chưa có dữ liệu Firestore
+                        hoTen = currentUser.displayName.orEmpty()
+                        soDienThoai = currentUser.phoneNumber.orEmpty()
+                        email = currentUser.email.orEmpty()
+                    }
                 }
-                if(hoTen == null || soDienThoai == null || diaChi == null){
-                    Log.d("thong tin", "$hoTen")
-                    Log.d("thong tin", "$soDienThoai")
-                    Log.d("thong tin", "$diaChi")
+                .addOnFailureListener { e ->
+                    Log.e("InforLayout", "Error getting user info", e)
                 }
-            }
         }
     }
 
@@ -107,60 +137,134 @@ fun TrangDatLich(navController: NavController) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.Start
                 ) {
-                    listOf(
-                        Triple(R.drawable.tdesign_user_filled, "Họ và tên", hoTen),
-                        Triple(R.drawable.vector5, "Số điện thoại", soDienThoai),
-                        Triple(R.drawable.location, "Địa chỉ", diaChi)
-                    ).forEach { (icon, title, value) ->
-                        val text = remember { mutableStateOf(value) }
+                    //username
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Image(
+                            painterResource(R.drawable.tdesign_user_filled),
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp)
+                        )
+                        Text("Họ và tên", modifier = Modifier.padding(horizontal = 7.dp))
+                        Icon(
+                            painterResource(R.drawable.important),
+                            contentDescription = null,
+                            modifier = Modifier.size(9.dp),
+                            tint = Color(0xFFDF2D2D)
+                        )
+                    }
 
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Image(
-                                painterResource(icon),
-                                contentDescription = null,
-                                modifier = Modifier.size(16.dp)
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(3.dp)
+                            .background(
+                                Color(0xFFF5F5F5),
+                                shape = RoundedCornerShape(60.dp)
                             )
-                            Text(title, modifier = Modifier.padding(horizontal = 7.dp))
-                            Icon(
-                                painterResource(R.drawable.important),
-                                contentDescription = null,
-                                modifier = Modifier.size(9.dp),
-                                tint = Color(0xFFDF2D2D)
-                            )
-                        }
+                            .padding(horizontal = 16.dp, vertical = 10.dp)
+                    ) {
+                        BasicTextField(
+                            value = hoTen,
+                            onValueChange = {
+                                hoTen = it
+                            },
+                            textStyle = TextStyle(fontSize = 16.sp, color = Color.Black),
+                            decorationBox = { innerTextField ->
+                                if (hoTen.isEmpty()) {
+                                    Text("Nhập nội dung...", color = Color.Gray)
+                                }
+                                innerTextField()
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                    //phone
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Image(
+                            painterResource(R.drawable.vector5),
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp)
+                        )
+                        Text("Số điện thoại", modifier = Modifier.padding(horizontal = 7.dp))
+                        Icon(
+                            painterResource(R.drawable.important),
+                            contentDescription = null,
+                            modifier = Modifier.size(9.dp),
+                            tint = Color(0xFFDF2D2D)
+                        )
+                    }
 
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(3.dp)
-                                .background(
-                                    Color(0xFFF5F5F5),
-                                    shape = RoundedCornerShape(60.dp)
-                                )
-                                .padding(horizontal = 16.dp, vertical = 10.dp)
-                        ) {
-                            BasicTextField(
-                                value = text.value,
-                                onValueChange = {
-                                    text.value = it
-                                    when (title) {
-                                        "Họ và tên" -> hoTen = it
-                                        "Số điện thoại" -> soDienThoai = it
-                                        "Địa chỉ" -> diaChi = it
-                                    }
-                                },
-                                textStyle = TextStyle(fontSize = 16.sp, color = Color.Black),
-                                decorationBox = { innerTextField ->
-                                    if (text.value.isEmpty()) {
-                                        Text("Nhập nội dung...", color = Color.Gray)
-                                    }
-                                    innerTextField()
-                                },
-                                modifier = Modifier.fillMaxWidth()
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(3.dp)
+                            .background(
+                                Color(0xFFF5F5F5),
+                                shape = RoundedCornerShape(60.dp)
                             )
-                        }
+                            .padding(horizontal = 16.dp, vertical = 10.dp)
+                    ) {
+                        BasicTextField(
+                            value = soDienThoai,
+                            onValueChange = {
+                                soDienThoai = it
+                            },
+                            textStyle = TextStyle(fontSize = 16.sp, color = Color.Black),
+                            decorationBox = { innerTextField ->
+                                if (soDienThoai.isEmpty()) {
+                                    Text("Nhập nội dung...", color = Color.Gray)
+                                }
+                                innerTextField()
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                    //email
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Image(
+                            painterResource(R.drawable.image14),
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp)
+                        )
+                        Text("Email", modifier = Modifier.padding(horizontal = 7.dp))
+                        Icon(
+                            painterResource(R.drawable.important),
+                            contentDescription = null,
+                            modifier = Modifier.size(9.dp),
+                            tint = Color(0xFFDF2D2D)
+                        )
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(3.dp)
+                            .background(
+                                Color(0xFFF5F5F5),
+                                shape = RoundedCornerShape(60.dp)
+                            )
+                            .padding(horizontal = 16.dp, vertical = 10.dp)
+                    ) {
+                        BasicTextField(
+                            value = email,
+                            onValueChange = {
+                                email = it
+                            },
+                            textStyle = TextStyle(fontSize = 16.sp, color = Color.Black),
+                            decorationBox = { innerTextField ->
+                                if (email.isEmpty()) {
+                                    Text("Nhập nội dung...", color = Color.Gray)
+                                }
+                                innerTextField()
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        )
                     }
                 }
             }
@@ -275,79 +379,124 @@ fun TrangDatLich(navController: NavController) {
                 .fillMaxWidth()
                 .horizontalScroll(rememberScrollState())
         ) {
+            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+
+            val isValidDateTime = selectedDate.isNotBlank() && selectedTime.isNotBlank()
+            val dateTimeString = if (isValidDateTime) "${selectedDate} $selectedTime" else null
+
             staffViewModel.staffs.forEachIndexed { index, staff ->
                 var checked by remember { mutableStateOf(false) }
 
-                Column(
-                    modifier = Modifier
-                        .width(130.dp)
-                        .padding(horizontal = 4.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    AsyncImage(
-                        model = staff.image,
-                        contentDescription = null,
-                        modifier = Modifier.size(90.dp),
-                        contentScale = ContentScale.Crop
-                    )
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 5.dp),
-                        horizontalAlignment = Alignment.End
-                    ) {
-                        Canvas(
-                            modifier = Modifier
-                                .size(24.dp)
-                                .clip(CircleShape)
-                                .clickable { checked = !checked
-                                    if (checked) {
-                                        selectedStaff = staff// Save the staff ID when checked
+                val isBusy = if (dateTimeString != null) {
+                    try {
+                        val selectedStart = LocalDateTime.parse(dateTimeString, formatter)
+                        appointmentViewModel.appointments.any { appt ->
+                            appt.staffId == staff.id &&
+                                    selectedService != null && run {
+                                val apptStart = LocalDateTime.parse(appt.pickedDate, formatter)
+                                val apptDuration =
+                                    serviceViewModel.services.find { it.id == appt.servicesId }?.overalTime ?: 0
 
-                                    } else {
-                                        selectedStaff = null // Reset the selected staff ID when unchecked
-                                    }}
-                        ) {
-                            drawCircle(
-                                color = if (checked) Color(0xFFDBC37C) else Color(0xFFD9D9D9)
-                            )
-                            if (checked) {
-                                drawLine(
-                                    color = Color.White,
-                                    strokeWidth = 4f,
-                                    start = Offset(size.width * 0.3f, size.height * 0.5f),
-                                    end = Offset(size.width * 0.45f, size.height * 0.7f)
+                                isOverlapping(
+                                    selectedStart,
+                                    selectedService!!.overalTime,
+                                    apptStart,
+                                    apptDuration
                                 )
-                                drawLine(
-                                    color = Color.White,
-                                    strokeWidth = 4f,
-                                    start = Offset(size.width * 0.45f, size.height * 0.7f),
-                                    end = Offset(size.width * 0.7f, size.height * 0.3f)
-                                )
+
                             }
                         }
+
+                    } catch (e: DateTimeParseException) {
+                        false
                     }
-                    Text(staff.name, fontSize = 12.sp)
+                } else {
+                    false
+                }
+                if (!isBusy) {
+                    Column(
+                        modifier = Modifier
+                            .width(130.dp)
+                            .padding(horizontal = 4.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        AsyncImage(
+                            model = staff.image,
+                            contentDescription = null,
+                            modifier = Modifier.size(90.dp),
+                            contentScale = ContentScale.Crop
+                        )
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 5.dp),
+                            horizontalAlignment = Alignment.End
+                        ) {
+                            Canvas(
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .clip(CircleShape)
+                                    .clickable {
+                                        checked = !checked
+                                        if (checked) {
+                                            selectedStaff = staff// Save the staff ID when checked
+
+                                        } else {
+                                            selectedStaff =
+                                                null // Reset the selected staff ID when unchecked
+                                        }
+                                    }
+                            ) {
+                                drawCircle(
+                                    color = if (checked) Color(0xFFDBC37C) else Color(0xFFD9D9D9)
+                                )
+                                if (checked) {
+                                    drawLine(
+                                        color = Color.White,
+                                        strokeWidth = 4f,
+                                        start = Offset(size.width * 0.3f, size.height * 0.5f),
+                                        end = Offset(size.width * 0.45f, size.height * 0.7f)
+                                    )
+                                    drawLine(
+                                        color = Color.White,
+                                        strokeWidth = 4f,
+                                        start = Offset(size.width * 0.45f, size.height * 0.7f),
+                                        end = Offset(size.width * 0.7f, size.height * 0.3f)
+                                    )
+                                }
+                            }
+                        }
+                        Text(staff.name, fontSize = 12.sp)
+                    }
+
                 }
             }
+
         }
 
         Spacer(Modifier.height(20.dp))
 
         // Chọn khung giờ
-        var selectedDate by remember { mutableStateOf("09/03") }
-        var selectedTime by remember { mutableStateOf("") }
 
-        val days = listOf("Thứ 7\n08/03", "Chủ Nhật\n09/03", "Thứ 2\n10/03", "Thứ 3\n11/03")
+        val days = remember { generateDaysForMonth() }
         val times = listOf(
             listOf("09:00", "09:45", "10:30", "11:15"),
             listOf("12:00", "12:45", "13:30", "14:15"),
             listOf("15:00", "15:45", "16:30", "17:15")
         )
         val statusMap = mapOf(
-            "09:00" to "available", "09:45" to "full", "10:30" to "available", "11:15" to "available",
-            "12:00" to "full", "12:45" to "available", "13:30" to "available", "14:15" to "full",
-            "15:00" to "available", "15:45" to "full", "16:30" to "full", "17:15" to "available"
+            "09:00" to "available",
+            "09:45" to "available",
+            "10:30" to "available",
+            "11:15" to "available",
+            "12:00" to "available",
+            "12:45" to "available",
+            "13:30" to "available",
+            "14:15" to "available",
+            "15:00" to "available",
+            "15:45" to "available",
+            "16:30" to "available",
+            "17:15" to "available"
         )
 
         TimeSlotPicker(
@@ -356,8 +505,8 @@ fun TrangDatLich(navController: NavController) {
             statusMap = statusMap,
             selectedDate = selectedDate,
             selectedTime = selectedTime,
-            onDateSelected = { date -> selectedDate = date }, // Sửa it thành tên rõ ràng
-            onTimeSelected = { time -> selectedTime = time ?: "" } // Sửa it thành tên rõ ràng
+            onDateSelected = { date -> selectedDate = date },
+            onTimeSelected = { time -> selectedTime = time ?: "" }
         )
 
         Spacer(Modifier.height(10.dp))
@@ -370,14 +519,14 @@ fun TrangDatLich(navController: NavController) {
             Button(
                 onClick = {
                     //Kiem tra day du thong tin
-                    if (hoTen.isBlank() || soDienThoai.isBlank() || diaChi.isBlank() ||
+                    if (hoTen.isBlank() || soDienThoai.isBlank() || email.isBlank() ||
                         selectedService == null || selectedTime.isBlank() || selectedStaff == null
                     ) {
                         val missingFields = mutableListOf<String>()
 
                         if (hoTen.isBlank()) missingFields.add("Họ tên")
                         if (soDienThoai.isBlank()) missingFields.add("Số điện thoại")
-                        if (diaChi.isBlank()) missingFields.add("Địa chỉ")
+                        if (email.isBlank()) missingFields.add("Email")
                         if (selectedService == null) missingFields.add("Dịch vụ")
                         if (selectedTime.isBlank()) missingFields.add("Thời gian")
                         if (selectedStaff == null) missingFields.add("Nhân viên")
@@ -395,9 +544,15 @@ fun TrangDatLich(navController: NavController) {
                     val userId = authViewModel.authState?.uid ?: "anonymous"
                     val appointment = Appointment(
                         userId = userId,
+                        userName = hoTen,
+                        phone = soDienThoai,
+                        email = email,
                         staffId = staffIndex,
                         servicesId = serviceIndex,
-                        orderDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
+                        orderDate = SimpleDateFormat(
+                            "dd/MM/yyyy",
+                            Locale.getDefault()
+                        ).format(Date()),
                         pickedDate = "$selectedDate $selectedTime",
                         state = 0,
                         totalValues = finalPrice,
@@ -406,13 +561,19 @@ fun TrangDatLich(navController: NavController) {
 
                     val appointmentsRef = db.collection("Appointments")
 
+                    serviceViewModel.updateVistor(selectedService!!)
+
                     appointmentsRef.add(appointment)
                         .addOnSuccessListener { documentReference ->
                             val appointmentId = documentReference.id
 
                             // Optionally update Firestore document with this ID inside the object
                             appointmentsRef.document(appointmentId)
-                                .update("id", appointmentId) // This assumes your Appointment class has an "id" field
+                                .update(
+                                    "id",
+                                    appointmentId
+                                ) // This assumes your Appointment class has an "id" field
+
 
                             Log.d("appointmentIDdatlich", "$appointmentId")
                             navController.navigate("TrangThanhToan/$appointmentId")
@@ -431,9 +592,47 @@ fun TrangDatLich(navController: NavController) {
     }
 }
 
+fun generateDaysForMonth(): List<String> {
+    val startDate = LocalDate.now()
+    val endDate = startDate.plusMonths(1)
+    val formatter = DateTimeFormatter.ofPattern("dd/MM")
+    val days = mutableListOf<String>()
+
+    val currentYear = java.time.Year.now().value
+
+    var date = startDate
+    while (date.isBefore(endDate)) {
+        val dayOfWeek = when (date.dayOfWeek) {
+            DayOfWeek.MONDAY -> "Thứ 2"
+            DayOfWeek.TUESDAY -> "Thứ 3"
+            DayOfWeek.WEDNESDAY -> "Thứ 4"
+            DayOfWeek.THURSDAY -> "Thứ 5"
+            DayOfWeek.FRIDAY -> "Thứ 6"
+            DayOfWeek.SATURDAY -> "Thứ 7"
+            DayOfWeek.SUNDAY -> "Chủ Nhật"
+        }
+        days.add("$dayOfWeek\n${date.format(formatter)}/$currentYear")
+        date = date.plusDays(1)
+    }
+
+    return days
+}
+
+fun isOverlapping(
+    selectedStart: LocalDateTime,
+    selectedDuration: Int,
+    apptStart: LocalDateTime,
+    apptDuration: Int
+): Boolean {
+    val selectedEnd = selectedStart.plusMinutes(selectedDuration.toLong())
+    val apptEnd = apptStart.plusMinutes(apptDuration.toLong())
+    return selectedStart < apptEnd && selectedEnd > apptStart
+}
+
+
 @Composable
 fun TimeSlotPicker(
-    days: List<String>,
+    days: List<String>, // e.g., "Thứ 2\n06/05/2025"
     times: List<List<String>>,
     statusMap: Map<String, String>,
     selectedDate: String,
@@ -441,14 +640,24 @@ fun TimeSlotPicker(
     onDateSelected: (String) -> Unit,
     onTimeSelected: (String?) -> Unit
 ) {
-    var currentDateIndex by remember { mutableStateOf(days.indexOf(selectedDate)) }
+    var currentDateIndex by remember { mutableStateOf(days.indexOfFirst { it.contains(selectedDate) }) }
+    val listState = rememberLazyListState()
+
+    // Scroll to selected index when it changes
+    LaunchedEffect(currentDateIndex) {
+        if (currentDateIndex in days.indices) {
+            listState.animateScrollToItem(currentDateIndex)
+        }
+    }
 
     fun onArrowClick(isNext: Boolean) {
         currentDateIndex = when {
             isNext -> (currentDateIndex + 1) % days.size
             else -> (currentDateIndex - 1 + days.size) % days.size
         }
-        onDateSelected(days[currentDateIndex].substringAfter("\n"))
+        // Extract full date part after '\n'
+        val fullDate = days[currentDateIndex].substringAfter("\n")
+        onDateSelected(fullDate)
     }
 
     Column(
@@ -475,8 +684,8 @@ fun TimeSlotPicker(
             Spacer(modifier = Modifier.height(8.dp))
 
             Row(horizontalArrangement = Arrangement.SpaceBetween) {
-                ColorLegend(color = Color(0xFF9EFFC6), label = "Còn chỗ")
-                ColorLegend(color = Color.LightGray, label = "Hết chỗ")
+                ColorLegend(color = Color(0xFF9EFFC6), label = "Chưa Chọn")
+                Spacer(Modifier.width(10.dp))
                 ColorLegend(color = Color(0xFFFFFF66), label = "Đang chọn")
             }
 
@@ -490,7 +699,7 @@ fun TimeSlotPicker(
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .background(color = Color(0xFFBDBDBD).copy(0.6f)),
+                    .background(Color(0xFFBDBDBD).copy(0.6f)),
                 verticalArrangement = Arrangement.Center
             ) {
                 Icon(
@@ -504,21 +713,27 @@ fun TimeSlotPicker(
             }
 
             LazyRow(
+                state = listState,
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
                 modifier = Modifier
                     .weight(1f)
                     .padding(horizontal = 4.dp)
             ) {
-                items(days) { day ->
-                    val isSelected = day.contains(selectedDate)
+                itemsIndexed(days) { index, day ->
+                    val dayDate = day.substringAfter("\n")
+                    val isSelected = selectedDate == dayDate
+
                     Box(
                         modifier = Modifier
                             .fillMaxHeight()
                             .background(
                                 if (isSelected) Color(0xFFFCEA2B) else Color(0xFFBDBDBD).copy(0.6f)
                             )
-                            .clickable { onDateSelected(day.substringAfter("\n")) }
+                            .clickable {
+                                currentDateIndex = index
+                                onDateSelected(dayDate)
+                            }
                             .padding(horizontal = 12.dp, vertical = 8.dp),
                         contentAlignment = Alignment.Center
                     ) {
@@ -536,7 +751,7 @@ fun TimeSlotPicker(
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .background(color = Color(0xFFBDBDBD).copy(0.6f)),
+                    .background(Color(0xFFBDBDBD).copy(0.6f)),
                 verticalArrangement = Arrangement.Center
             ) {
                 Icon(
@@ -569,7 +784,6 @@ fun TimeSlotPicker(
                     val colorFontStyle = when {
                         isSelected -> Color.White
                         status == "available" -> Color.White
-                        status == "full" -> Color.Black
                         else -> Color.White
                     }
 
@@ -591,6 +805,7 @@ fun TimeSlotPicker(
         }
     }
 }
+
 
 @Composable
 fun ColorLegend(color: Color, label: String) {

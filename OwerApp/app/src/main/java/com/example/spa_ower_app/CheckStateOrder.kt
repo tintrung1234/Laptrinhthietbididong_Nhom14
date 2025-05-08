@@ -14,11 +14,11 @@ fun CheckStateOrder(state: Int){
     var color: Int
     when(state){
         0 -> {
-            text = "Chờ xác nhận"
+            text = "Đã đặt"
             color = 0xFFDF2D2D.toInt()
         }
         else -> {
-            text = "Đã xác nhận"
+            text = "Đã hoàn thành"
             color = 0xFF09E932.toInt()
         }
     }

@@ -1,5 +1,11 @@
 package com.example.spa_app
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -47,14 +53,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.NotificationCompat
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.Locale
+import kotlin.random.Random
 
 @Composable
 fun PaymentScreen(
@@ -62,16 +70,23 @@ fun PaymentScreen(
     appointmentId: String?,
     appointmentViewModel: AppointmentViewModel = viewModel(),
     serviceViewModel: ServiceViewModel = viewModel(),
-    discountViewModel: DiscountViewModel = viewModel(),
-    notifyViewModel: NotifyViewModel = viewModel(),
+    discountViewModel: DiscountViewModel = viewModel()
+) {
 
+    var notifyViewModel: NotifyViewModel = viewModel()
+    val context = LocalContext.current
 
-    ) {
-    Log.d("appointmentIDthanhtoan", "$appointmentId")
+    // Lắng nghe sự kiện thông báo
+    LaunchedEffect(key1 = true) {
+        notifyViewModel.notificationEvents.collect { notification ->
+            showPopupNotification(context, notification.contentForUser)
+        }
+    }
+
 
     // Get the Appointment matching the ID
     val appointmentIndex = appointmentId
-    val context = LocalContext.current
+
     val vouchers = discountViewModel.vouchers
     var voucher by remember { mutableStateOf("") }
     var acceptVoucher = remember { mutableStateOf(false) }
@@ -85,39 +100,13 @@ fun PaymentScreen(
 
     var finalPrice = 0f
 
-    val firestore = FirebaseFirestore.getInstance()
     val auth = FirebaseAuth.getInstance()
     val currentUser = auth.currentUser
-    val userDocRef =
-        currentUser?.let { firestore.collection("Users").document(it.uid) }
 
     // State for user info
     var name by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
-
-    LaunchedEffect(Unit) {
-        if (userDocRef != null) {
-            userDocRef.get()
-                .addOnSuccessListener { document ->
-                    if (document != null && document.exists()) {
-                        name = document.getString("name")
-                            ?: currentUser.displayName.orEmpty()
-                        phone = document.getString("phone")
-                            ?: currentUser.phoneNumber.orEmpty()
-                        email = document.getString("email")
-                            ?: currentUser.email.orEmpty()
-                    } else {
-                        name = currentUser.displayName.orEmpty()
-                        phone = currentUser.phoneNumber.orEmpty()
-                        email = currentUser.email.orEmpty()
-                    }
-                }
-                .addOnFailureListener { e ->
-                    Log.e("InforLayout", "Error getting user info", e)
-                }
-        }
-    }
 
     if (appointmentIndex != null) {
         val appointment =
@@ -136,6 +125,12 @@ fun PaymentScreen(
                 val discountPercent = service.discount.toFloat() / 100f
                 val discountAmount = service.price * discountPercent
                 totalPrice = service.price - discountAmount
+
+                if (appointment != null) {
+                    name = appointment.userName
+                    phone = appointment.phone
+                    email = appointment.email
+                }
 
                 LazyColumn(
                     modifier = Modifier
@@ -225,35 +220,23 @@ fun PaymentScreen(
                                             appointment,
                                             finalPrice
                                         )
-
-
-
-                                        // Nếu có áp dụng mã giảm giá thì cập nhật
                                         if (acceptVoucher.value) {
                                             val voucher = vouchers.find { it.code == voucher }
-                                            voucher?.let {
-                                                voucherValue = it.value
-                                                discountViewModel.updateVoucherInFirestore(it)
+                                            if (voucher != null) {
+                                                voucherValue = voucher.value
                                             }
-                                        }
-
-                                        // Cập nhật voucher nếu có
-                                        if (acceptVoucher.value) {
-                                            val voucher = vouchers.find { it.code == voucher }
-                                            voucher?.let { discountViewModel.updateVoucherInFirestore(it) }
+                                            if (voucher != null) {
+                                                discountViewModel.updateVoucherInFirestore(voucher)
+                                            }
                                         }
 
                                         currentUser?.uid?.let { uid ->
                                             notifyViewModel.createNotification(uid)
                                         }
-
                                     }
-
-                                    // Chuyển đến màn hình lịch sử
-                                    navController.navigate("TrangChu")
-                                          },
-
-                                        shape = RoundedCornerShape(10.dp),
+                                    navController.navigate("LichSu")
+                                },
+                                shape = RoundedCornerShape(10.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = Color(0xFFDBC37C)
                                 ),
@@ -312,7 +295,7 @@ fun AddressCustomer(name: String, phone: String, email: String) {
                 Row {
                     Text(name)
                     Text(
-                        text = " (+84)"+"${phone}",
+                        text = " (+84)" + "${phone}",
                         color = Color(0x80000000)
                     )
                 }
@@ -482,4 +465,37 @@ fun formatCost(cost: Float): String {
     }
     val formatter = DecimalFormat("#,###", symbols)
     return formatter.format(cost.toInt()) + "đ"
+}
+
+fun showPopupNotification(context: Context, message: String) {
+    val channelId = "booking_channel"
+    val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val channel = NotificationChannel(channelId, "Thông báo đặt lịch", NotificationManager.IMPORTANCE_HIGH)
+        notificationManager.createNotificationChannel(channel)
+    }
+
+    // Tạo Intent để mở MainActivity và điều hướng đến LichSu
+    val intent = Intent(context, MainActivity::class.java).apply {
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        putExtra("navigate_to", "lichsu") // bạn xử lý intent này trong MainActivity
+    }
+
+    val pendingIntent = PendingIntent.getActivity(
+        context,
+        0,
+        intent,
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
+
+    val notification = NotificationCompat.Builder(context, channelId)
+        .setSmallIcon(R.drawable.ic_logo)
+        .setContentTitle("Spa App")
+        .setContentText(message)
+        .setContentIntent(pendingIntent)
+        .setAutoCancel(true)
+        .build()
+
+    notificationManager.notify(Random.nextInt(), notification)
 }

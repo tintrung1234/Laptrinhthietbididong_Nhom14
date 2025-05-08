@@ -30,4 +30,23 @@ class CategoryViewModel : ViewModel() {
                 Log.e("CategoryViewModel", "Error getting categories", exception)
             }
     }
+
+    fun getCategoryIDByName(name: String, onResult: (Int?) -> Unit) {
+        db.collection("Categories")
+            .whereEqualTo("Name", name)
+            .get()
+            .addOnSuccessListener { documents ->
+                if (!documents.isEmpty) {
+                    val id = documents.first().id.toIntOrNull()
+                    onResult(id)
+                } else {
+                    onResult(null) // No category found with that name
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.e("CategoryViewModel", "Error fetching category by name", exception)
+                onResult(null)
+            }
+    }
+
 }

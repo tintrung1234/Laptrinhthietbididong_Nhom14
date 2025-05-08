@@ -19,23 +19,30 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        val startDestination = when (intent?.getStringExtra("navigate_to")) {
+            "lichsu" -> "LichSu"
+            "taikhoan" -> "TaiKhoan"
+            else -> "TrangChu"
+        }
+
         setContent {
             Spa_appTheme {
-                Controller()
+                Controller(startDestination = startDestination)
             }
         }
     }
 }
 
 @Composable
-fun Controller() {
+fun Controller(startDestination: String = "TrangChu") {
     val navConTroller = rememberNavController()
     val servicesViewModel: ServiceViewModel = viewModel()
     val staffsViewModel: StaffViewModel = viewModel()
     val categoryViewModel: CategoryViewModel = viewModel()
     val discountViewModel: DiscountViewModel = viewModel()
     val appointmentViewModel: AppointmentViewModel = viewModel()
-    NavHost(navController = navConTroller, startDestination = "TrangChu") {
+    //TrangThanhToan/1TCPNApprFwQoorJiMtE
+    NavHost(navController = navConTroller, startDestination = startDestination) {
         composable("TrangChu") { TrangChu(navConTroller, servicesViewModel, staffsViewModel) }
         composable("DatLich") { TrangDatLich(navConTroller) }
         composable("DanhGia") { ReviewPage(navConTroller) }
