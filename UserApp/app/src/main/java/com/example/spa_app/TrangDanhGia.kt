@@ -199,7 +199,7 @@ fun ReviewPage(navController: NavController){
             }
 
             Spacer(Modifier.height(20.dp))
-            if (appointmentID != null){
+            if (appointmentID != ""){
                 Text("Đánh giá dịch vụ",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold)
