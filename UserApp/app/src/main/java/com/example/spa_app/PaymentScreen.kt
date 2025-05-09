@@ -72,7 +72,6 @@ fun PaymentScreen(
     serviceViewModel: ServiceViewModel = viewModel(),
     discountViewModel: DiscountViewModel = viewModel()
 ) {
-
     var notifyViewModel: NotifyViewModel = viewModel()
     val context = LocalContext.current
 
@@ -82,7 +81,6 @@ fun PaymentScreen(
             showPopupNotification(context, notification.contentForUser)
         }
     }
-
 
     // Get the Appointment matching the ID
     val appointmentIndex = appointmentId

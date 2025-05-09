@@ -1,11 +1,14 @@
 package com.example.spa_app
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavType
@@ -14,13 +17,31 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.spa_app.ui.theme.Spa_appTheme
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+    private lateinit var notifyViewModel: NotifyViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        notifyViewModel = ViewModelProvider(this)[NotifyViewModel::class.java]
+
+        val auth = FirebaseAuth.getInstance()
+        val userId = auth.currentUser?.uid
+
+        // Luôn chạy khi app còn foreground, không bị recompose
+        lifecycleScope.launch {
+            if (userId != null) {
+                notifyViewModel.loadUserNotifications(userId)
+            }
+        }
+
         val startDestination = when (intent?.getStringExtra("navigate_to")) {
             "lichsu" -> "LichSu"
+            "taikhoan" -> "TaiKhoan"
             else -> "TrangChu"
         }
 
@@ -90,13 +111,3 @@ fun Controller(startDestination: String = "TrangChu") {
         composable("TimKiem") { Search(navConTroller, servicesViewModel) }
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun Preview() {
-//    Spa_appTheme {
-////        Controller()
-//    val navConTroller = rememberNavController()
-//    LoginRegisterScreen(navConTroller)
-//    }
-//}

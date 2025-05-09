@@ -22,6 +22,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
@@ -30,6 +31,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,6 +42,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
@@ -135,8 +138,15 @@ fun TrangChu(
                             }
                         }
 
+                        val notifyViewModel: NotifyViewModel = viewModel()
 
-                        //Button notification
+                        LaunchedEffect(Unit) {
+                            notifyViewModel.loadNotifications()
+                        }
+
+                        val notifications = notifyViewModel.notifications.filter { it.contentForOwner.isNotEmpty() && !it.seenByOwner}
+
+                        Box {
                         Button(
                             onClick = { navController.navigate("ThongBao") },
                             colors = ButtonDefaults.buttonColors(containerColor = Color.White),
@@ -145,16 +155,29 @@ fun TrangChu(
                                 .offset(x = 5.dp),
                             contentPadding = PaddingValues(0.dp),
                         ) {
-                            Image(
-                                painterResource(R.drawable.line_md_bell_loop),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(25.dp)
-                                    .background(color = Color.White)
-                                    .padding(start = 1.dp)
-                            )
 
+                                Image(
+                                    painter = painterResource(R.drawable.line_md_bell_loop),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .size(25.dp)
+                                        .background(color = Color.White)
+                                        .padding(start = 1.dp)
+                                )
+                            }
                         }
+                        Box{
+                            if (notifications.isNotEmpty()) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(8.dp)
+                                        .background(Color.Red, shape = CircleShape)
+                                        .align(Alignment.TopEnd)
+                                        .offset(x = 2.dp, y = (-2).dp) // fine-tune this as needed
+                                )
+                            }
+                        }
+
                     }
 
                     //Category

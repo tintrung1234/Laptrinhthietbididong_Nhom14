@@ -91,7 +91,12 @@ class MainActivity : ComponentActivity() {
 
         // Luôn chạy khi app còn foreground, không bị recompose
         lifecycleScope.launch {
-            notifyViewModel.notificationEvent.collect { notification ->
+            notifyViewModel.loadNotifications()
+        }
+
+
+        lifecycleScope.launch {
+            notifyViewModel.notificationEvents.collect { notification ->
                 showPopupNotification(this@MainActivity, notification.contentForOwner)
             }
         }

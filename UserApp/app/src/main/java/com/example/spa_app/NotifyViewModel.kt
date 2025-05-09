@@ -17,6 +17,7 @@ data class UserNotification(
     val contentForUser: String = "",
     val contentForOwner: String = "",
     val timestamp: Long = System.currentTimeMillis(),
+    val seenByUser: Boolean = false,
     val seenByOwner: Boolean = false
 )
 
@@ -44,6 +45,7 @@ class NotifyViewModel : ViewModel() {
                 contentForUser = "Bạn đã đặt lịch thành công!",
                 contentForOwner = "Khách hàng $username vừa đặt lịch.",
                 timestamp = System.currentTimeMillis(),
+                seenByUser = false,
                 seenByOwner = false
             )
 
@@ -65,6 +67,33 @@ class NotifyViewModel : ViewModel() {
         }
     }
 
+    //Tạo thông báo khi cập nhật lại thông tin cá nhân
+    fun createUpdateInforNotification(userId: String) {
+        val notificationId = db.collection("notifications").document().id
+        val updateNotification = UserNotification(
+            id = notificationId,
+            userId = userId,
+            contentForUser = "Bạn đã thay đổi thông tin cá nhân",
+            contentForOwner = "",
+            timestamp = System.currentTimeMillis(),
+            seenByUser = false
+        )
+
+        // Lưu thông báo vào Firestore
+        db.collection("notifications").document(notificationId)
+            .set(updateNotification)
+            .addOnSuccessListener {
+                Log.d("Notify", "Thông báo cập nhật thông tin đã được tạo")
+                // Gửi sự kiện ra UI
+                viewModelScope.launch {
+                    _notificationEvents.emit(updateNotification)
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("Notify", "Lỗi khi tạo thông báo cập nhật thông tin", e)
+            }
+    }
+
     // Load danh sách thông báo của người dùng (hiển thị trong NotifyScreen)
     fun loadUserNotifications(userId: String) {
         db.collection("notifications")
@@ -76,14 +105,34 @@ class NotifyViewModel : ViewModel() {
                     return@addSnapshotListener
                 }
 
-                snapshot?.let {
-                    _notifications.clear()
-                    _notifications.addAll(
-                        it.documents.mapNotNull { doc ->
-                            doc.toObject(UserNotification::class.java)
+                snapshot?.let { it ->
+                    val newNotifications = it.documents.mapNotNull { doc ->
+                        doc.toObject(UserNotification::class.java)
+                    }.filter { it.contentForUser.isNotEmpty() && !it.seenByUser}
+
+                    // Kiểm tra và phát thông báo mới (nếu có)
+                    if (newNotifications.isNotEmpty() && newNotifications != _notifications) {
+                        val latest = newNotifications.first()
+                        viewModelScope.launch {
+                            _notificationEvents.emit(latest)
                         }
-                    )
+                    }
+
+                    _notifications.clear()
+                    _notifications.addAll(newNotifications)
                 }
+            }
+    }
+
+
+    fun markNotificationAsSeen(notificationId: String) {
+        db.collection("notifications").document(notificationId)
+            .update("seenByUser", true)
+            .addOnSuccessListener {
+                Log.d("NotifyVM", "Notification marked as seen: $notificationId")
+            }
+            .addOnFailureListener {
+                Log.e("NotifyVM", "Failed to mark as seen", it)
             }
     }
 }

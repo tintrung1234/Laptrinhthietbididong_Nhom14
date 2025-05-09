@@ -38,8 +38,13 @@ fun NotifyScreen(
         navController.navigate("TaiKhoan")
         return // Dừng thực thi màn hình này nếu không có userId
     }
+
     LaunchedEffect(Unit) {
         notifyViewModel.loadUserNotifications(userId)
+
+        notifications.forEach {
+            notifyViewModel.markNotificationAsSeen(it.id)
+        }
     }
 
     Column(
@@ -50,21 +55,38 @@ fun NotifyScreen(
         TopLayout("Thông báo") {
             navController.navigate("TrangChu")
         }
-
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(notifications) { item ->
-                NotiItem(
-                    title = item.contentForUser,
-                    timestamp = item.timestamp,
-                    navController
-                )
+        if (notifications.isEmpty()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text("Không có thông báo")
+            }
+        } else {
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(notifications) { item ->
+                    NotiItem(
+                        title = item.contentForUser,
+                        timestamp = item.timestamp,
+                        navController,
+                        onClick = {
+                            notifyViewModel.markNotificationAsSeen(item.id)
+                            if (item.contentForUser == "Bạn đã thay đổi thông tin cá nhân") {
+                                navController.navigate("TaiKhoan")
+                            } else {
+                                navController.navigate("LichSu")
+                            }
+                        }
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-fun NotiItem(title: String, timestamp: Long , navController: NavController) {
+fun NotiItem(title: String, timestamp: Long, navController: NavController, onClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -73,10 +95,12 @@ fun NotiItem(title: String, timestamp: Long , navController: NavController) {
             .padding(vertical = 10.dp, horizontal = 20.dp)
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.height(60.dp)) {
+            Column {
                 Text(text = title, fontSize = 18.sp)
                 Spacer(modifier = Modifier.weight(1f))
-                Row {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Text(
                         text = convertTimestamp(timestamp),
                         modifier = Modifier.align(Alignment.CenterVertically),
@@ -84,15 +108,16 @@ fun NotiItem(title: String, timestamp: Long , navController: NavController) {
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     TextButton(
-                        onClick = { navController.navigate("lichsu") },
-                        contentPadding = PaddingValues(),
+                        onClick = onClick,
+                        contentPadding = PaddingValues(0.dp),
                         modifier = Modifier
-                            .align(Alignment.Bottom)
+                            .align(Alignment.CenterVertically)
                             .height(20.dp)
                     ) {
                         Text(
                             text = "Xem chi tiết >>",
                             textDecoration = TextDecoration.Underline,
+                            modifier = Modifier.align(Alignment.CenterVertically),
                             color = Color(0x80000000),
                         )
                     }

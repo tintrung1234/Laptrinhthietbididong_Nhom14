@@ -1,5 +1,11 @@
 package com.example.spa_app
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -44,6 +50,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -51,11 +58,13 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.NotificationCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlin.random.Random
 
 @Composable
 fun InforScreen(navController: NavController) {
@@ -72,6 +81,9 @@ fun InforScreen(navController: NavController) {
 
 @Composable
 fun InforLayout(navController: NavController, viewModel: AuthViewModel = viewModel()) {
+    val notifyViewModel: NotifyViewModel = viewModel()
+    val context = LocalContext.current
+
     val firestore = FirebaseFirestore.getInstance()
     val auth = FirebaseAuth.getInstance()
     val currentUser = auth.currentUser
@@ -181,6 +193,13 @@ fun InforLayout(navController: NavController, viewModel: AuthViewModel = viewMod
                             userDocRef.set(updatedData)
                                 .addOnSuccessListener {
                                     Log.d("InforLayout", "User info updated")
+                                    currentUser?.uid?.let { uid ->
+                                        notifyViewModel.createUpdateInforNotification(userId = uid)
+                                    }
+                                    showPopupInforNotification(
+                                        context = context,
+                                        message = "Thông tin cá nhân đã được cập nhật thành công!"
+                                    )
                                 }
                                 .addOnFailureListener { e ->
                                     Log.e("InforLayout", "Failed to update info", e)
@@ -287,4 +306,35 @@ fun InforItem(
 }
 
 
+fun showPopupInforNotification(context: Context, message: String) {
+    val channelId = "booking_channel"
+    val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val channel = NotificationChannel(channelId, "Thông báo thay đổi tài khoảng", NotificationManager.IMPORTANCE_HIGH)
+        notificationManager.createNotificationChannel(channel)
+    }
+
+    // Tạo Intent để mở MainActivity và điều hướng đến LichSu
+    val intent = Intent(context, MainActivity::class.java).apply {
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        putExtra("navigate_to", "taikhoan") // bạn xử lý intent này trong MainActivity
+    }
+
+    val pendingIntent = PendingIntent.getActivity(
+        context,
+        0,
+        intent,
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
+
+    val notification = NotificationCompat.Builder(context, channelId)
+        .setSmallIcon(R.drawable.ic_logo)
+        .setContentTitle("Spa App")
+        .setContentText(message)
+        .setContentIntent(pendingIntent)
+        .setAutoCancel(true)
+        .build()
+
+    notificationManager.notify(Random.nextInt(), notification)
+}

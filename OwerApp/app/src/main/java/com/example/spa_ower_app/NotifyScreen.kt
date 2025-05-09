@@ -47,15 +47,7 @@ import kotlin.random.Random
 
 @Composable
 fun NotifyScreen(navController: NavController, notifyViewModel: NotifyViewModel = viewModel()) {
-    val context = LocalContext.current
     val notifications = notifyViewModel.notifications
-
-    // Lắng nghe sự kiện thông báo
-    LaunchedEffect(Unit) {
-        notifyViewModel.notificationEvent.collect { notification ->
-            showPopupNotification(context, notification.contentForOwner)
-        }
-    }
 
     val auth = FirebaseAuth.getInstance()
     val userId = auth.currentUser?.uid ?: ""
@@ -65,7 +57,11 @@ fun NotifyScreen(navController: NavController, notifyViewModel: NotifyViewModel 
     }
     // Tải thông báo mỗi khi màn hình NotifyScreenOwner được gọi
     LaunchedEffect(Unit) {
-        notifyViewModel.loadNotifications(userId )
+        notifyViewModel.loadNotifications()
+
+        notifications.forEach {
+            notifyViewModel.markNotificationAsSeen(it.id)
+        }
     }
 
     Column(
@@ -74,15 +70,28 @@ fun NotifyScreen(navController: NavController, notifyViewModel: NotifyViewModel 
             .padding(vertical = 30.dp, horizontal = 20.dp)
     ) {
         TopLayout("Thông báo", { navController.navigate("TrangChu") })
-
-        // Hiển thị thông báo cho Owner
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(notifications) { item ->
-                NotiItem(
-                    title = item.contentForOwner,
-                    timestamp = item.timestamp,
-                    navController
-                )
+        if (notifications.isEmpty()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text("Không có thông báo")
+            }
+        } else {
+            // Hiển thị thông báo cho Owner
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(notifications) { item ->
+                    NotiItem(
+                        title = item.contentForOwner,
+                        timestamp = item.timestamp,
+                        navController,
+                        onClick = {
+                            notifyViewModel.markNotificationAsSeen(item.id)
+                            navController.navigate("LichSu")
+                        }
+                    )
+                }
             }
         }
     }
@@ -90,7 +99,7 @@ fun NotifyScreen(navController: NavController, notifyViewModel: NotifyViewModel 
 
 
 @Composable
-fun NotiItem(title: String, timestamp: Long, navController: NavController) {
+fun NotiItem(title: String, timestamp: Long, navController: NavController, onClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -99,7 +108,7 @@ fun NotiItem(title: String, timestamp: Long, navController: NavController) {
             .padding(vertical = 10.dp, horizontal = 20.dp)
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.height(60.dp)) {
+            Column {
                 Text(text = title, fontSize = 18.sp)  // Hiển thị nội dung thông báo
                 Spacer(modifier = Modifier.weight(1f))
                 Row {
@@ -110,7 +119,7 @@ fun NotiItem(title: String, timestamp: Long, navController: NavController) {
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     TextButton(
-                        onClick = { navController.navigate("lichsu") },
+                        onClick = onClick,
                         contentPadding = PaddingValues(),
                         modifier = Modifier
                             .align(Alignment.Bottom)
