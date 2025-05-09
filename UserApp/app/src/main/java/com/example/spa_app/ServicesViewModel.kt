@@ -22,8 +22,7 @@ data class Service(
     val rating: Int = 0,
     val rateCount: Int = 0,
     val visitors: Int = 0
-) : Parcelable
-
+): Parcelable
 
 class ServiceViewModel : ViewModel() {
     private val db = FirebaseFirestore.getInstance()

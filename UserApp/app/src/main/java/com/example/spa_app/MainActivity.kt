@@ -66,7 +66,8 @@ fun Controller(startDestination: String = "TrangChu") {
         composable("TrangChu") { TrangChu(navConTroller, servicesViewModel, staffsViewModel) }
         composable("DatLich") { backStackEntry  ->
             val serviceSelected = navConTroller.previousBackStackEntry?.savedStateHandle?.get<Service>("serviceSelected")
-            TrangDatLich(navConTroller, serviceSelected) }
+            TrangDatLich(navConTroller, serviceSelected)
+        }
         composable("DanhGia") { ReviewPage(navConTroller) }
         composable("ThongBao") { NotifyScreen(navConTroller) }
         composable(
@@ -109,9 +110,10 @@ fun Controller(startDestination: String = "TrangChu") {
             val appointmentId = backStackEntry.arguments?.getString("appointmentId")
             PaymentScreen(navConTroller, appointmentId, appointmentViewModel, servicesViewModel, discountViewModel)
         }
-        composable("TrangDatLich") { backStackEntry  ->
+        composable("TrangDatLich") {  backStackEntry  ->
             val serviceSelected = navConTroller.previousBackStackEntry?.savedStateHandle?.get<Service>("serviceSelected")
-            TrangDatLich(navConTroller, serviceSelected) }
+            TrangDatLich(navConTroller, serviceSelected)
+        }
         composable("TimKiem") { Search(navConTroller, servicesViewModel) }
     }
 }
