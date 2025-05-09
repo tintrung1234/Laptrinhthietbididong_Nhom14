@@ -51,7 +51,7 @@ import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TrangDatLich(navController: NavController) {
+fun TrangDatLich(navController: NavController, serviceSelected: Service? = null) {
     val authViewModel: AuthViewModel = viewModel()
     val appointmentViewModel: AppointmentViewModel = viewModel()
     val serviceViewModel: ServiceViewModel = viewModel()
@@ -60,7 +60,7 @@ fun TrangDatLich(navController: NavController) {
 
     // Trạng thái thông tin người dùng
 
-    var selectedService by remember { mutableStateOf<Service?>(null) } // Khai báo selectedService
+    var selectedService by remember { mutableStateOf(serviceSelected) } // Khai báo selectedService
     var selectedStaff by remember { mutableStateOf<Staff?>(null) }
 
     val firestore = FirebaseFirestore.getInstance()
