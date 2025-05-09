@@ -1,12 +1,15 @@
 package com.example.spa_app
 
+import android.os.Parcelable
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Service(
     val id: String = "",
     val categoryId: Int = 0,
@@ -19,7 +22,7 @@ data class Service(
     val rating: Int = 0,
     val rateCount: Int = 0,
     val visitors: Int = 0
-)
+): Parcelable
 
 class ServiceViewModel : ViewModel() {
     private val db = FirebaseFirestore.getInstance()

@@ -176,7 +176,10 @@ fun DetailServiceScreen(
                     .align(Alignment.CenterHorizontally)
             ) {
                 Button(
-                    onClick = { navController.navigate("TrangDatLich") },
+                    onClick = {
+                        navController.currentBackStackEntry?.savedStateHandle?.set("serviceSelected", serviceDetail)
+                        navController.navigate("TrangDatLich")
+                              },
                     shape = RoundedCornerShape(7.dp),
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
