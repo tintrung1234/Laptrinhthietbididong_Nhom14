@@ -14,7 +14,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
@@ -53,6 +55,7 @@ fun DetailServiceScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(vertical = 30.dp, horizontal = 20.dp)
+                .verticalScroll(rememberScrollState())
         ) {
             TopLayout("Dịch vụ", { navController.popBackStack() })
             Box(
@@ -165,6 +168,13 @@ fun DetailServiceScreen(
                         )
                     }
                 }
+
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally)
+            ) {
                 Button(
                     onClick = { navController.navigate("TrangDatLich") },
                     shape = RoundedCornerShape(7.dp),
@@ -185,6 +195,7 @@ fun DetailServiceScreen(
                     )
                 }
             }
+
         }
     }
 }

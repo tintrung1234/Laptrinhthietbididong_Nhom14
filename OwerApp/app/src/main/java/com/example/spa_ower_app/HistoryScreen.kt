@@ -3,6 +3,7 @@ package com.example.spa_ower_app
 import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -79,24 +80,34 @@ fun HistoryScreen(
     ) {
         TopLayout("Lịch sử", { navController.navigate("TrangChu") })
         if (userDocRef != null && admin == 1) {
-            Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = Color(0xFFD9D9D9)
-                ),
-            ) {
-
-                LazyColumn(
+            if (appointment.isEmpty()) {
+                Box(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(8.dp)
+                        .fillMaxSize(),
+                    contentAlignment = Alignment.Center
                 ) {
-                    items(appointment) { appointment ->
-                        itemCardHistory(
-                            appointment,
-                            appointment.id,
-                            navController,
-                            servicesViewModel
-                        )
+                    Text("Không có lịch đặt nào")
+                }
+            } else {
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color(0xFFD9D9D9)
+                    ),
+                ) {
+
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(8.dp)
+                    ) {
+                        items(appointment) { appointment ->
+                            itemCardHistory(
+                                appointment,
+                                appointment.id,
+                                navController,
+                                servicesViewModel
+                            )
+                        }
                     }
                 }
             }

@@ -235,7 +235,7 @@ fun CategoryTotalChart(categoryTotals: Map<String, Float>) {
             .fillMaxWidth()
             .background(color = Color.Gray.copy(0.1f), RoundedCornerShape(5.dp))
             .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
+//        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.Bottom
     ) {
         sortedEntries.forEachIndexed { index, (categoryName, total) ->

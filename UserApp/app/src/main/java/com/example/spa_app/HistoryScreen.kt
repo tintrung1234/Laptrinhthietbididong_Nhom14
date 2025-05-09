@@ -3,6 +3,7 @@ package com.example.spa_app
 import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,6 +19,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -47,18 +49,33 @@ fun HistoryScreen(
             .padding(vertical = 30.dp, horizontal = 20.dp)
     ) {
         TopLayout("Lịch sử", { navController.navigate("TrangChu") })
-        Card(
-            colors = CardDefaults.cardColors(
-                containerColor = Color(0xFFD9D9D9)
-            ),
-        ) {
-            LazyColumn(
+        if (appointment.isEmpty()) {
+            Box(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(8.dp)
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
             ) {
-                items(appointment) { appointment ->
-                    itemCardHistory(appointment, appointment.id , navController, servicesViewModel)
+                Text("Không có lịch đặt nào")
+            }
+        } else {
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = Color(0xFFD9D9D9)
+                ),
+            ) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(8.dp)
+                ) {
+                    items(appointment) { appointment ->
+                        itemCardHistory(
+                            appointment,
+                            appointment.id,
+                            navController,
+                            servicesViewModel
+                        )
+                    }
                 }
             }
         }
