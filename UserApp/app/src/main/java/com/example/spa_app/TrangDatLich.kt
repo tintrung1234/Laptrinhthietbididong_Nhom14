@@ -593,25 +593,25 @@ fun TrangDatLich(navController: NavController, serviceSelected: Service? = null)
 }
 
 fun generateDaysForMonth(): List<String> {
-    val startDate = LocalDate.now()
-    val endDate = startDate.plusMonths(1)
+    val today = LocalDate.now()
+    val endDate = today.plusMonths(1)
     val formatter = DateTimeFormatter.ofPattern("dd/MM")
     val days = mutableListOf<String>()
 
-    val currentYear = java.time.Year.now().value
-
-    var date = startDate
+    var date = today
     while (date.isBefore(endDate)) {
-        val dayOfWeek = when (date.dayOfWeek) {
-            DayOfWeek.MONDAY -> "Thứ 2"
-            DayOfWeek.TUESDAY -> "Thứ 3"
-            DayOfWeek.WEDNESDAY -> "Thứ 4"
-            DayOfWeek.THURSDAY -> "Thứ 5"
-            DayOfWeek.FRIDAY -> "Thứ 6"
-            DayOfWeek.SATURDAY -> "Thứ 7"
-            DayOfWeek.SUNDAY -> "Chủ Nhật"
+        if (!date.isBefore(today)) { // Ensure date is not in the past
+            val dayOfWeek = when (date.dayOfWeek) {
+                DayOfWeek.MONDAY -> "Thứ 2"
+                DayOfWeek.TUESDAY -> "Thứ 3"
+                DayOfWeek.WEDNESDAY -> "Thứ 4"
+                DayOfWeek.THURSDAY -> "Thứ 5"
+                DayOfWeek.FRIDAY -> "Thứ 6"
+                DayOfWeek.SATURDAY -> "Thứ 7"
+                DayOfWeek.SUNDAY -> "Chủ Nhật"
+            }
+            days.add("$dayOfWeek\n${date.format(formatter)}/${date.year}")
         }
-        days.add("$dayOfWeek\n${date.format(formatter)}/$currentYear")
         date = date.plusDays(1)
     }
 

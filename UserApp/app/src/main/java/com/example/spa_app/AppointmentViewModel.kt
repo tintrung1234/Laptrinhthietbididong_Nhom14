@@ -77,4 +77,20 @@ class AppointmentViewModel : ViewModel() {
                 Log.e("Firestore", "Error updating state", e)
             }
     }
+
+    fun deleteAppointment(apppointmentId: String, onSuccess: () -> Unit = {}) {
+        db.collection("Appointments")
+            .document(apppointmentId)
+            .delete()
+            .addOnSuccessListener {
+                Log.d("ApppointmentViewModel", "Apppointment deleted successfully")
+                // Update the local list
+                appointments = appointments.filterNot { it.id == apppointmentId }
+                // Call the success callback
+                onSuccess()
+            }
+            .addOnFailureListener { e ->
+                Log.e("ApppointmentViewModel", "Error deleting Apppointment", e)
+            }
+    }
 }

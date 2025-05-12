@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +16,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -84,7 +88,12 @@ fun HistoryScreen(
 
 //@Preview(showBackground = true)
 @Composable
-fun itemCardHistory(appointment: Appointment, appointmentId: String, navController: NavController, serviceViewModel: ServiceViewModel = viewModel()) {
+fun itemCardHistory(
+    appointment: Appointment,
+    appointmentId: String,
+    navController: NavController,
+    serviceViewModel: ServiceViewModel = viewModel()
+) {
     val appointmentViewModel: AppointmentViewModel = viewModel()
     var appointments = appointmentViewModel.appointments
 
@@ -127,6 +136,27 @@ fun itemCardHistory(appointment: Appointment, appointmentId: String, navControll
                 textAlign = TextAlign.End // Căn văn bản bên phải
             )
             CheckPayment(appointment.paymentMethod)
+            Spacer(Modifier.height(5.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            )
+            {
+                Button(
+                    onClick = {
+                        appointmentViewModel.deleteAppointment(appointmentId,
+                            onSuccess = {
+                                Log.d("Delete appointment", "Xóa thành công")
+                            })
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFCB0404)),
+                    shape = RoundedCornerShape(8.dp),
+                    contentPadding = PaddingValues(horizontal = 10.dp)
+                ) {
+                    Text("Hủy bỏ", fontSize = 14.sp)
+                }
+            }
+
         }
     }
     Spacer(modifier = Modifier.height(12.dp))
