@@ -271,7 +271,7 @@ fun RegisterForm(navController: NavController, viewModel: AuthViewModel = viewMo
                 username = it
                 error = null
             },
-            label = { Text("Tên đăng nhập *") },
+            label = { Text("Tên người dùng *") },
             leadingIcon = { Icon(Icons.Default.Person, contentDescription = null) },
             modifier = Modifier.fillMaxWidth(),
             isError = error?.contains("Tên") == true

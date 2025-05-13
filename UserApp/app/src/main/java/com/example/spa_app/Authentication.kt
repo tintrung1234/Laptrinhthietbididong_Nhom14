@@ -9,6 +9,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,19 +23,22 @@ class AuthViewModel : ViewModel() {
     )
 
     fun saveUserToRealtimeDatabase(uid: String, name: String, phone: String, email: String) {
-        val database = FirebaseDatabase.getInstance()
-        val userRef = database.getReference("users").child(uid)
+        val database = FirebaseFirestore.getInstance()
+        val usersRef = database.collection("Users")
 
         val user = User(uid, name, phone, email)
 
-        userRef.setValue(user)
+        // Save using UID as document ID
+        usersRef.document(uid).set(user)
             .addOnSuccessListener {
-                Log.d("Firebase", "User saved successfully")
+                Log.d("Firebase", "User saved successfully to Firestore")
             }
             .addOnFailureListener { e ->
-                Log.w("Firebase", "Error saving user", e)
+                Log.w("Firebase", "Error saving user to Firestore", e)
             }
     }
+
+
 
     private val auth = FirebaseAuth.getInstance()
 
@@ -49,6 +53,8 @@ class AuthViewModel : ViewModel() {
             .addOnSuccessListener { result ->
                 val uid = result.user?.uid ?: return@addOnSuccessListener
                 saveUserToRealtimeDatabase(uid, username, phone, email)
+                Log.d("UserDebug1", "$uid, $username, $phone, $email")
+
             }
     }
 

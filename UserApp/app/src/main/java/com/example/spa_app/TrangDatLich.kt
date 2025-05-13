@@ -356,6 +356,40 @@ fun TrangDatLich(navController: NavController, serviceSelected: Service? = null)
 
         Spacer(Modifier.height(20.dp))
 
+        // Chọn khung giờ
+
+        val days = remember { generateDaysForMonth() }
+        val times = listOf(
+            listOf("09:00", "09:45", "10:30", "11:15"),
+            listOf("12:00", "12:45", "13:30", "14:15"),
+            listOf("15:00", "15:45", "16:30", "17:15")
+        )
+        val statusMap = mapOf(
+            "09:00" to "available",
+            "09:45" to "available",
+            "10:30" to "available",
+            "11:15" to "available",
+            "12:00" to "available",
+            "12:45" to "available",
+            "13:30" to "available",
+            "14:15" to "available",
+            "15:00" to "available",
+            "15:45" to "available",
+            "16:30" to "available",
+            "17:15" to "available"
+        )
+
+        TimeSlotPicker(
+            days = days,
+            times = times,
+            statusMap = statusMap,
+            selectedDate = selectedDate,
+            selectedTime = selectedTime,
+            onDateSelected = { date -> selectedDate = date },
+            onTimeSelected = { time -> selectedTime = time ?: "" }
+        )
+
+        Spacer(Modifier.height(10.dp))
         // Chọn kỹ thuật viên
         Row {
             Text(
@@ -475,42 +509,16 @@ fun TrangDatLich(navController: NavController, serviceSelected: Service? = null)
         }
 
         Spacer(Modifier.height(20.dp))
-
-        // Chọn khung giờ
-
-        val days = remember { generateDaysForMonth() }
-        val times = listOf(
-            listOf("09:00", "09:45", "10:30", "11:15"),
-            listOf("12:00", "12:45", "13:30", "14:15"),
-            listOf("15:00", "15:45", "16:30", "17:15")
-        )
-        val statusMap = mapOf(
-            "09:00" to "available",
-            "09:45" to "available",
-            "10:30" to "available",
-            "11:15" to "available",
-            "12:00" to "available",
-            "12:45" to "available",
-            "13:30" to "available",
-            "14:15" to "available",
-            "15:00" to "available",
-            "15:45" to "available",
-            "16:30" to "available",
-            "17:15" to "available"
-        )
-
-        TimeSlotPicker(
-            days = days,
-            times = times,
-            statusMap = statusMap,
-            selectedDate = selectedDate,
-            selectedTime = selectedTime,
-            onDateSelected = { date -> selectedDate = date },
-            onTimeSelected = { time -> selectedTime = time ?: "" }
-        )
-
-        Spacer(Modifier.height(10.dp))
-
+        var error by remember { mutableStateOf<String?>(null) }
+        if (error != null) {
+            Text(
+                text = error!!,
+                color = Color.Red,
+                modifier = Modifier
+                    .padding(top = 4.dp)
+                    .align(alignment = Alignment.CenterHorizontally)
+            )
+        }
         // Nút gửi đặt lịch
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -532,6 +540,7 @@ fun TrangDatLich(navController: NavController, serviceSelected: Service? = null)
                         if (selectedStaff == null) missingFields.add("Nhân viên")
 
                         Log.d("Error", "Thiếu thông tin: ${missingFields.joinToString(", ")}")
+                        error = "Vui lòng chọn đầy đủ thông tin"
                         return@Button
                     }
 

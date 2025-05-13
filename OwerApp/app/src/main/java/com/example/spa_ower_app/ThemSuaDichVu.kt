@@ -246,6 +246,7 @@ fun Form(
 
     // Thong bao khi thanh cong
     var message by remember { mutableStateOf<String?>(null) }
+    var error by remember { mutableStateOf<String?>(null) }
 
     //Sua dich vu
     var selectedService by remember { mutableStateOf<Service?>(null) }
@@ -805,6 +806,16 @@ fun Form(
 
             Spacer(Modifier.height(10.dp))
 
+            if (error != null) {
+                Text(
+                    text = error!!,
+                    color = Color.Red,
+                    modifier = Modifier
+                        .padding(top = 4.dp)
+                        .align(alignment = Alignment.CenterHorizontally)
+                )
+            }
+
             if (message != null) {
                 Text(
                     text = message!!,
@@ -840,6 +851,9 @@ fun Form(
                                         visitors = 0,
                                         onSuccess = {
                                             message = "Lưu thành công"
+                                        },
+                                        onFailure = {
+                                            error = "Vui lòng điền đầy đủ thông tin"
                                         }
                                     )
                                 }

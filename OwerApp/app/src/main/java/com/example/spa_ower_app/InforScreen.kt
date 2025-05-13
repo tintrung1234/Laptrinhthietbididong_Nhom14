@@ -82,6 +82,7 @@ fun InforLayout(navController: NavController, viewModel: AuthViewModel = viewMod
     var phone by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var editMode by remember { mutableStateOf(false) }
+    var admin by remember { mutableStateOf(0) }
 
     // Lấy dữ liệu Firestore khi mở
     LaunchedEffect(Unit) {
@@ -92,6 +93,7 @@ fun InforLayout(navController: NavController, viewModel: AuthViewModel = viewMod
                         name = document.getString("name") ?: currentUser.displayName.orEmpty()
                         phone = document.getString("phone") ?: currentUser.phoneNumber.orEmpty()
                         email = document.getString("email") ?: currentUser.email.orEmpty()
+                        admin = (document.getLong("admin") ?: 0L).toInt()
                     } else {
                         // Chưa có dữ liệu Firestore
                         name = currentUser.displayName.orEmpty()
@@ -105,6 +107,7 @@ fun InforLayout(navController: NavController, viewModel: AuthViewModel = viewMod
         }
     }
 
+    val uid = currentUser?.uid
     val photoUrl = currentUser?.photoUrl
 
     Column(
@@ -175,7 +178,9 @@ fun InforLayout(navController: NavController, viewModel: AuthViewModel = viewMod
                         val updatedData = mapOf(
                             "name" to name,
                             "phone" to phone,
-                            "email" to email
+                            "email" to email,
+                            "uid" to uid,
+                            "admin" to admin
                         )
                         if (userDocRef != null) {
                             userDocRef.set(updatedData)
