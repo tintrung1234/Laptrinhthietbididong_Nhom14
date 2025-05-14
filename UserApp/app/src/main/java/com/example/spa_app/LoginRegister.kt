@@ -246,7 +246,7 @@ fun LoginForm(navController: NavController, viewModel: AuthViewModel = viewModel
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 8.dp)
-                .clickable(onClick = { navController.navigate("QuanMatKhau") }),
+                .clickable(onClick = { navController.navigate("QuenMatKhau") }),
             fontSize = 12.sp,
             color = Color.Black,
             textDecoration = TextDecoration.Underline

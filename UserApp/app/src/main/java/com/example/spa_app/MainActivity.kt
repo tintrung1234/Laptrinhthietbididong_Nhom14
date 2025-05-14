@@ -103,6 +103,7 @@ fun Controller(startDestination: String = "TrangChu") {
             )
         }
         composable("TaiKhoan") { InforScreen(navConTroller) }
+        composable("QuenMatKhau") { ForgotPasswordScreen(navConTroller) }
         composable(
             "TrangThanhToan/{appointmentId}",
             arguments = listOf(navArgument("appointmentId") { type = NavType.StringType })
