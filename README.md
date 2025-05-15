@@ -40,7 +40,8 @@ Nơi lưu lại tiến độ bài tập nhóm của nhóm 14
    - Android dưới 8.0: Người dùng chỉ cần bật tùy chọn Cài đặt từ nguồn không xác định trong phần Cài đặt > Bảo mật > Nguồn không xác định.
 
 2. **Quét mã QR sau đây để tải và trải nghiệm app**:
-![72cc93e9717bc3259a6a](https://github.com/user-attachments/assets/7d61e8d2-35ea-430b-b720-7c564d279456)
+
+![72cc93e9717bc3259a6a](https://github.com/user-attachments/assets/cb0c9acc-73d6-4d0f-855a-9210c2e24ec1)
 
 3. **Cài đặt Spa_app**:
    - Cho phép cài đặt app > Chờ app tải xong > Mở lên và sử dụng
